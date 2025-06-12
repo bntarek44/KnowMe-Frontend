@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="main.css" />
+  
+  <style>
+    /* ستايل رسالة الترحيب */
+    #welcome-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      padding: 20px 30px;
+      text-align: center;
+      z-index: 10000;
+      min-width: 300px;
+      max-width: 90%;
+      user-select: none;
+      background-color: var(--modal-bg, white);
+      color: var(--modal-color, #222);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    }
+    #welcome-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    #close-btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 30px;
+      background-color: #555;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    #close-btn:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- الناف بار -->
+  <nav id="mainNav" class="navbar navbar-expand-lg bg-body-tertiary p-2">
+    <div class="container-fluid">
+      <select id="langSelect" class="form-select language-selector" onchange="setLanguage(this.value)" style="max-width: 100px;">
+        <option value="ar">العربية</option>
+        <option value="en">English</option>
+      </select>
+
+      <select class="form-select mode-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; margin: 0;">
+        <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
+        <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
+        <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
+        <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
+        <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
+        <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
+        <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
+        <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
+        <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
+        <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
+      </select>
+    </div>
+  </nav>
+
+  <!-- رسالة الترحيب -->
+  <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
+    <p id="welcome-text" data-key="welcome"></p>
+    <button id="close-btn" data-key="closeBtn">إغلاق</button>
+  </div>
+
+  <!-- كود الجافاسكريبت الخاص برسالة الترحيب فقط -->
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    // جلب اسم المستخدم من السيرفر وعرض رسالة الترحيب
+    fetchUserName().then(name => {
+      showWelcomeModal(name);
+    }).catch(err => {
+      console.error('Error fetching user:', err);
+      showWelcomeModal(null);
+    });
+
+    // حدث زر الإغلاق
+    document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
+
+    // تحديث النصوص والألوان بناء على اللغة والمود المحفوظين
+    updateWelcomeModalColors();
+    updateWelcomeModalTexts();
+  });
+
+  // جلب بيانات اليوزر من API
+  async function fetchUserName() {
+      const response = await fetch('http://localhost:3100/auth/user', {
+    credentials: 'include'
+  });
+    if (!response.ok) throw new Error('Failed to fetch user');
+    const data = await response.json();
+    return data.user ? data.user.name : null;
+  }
+
+  // عرض رسالة الترحيب مع اسم المستخدم (أو رسالة عامة لو مفيش اسم)
+  function showWelcomeModal(name) {
+    const modal = document.getElementById('welcome-modal');
+    const welcomeText = document.getElementById('welcome-text');
+    const lang = localStorage.getItem('lang') || 'ar';
+
+    // نصوص الترحيب مع اسم المستخدم (لو موجود)
+    const welcomeMessages = {
+      ar: name ? `🙌 أهلاً بيك يا ${name} في اعرفني` : "🙌 أهلاً بيك في اعرفني",
+      en: name ? `🙌 Welcome, ${name}, to E3rafni` : "🙌 Welcome to E3rafni"
+    };
+
+    welcomeText.textContent = welcomeMessages[lang] || welcomeMessages['ar'];
+    modal.classList.add('show');
+  }
+
+  // إخفاء رسالة الترحيب
+  function hideWelcomeModal() {
+    const modal = document.getElementById('welcome-modal');
+    modal.classList.remove('show');
+  }
+
+  // تحديث النصوص حسب اللغة (زر الإغلاق فقط هنا)
+  function updateWelcomeModalTexts() {
+    const lang = localStorage.getItem('lang') || 'ar';
+    const translations = {
+      ar: { closeBtn: "إغلاق" },
+      en: { closeBtn: "Close" }
+    };
+    document.querySelectorAll('#welcome-modal [data-key]').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if (key === 'welcome') return; // نترك رسالة الترحيب لأنها محدثة في showWelcomeModal
+      el.textContent = translations[lang][key] || el.textContent;
+    });
+  }
+
+  // تحديث ألوان النافذة حسب المود
+  function updateWelcomeModalColors() {
+    const mode = localStorage.getItem('mode') || 'light-gray2';
+    const colorsMap = {
+      "light-gray1": { bg: "#fff", color: "#222" },
+      "light-gray2": { bg: "#fff", color: "#222" },
+      "light-beige": { bg: "#fff9f0", color: "#222" },
+      "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
+      "light-pink": { bg: "#fff0f6", color: "#831843" },
+      "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+      "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
+      "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
+      "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
+      "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
+    };
+    const modal = document.getElementById('welcome-modal');
+    const c = colorsMap[mode] || colorsMap['light-gray2'];
+    modal.style.backgroundColor = c.bg;
+    modal.style.color = c.color;
+  }
+</script>
+
+
+  <!-- ملف الجافاسكريبت الخارجي -->
+  <script src="main.js"></script>
+</body>
+</html>

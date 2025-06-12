@@ -1,0 +1,226 @@
+body {
+  font-family: 'Tajawal', sans-serif;
+  margin: 0;
+  height: auto;
+  text-align: center;
+  transition: background 0.3s, color 0.3s;
+  padding: 0px;
+  cursor: pointer;
+  color: #222;
+}
+.navbar {
+    margin:0 0px;
+}
+.container{
+    padding-top: 150px;
+}
+body {
+  font-family: 'Tajawal', sans-serif;
+}
+
+
+
+/* ألوان الخلفية الخاصة بالناف بار لكل مود */
+#mainNav.light-gray1 { background-color: #e0e2e5 !important; }
+#mainNav.light-gray2 { background-color: #f3f4f6 !important; } 
+#mainNav.light-beige { background-color: #f0ddc6 !important; }
+#mainNav.light-purple { background-color: #d1bcec !important; }
+#mainNav.light-pink { background-color: #fdb6c7 !important; }
+
+#mainNav.dark-gray1 { background-color: #3a3d42 !important; }
+#mainNav.dark-gray2 { background-color: #3f464e !important; }
+#mainNav.dark-blue { background-color: #3e4683 !important; }
+#mainNav.dark-brown { background-color: #5c504c !important; }
+#mainNav.dark-red { background-color: #663434 !important; }
+
+/* لو حابب تضبط لون النص حسب مود الناف بار أكثر: */
+.navbar-light { color: #212529; }
+.navbar-dark { color: #fff; }
+
+/* تحسين التباين للنص في ألوان معينة ممكن تحتاجها */
+#mainNav.dark-brown.navbar-dark { color: #e0c9b7; }
+
+
+/* زر جوجل */
+.google-btn.light {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+.google-btn.dark {
+  background-color: #222;
+  color: #eee;
+  border: 1px solid #444;
+}
+
+
+.google-btn {
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.google-btn.light {
+  background-color: #4285f4; /* أزرق جوجل فاتح */
+}
+
+.google-btn.dark {
+  background-color: #1a73e8; /* أزرق جوجل داكن */
+}
+
+.container {
+  max-width: 600px;
+}
+
+button.google-btn {
+  font-weight: bold;
+  padding: 0.8rem 1.8rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* أوضاع الألوان */
+
+body.light-gray1 {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+body.light-gray1 button.google-btn {
+  background: #2563eb;
+  color: white;
+}
+body.light-gray1 button.google-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 16px rgba(29, 78, 216, 0.7);
+}
+body.light-gray2 {
+  background: #e5e7eb;
+  color: #1e293b;
+}
+body.light-gray2 button.google-btn {
+  background: #3b82f6;
+  color: white;
+}
+body.light-gray2 button.google-btn:hover {
+    background: #2563eb;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.7);
+}
+body.light-beige {
+  background: #fdf6e3;
+  color: #3e3e3e;
+}
+body.light-beige button.google-btn {
+  background: #f59e0b;
+  color: white;
+}
+body.light-beige button.google-btn:hover {
+    background: #805c00;
+    box-shadow: 0 6px 16px rgba(128, 92, 0, 0.7);
+}
+body.light-purple {
+  background: #f3e8ff;
+  color: #4c1d95;
+}
+body.light-purple button.google-btn {
+  background: #8b5cf6;
+  color: white;
+}
+body.light-purple button.google-btn:hover {
+    background: #5b21b6;
+    box-shadow: 0 6px 16px rgba(91, 33, 182, 0.7);
+
+}
+body.light-pink {
+  background: #ffe4e6;
+  color: #831843;
+}
+body.light-pink button.google-btn {
+  background: #ec4899;
+  color: white;
+}
+body.light-pink button.google-btn:hover {
+    background: #be185d;
+    box-shadow: 0 6px 16px rgba(190, 24, 93, 0.7);
+}
+body.dark-gray1 {
+  background: #374151;
+  color: #f9fafb;
+}
+body.dark-gray1 button.google-btn {
+  background: #2563eb;
+  color: white;
+}
+body.dark-gray1 button.google-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 16px rgba(29, 78, 216, 0.7);
+}
+
+body.dark-gray2 {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+body.dark-gray2 button.google-btn {
+  background: #60a5fa;
+  color: white;
+}
+body.dark-gray2 button.google-btn:hover {
+    background: #2563eb;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.7);
+}
+
+body.dark-blue {
+    background: #1e3a8a;
+    color: #cbd5e1;
+}
+body.dark-blue button.google-btn {
+    background: #60a5fa;
+    color: #1e293b;
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.6);
+}
+body.dark-blue button.google-btn:hover {
+    background: #3b82f6;
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.7);
+    color: white;
+}
+
+body.dark-brown {
+  background: #4e342e;
+  color: #fcefe5;
+}
+body.dark-brown button.google-btn {
+  background: #a0522d;
+  color: white;
+}
+body.dark-brown button.google-btn:hover {
+    background: #7b3e1b;
+    box-shadow: 0 6px 16px rgba(123, 62, 27, 0.7);
+}
+
+body.dark-red {
+  background: #7f1d1d;
+  color: #fee2e2;
+}
+body.dark-red button.google-btn {
+  background: #dc2626;
+  color: white;
+}
+body.dark-red button.google-btn:hover {
+    background: #7f1d1d;
+    box-shadow: 0 6px 16px rgba(127, 29, 29, 0.7);
+}
+
+
+
+
+
