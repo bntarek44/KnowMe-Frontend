@@ -220,7 +220,14 @@ body.dark-red button.google-btn:hover {
     box-shadow: 0 6px 16px rgba(127, 29, 29, 0.7);
 }
 
-
+/* Dropdown ثابت */
+/* .mode-select {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
+  width: 300px;
+} */
 
 
 
