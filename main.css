@@ -26,7 +26,7 @@ body {
 }
 @media (max-width: 509.98px) {
   .responsive-select {
-    max-width: 51% !important;
+    max-width: 70% !important;
     margin:  auto 0 ; 
     margin-bottom: 3px;
     
