@@ -73,107 +73,104 @@
     </div>
   </nav>
 
+  <!-- محتوى الصفحة الرئيسي -->
+  <div class="container my-4 text-center">
+    <h1 class="mb-4">👋 أهلاً بك في لوحة التحكم</h1>
+    <p>هنا هيظهر محتوى الداشبورد الخاص بك.</p>
+    <!-- تقدر تضيف هنا مزيد من العناصر -->
+  </div>
+
   <!-- رسالة الترحيب -->
   <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
     <p id="welcome-text" data-key="welcome"></p>
     <button id="close-btn" data-key="closeBtn">إغلاق</button>
   </div>
 
-  <!-- كود الجافاسكريبت الخاص برسالة الترحيب فقط -->
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    // جلب اسم المستخدم من السيرفر وعرض رسالة الترحيب
-    fetchUserName().then(name => {
-      showWelcomeModal(name);
-    }).catch(err => {
-      console.error('Error fetching user:', err);
-      showWelcomeModal(null);
+  <!-- سكريبتات الترحيب -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchUserName().then(name => {
+        showWelcomeModal(name);
+      }).catch(err => {
+        console.error('Error fetching user:', err);
+        showWelcomeModal(null);
+      });
+
+      document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
+
+      updateWelcomeModalColors();
+      updateWelcomeModalTexts();
     });
 
-    // حدث زر الإغلاق
-    document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
-
-    // تحديث النصوص والألوان بناء على اللغة والمود المحفوظين
-    updateWelcomeModalColors();
-    updateWelcomeModalTexts();
-  });
-
-  // جلب بيانات اليوزر من API
-  async function fetchUserName() {
+    async function fetchUserName() {
       const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
-    credentials: 'include'
-  });
-    if (!response.ok) throw new Error('Failed to fetch user');
-    const data = await response.json();
-    return data.user ? data.user.name : null;
-  }
-  // دالة بسيطة ترجع الاسم الأول من الاسم الكامل
-function getFirstName(fullName) {
-  if (!fullName) return null;
-  return fullName.split(' ')[0];
-}
+        credentials: 'include'
+      });
+      if (!response.ok) throw new Error('Failed to fetch user');
+      const data = await response.json();
+      return data.user ? data.user.name : null;
+    }
 
+    function getFirstName(fullName) {
+      if (!fullName) return null;
+      return fullName.split(' ')[0];
+    }
 
-  // عرض رسالة الترحيب مع اسم المستخدم (أو رسالة عامة لو مفيش اسم)
-  function showWelcomeModal(name) {
-    const modal = document.getElementById('welcome-modal');
-    const welcomeText = document.getElementById('welcome-text');
-    const lang = localStorage.getItem('lang') || 'ar';
-    const firstName = getFirstName(name);
-    // نصوص الترحيب مع اسم المستخدم (لو موجود)
-    const welcomeMessages = {
-      ar: name ? `🙌 أهلاً بيك يا ${firstName} في اعرفني` : "🙌 أهلاً بيك في اعرفني",
-      en: name ? `🙌 Welcome, ${firstName}, to E3rafni` : "🙌 Welcome to E3rafni"
-    };
+    function showWelcomeModal(name) {
+      const modal = document.getElementById('welcome-modal');
+      const welcomeText = document.getElementById('welcome-text');
+      const lang = localStorage.getItem('lang') || 'ar';
+      const firstName = getFirstName(name);
+      const welcomeMessages = {
+        ar: name ? `🙌 أهلاً بيك يا ${firstName} في اعرفني` : "🙌 أهلاً بيك في اعرفني",
+        en: name ? `🙌 Welcome, ${firstName}, to E3rafni` : "🙌 Welcome to E3rafni"
+      };
 
-    welcomeText.textContent = welcomeMessages[lang] || welcomeMessages['ar'];
-    modal.classList.add('show');
-  }
+      welcomeText.textContent = welcomeMessages[lang] || welcomeMessages['ar'];
+      modal.classList.add('show');
+    }
 
-  // إخفاء رسالة الترحيب
-  function hideWelcomeModal() {
-    const modal = document.getElementById('welcome-modal');
-    modal.classList.remove('show');
-  }
+    function hideWelcomeModal() {
+      const modal = document.getElementById('welcome-modal');
+      modal.classList.remove('show');
+    }
 
-  // تحديث النصوص حسب اللغة (زر الإغلاق فقط هنا)
-  function updateWelcomeModalTexts() {
-    const lang = localStorage.getItem('lang') || 'ar';
-    const translations = {
-      ar: { closeBtn: "إغلاق" },
-      en: { closeBtn: "Close" }
-    };
-    document.querySelectorAll('#welcome-modal [data-key]').forEach(el => {
-      const key = el.getAttribute('data-key');
-      if (key === 'welcome') return; // نترك رسالة الترحيب لأنها محدثة في showWelcomeModal
-      el.textContent = translations[lang][key] || el.textContent;
-    });
-  }
+    function updateWelcomeModalTexts() {
+      const lang = localStorage.getItem('lang') || 'ar';
+      const translations = {
+        ar: { closeBtn: "إغلاق" },
+        en: { closeBtn: "Close" }
+      };
+      document.querySelectorAll('#welcome-modal [data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (key === 'welcome') return;
+        el.textContent = translations[lang][key] || el.textContent;
+      });
+    }
 
-  // تحديث ألوان النافذة حسب المود
-  function updateWelcomeModalColors() {
-    const mode = localStorage.getItem('mode') || 'light-gray2';
-    const colorsMap = {
-      "light-gray1": { bg: "#fff", color: "#222" },
-      "light-gray2": { bg: "#fff", color: "#222" },
-      "light-beige": { bg: "#fff9f0", color: "#222" },
-      "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
-      "light-pink": { bg: "#fff0f6", color: "#831843" },
-      "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
-      "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
-      "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
-      "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
-      "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
-    };
-    const modal = document.getElementById('welcome-modal');
-    const c = colorsMap[mode] || colorsMap['light-gray2'];
-    modal.style.backgroundColor = c.bg;
-    modal.style.color = c.color;
-  }
-</script>
-
+    function updateWelcomeModalColors() {
+      const mode = localStorage.getItem('mode') || 'light-gray2';
+      const colorsMap = {
+        "light-gray1": { bg: "#fff", color: "#222" },
+        "light-gray2": { bg: "#fff", color: "#222" },
+        "light-beige": { bg: "#fff9f0", color: "#222" },
+        "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
+        "light-pink": { bg: "#fff0f6", color: "#831843" },
+        "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+        "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
+        "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
+        "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
+        "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
+      };
+      const modal = document.getElementById('welcome-modal');
+      const c = colorsMap[mode] || colorsMap['light-gray2'];
+      modal.style.backgroundColor = c.bg;
+      modal.style.color = c.color;
+    }
+  </script>
 
   <!-- ملف الجافاسكريبت الخارجي -->
   <script src="main.js"></script>
 </body>
+
 </html>
