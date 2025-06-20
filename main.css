@@ -21,10 +21,15 @@ body {
 body {
   font-family: 'Tajawal', sans-serif;
 }
+.form-select{
+  margin: 0;
+}
 @media (max-width: 509.98px) {
   .responsive-select {
     max-width: 51% !important;
-    margin: auto; 
+    margin:  auto 0 ; 
+    margin-bottom: 3px;
+    
   }
 }
 
