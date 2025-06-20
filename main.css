@@ -16,11 +16,18 @@ body {
     width: 100%;
 }
 .container{
-    padding-top: 150px;
+    padding-top: 230px;
 }
 body {
   font-family: 'Tajawal', sans-serif;
 }
+@media (max-width: 509.98px) {
+  .responsive-select {
+    max-width: 100% !important;
+    margin: 0 auto; 
+  }
+}
+
 
 
 
