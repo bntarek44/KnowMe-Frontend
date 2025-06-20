@@ -2,13 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>لوحة التحكم - اعرفني</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
-  
+
   <style>
-    /* ستايل رسالة الترحيب */
     #welcome-modal {
       position: fixed;
       top: 50%;
@@ -28,10 +29,12 @@
       visibility: hidden;
       transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
     }
+
     #welcome-modal.show {
       opacity: 1;
       visibility: visible;
     }
+
     #close-btn {
       margin-top: 15px;
       padding: 8px 20px;
@@ -43,6 +46,7 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
+
     #close-btn:hover {
       background-color: #333;
     }
@@ -51,33 +55,33 @@
 <body>
 
   <!-- الناف بار -->
-  <nav id="mainNav" class="navbar navbar-expand-lg bg-body-tertiary p-2">
+<nav id="mainNav" class="navbar navbar-expand-lg  p-2">
     <div class="container-fluid">
-      <select id="langSelect" class="form-select language-selector" onchange="setLanguage(this.value)" style="max-width: 100px;">
-        <option value="ar">العربية</option>
-        <option value="en">English</option>
-      </select>
+        <select id="langSelect" class="form-select language-selector" onchange="setLanguage(this.value)" style="max-width: 100px;">
+            <option value="ar" data-key="ar">العربية</option>
+            <option value="en" data-key="en">English</option>
+        </select>
 
-      <select class="form-select mode-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; margin: 0;">
-        <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
-        <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
-        <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
-        <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
-        <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
-        <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
-        <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
-        <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
-        <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
-        <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
-      </select>
+        <select class="form-select mode-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; margin: 0;">
+            <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
+            <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
+            <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
+            <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
+            <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
+            <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
+            <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
+            <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
+            <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
+            <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
+        </select>
     </div>
-  </nav>
+</nav>
 
-  <!-- محتوى الصفحة الرئيسي -->
-  <div class="container my-4 text-center">
-    <h1 class="mb-4">👋 أهلاً بك في لوحة التحكم</h1>
-    <p>هنا هيظهر محتوى الداشبورد الخاص بك.</p>
-    <!-- تقدر تضيف هنا مزيد من العناصر -->
+  <!-- المحتوى -->
+  <div class="container text-center my-4">
+    <h1 class="mb-3" data-key="welcome-dashboard">👋 أهلاً بك في لوحة التحكم</h1>
+    <p class="mb-4" data-key="dashboard-desc">هنا هيظهر محتوى الداشبورد الخاص بك</p>
+    <button class="google-btn light" onclick="logout()">تسجيل الخروج</button>
   </div>
 
   <!-- رسالة الترحيب -->
@@ -86,7 +90,7 @@
     <button id="close-btn" data-key="closeBtn">إغلاق</button>
   </div>
 
-  <!-- سكريبتات الترحيب -->
+  <!-- سكريبتات -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       fetchUserName().then(name => {
@@ -97,7 +101,6 @@
       });
 
       document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
-
       updateWelcomeModalColors();
       updateWelcomeModalTexts();
     });
@@ -125,14 +128,12 @@
         ar: name ? `🙌 أهلاً بيك يا ${firstName} في اعرفني` : "🙌 أهلاً بيك في اعرفني",
         en: name ? `🙌 Welcome, ${firstName}, to E3rafni` : "🙌 Welcome to E3rafni"
       };
-
       welcomeText.textContent = welcomeMessages[lang] || welcomeMessages['ar'];
       modal.classList.add('show');
     }
 
     function hideWelcomeModal() {
-      const modal = document.getElementById('welcome-modal');
-      modal.classList.remove('show');
+      document.getElementById('welcome-modal').classList.remove('show');
     }
 
     function updateWelcomeModalTexts() {
@@ -167,10 +168,14 @@
       modal.style.backgroundColor = c.bg;
       modal.style.color = c.color;
     }
+
+    function logout() {
+      // لو عندك زر تسجيل خروج حقيقي، حط الرابط هنا
+      window.location.href = "https://knowme-backend-production.up.railway.app/auth/logout";
+    }
   </script>
 
   <!-- ملف الجافاسكريبت الخارجي -->
   <script src="main.js"></script>
 </body>
-
 </html>
