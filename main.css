@@ -23,8 +23,8 @@ body {
 }
 @media (max-width: 509.98px) {
   .responsive-select {
-    max-width: 100% !important;
-    margin: 0 auto; 
+    max-width: 51% !important;
+    margin: auto; 
   }
 }
 
