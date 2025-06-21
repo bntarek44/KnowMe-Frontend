@@ -118,19 +118,21 @@
       if (!fullName) return null;
       return fullName.split(' ')[0];
     }
-
-    function showWelcomeModal(name) {
+      function showWelcomeModal(name) {
       const modal = document.getElementById('welcome-modal');
       const welcomeText = document.getElementById('welcome-text');
       const lang = localStorage.getItem('lang') || 'ar';
       const firstName = getFirstName(name);
       const welcomeMessages = {
-        ar: name ? `🙌 أهلاً بيك يا ${firstName} في اعرفني` : "🙌 أهلاً بيك في اعرفني",
-        en: name ? `🙌 Welcome, ${firstName}, to E3rafni` : "🙌 Welcome to E3rafni"
+        ar: name ? `أهلاً بيك يا <strong><em>${firstName}</em></strong>🙌في اعرفني` : "🙌 أهلاً بيك في اعرفني",
+        en: name ? `Welcome,<strong><em>${firstName}</em></strong>,🙌to E3rafni ` : "Welcome to E3rafni 🙌"
       };
-      welcomeText.textContent = welcomeMessages[lang] || welcomeMessages['ar'];
+      welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
+      document.getElementById('welcome-text').style.fontSize = '1.5rem';
       modal.classList.add('show');
+
     }
+
 
     function hideWelcomeModal() {
       document.getElementById('welcome-modal').classList.remove('show');
