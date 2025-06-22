@@ -8,50 +8,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="dashboard.css" />
 
-  <style>
-    #welcome-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      padding: 20px 30px;
-      text-align: center;
-      z-index: 10000;
-      min-width: 300px;
-      max-width: 90%;
-      user-select: none;
-      background-color: var(--modal-bg, white);
-      color: var(--modal-color, #222);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
-    }
 
-    #welcome-modal.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    #close-btn {
-      margin-top: 15px;
-      padding: 8px 20px;
-      border: none;
-      border-radius: 30px;
-      background-color: #555;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    #close-btn:hover {
-      background-color: #333;
-    }
-  </style>
-</head>
+ 
 <body>
 
   <!-- الناف بار -->
@@ -78,12 +38,129 @@
 </nav>
 
   <!-- المحتوى -->
-  <div class="container text-center my-4">
-    <h1 class="mb-3" data-key="welcome-dashboard">👋 أهلاً بك في لوحة التحكم</h1>
-    <p class="mb-4" data-key="dashboard-desc">هنا هيظهر محتوى الداشبورد الخاص بك</p>
-    <button class="google-btn light" onclick="logout()">تسجيل الخروج</button>
-  </div>
 
+<div class="content">
+  <div class="mainDev">
+    <h2 class="text-center mb-5 fw-bold dashHeader" data-key="headline">
+     جاوب عن نفسكز..محدش هيستخبي..ويلا نكشف الغشاشين الل بيقولوا يعرفوك!
+    </h2>
+
+    <form id="self-quiz-form" class="mx-auto" >
+
+      <!-- الأسئلة -->
+      <div class="mb-3">
+        <label class="form-label" data-key="q1">إيه أكتر أكلة بتحبها؟</label>
+        <select class="form-select" name="favFood">
+          <option data-key="q1o1">مكرونة</option>
+          <option data-key="q1o2">بيتزا</option>
+          <option data-key="q1o3">كشري</option>
+          <option data-key="q1o4">برجر</option>
+          <option data-key="q1o5">غير كده</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q2">إيه لونك المفضل؟</label>
+        <select class="form-select" name="favColor">
+          <option data-key="q2o1">أزرق</option>
+          <option data-key="q2o2">أحمر</option>
+          <option data-key="q2o3">أسود</option>
+          <option data-key="q2o4">أخضر</option>
+          <option data-key="q2o5">أصفر</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q3">إمتى تحب تقضي وقتك؟</label>
+        <select class="form-select" name="favTime">
+          <option data-key="q3o1">الصبح</option>
+          <option data-key="q3o2">الظهر</option>
+          <option data-key="q3o3">بالليل</option>
+          <option data-key="q3o4">مفيش وقت محدد</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q4">إيه نوع الأفلام اللي تحب تتفرج عليها؟</label>
+        <select class="form-select" name="favGenre">
+          <option data-key="q4o1">أكشن</option>
+          <option data-key="q4o2">كوميدي</option>
+          <option data-key="q4o3">رعب</option>
+          <option data-key="q4o4">دراما</option>
+          <option data-key="q4o5">خيال علمي</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q5">لو عندك إجازة، تحب تعمل إيه؟</label>
+        <select class="form-select" name="dayOff">
+          <option data-key="q5o1">أنام</option>
+          <option data-key="q5o2">أخرج مع أصحابي</option>
+          <option data-key="q5o3">أتفرج على أفلام</option>
+          <option data-key="q5o4">أقرأ أو أتعلم حاجة</option>
+          <option data-key="q5o5">ألعب جيمز</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q6">إيه أكتر مشروب بتحبه؟</label>
+        <select class="form-select" name="favDrink">
+          <option data-key="q6o1">شاي</option>
+          <option data-key="q6o2">قهوة</option>
+          <option data-key="q6o3">عصير</option>
+          <option data-key="q6o4">مياه غازية</option>
+          <option data-key="q6o5">مية</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q7">إيه أكتر مادة كنت بتحبها في المدرسة؟</label>
+        <select class="form-select" name="favSubject">
+          <option data-key="q7o1">رياضيات</option>
+          <option data-key="q7o2">عربي</option>
+          <option data-key="q7o3">علوم</option>
+          <option data-key="q7o4">إنجليزي</option>
+          <option data-key="q7o5">تربية فنية</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q8">إنت شخص صباحي ولا ليلي؟</label>
+        <select class="form-select" name="dayOrNight">
+          <option data-key="q8o1">صباحي</option>
+          <option data-key="q8o2">ليلي</option>
+          <option data-key="q8o3">حسب المزاج</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" data-key="q9">إيه أكتر حاجة بتخاف منها؟</label>
+        <select class="form-select" name="fear">
+          <option data-key="q9o1">الحشرات</option>
+          <option data-key="q9o2">المرتفعات</option>
+          <option data-key="q9o3">الظلمة</option>
+          <option data-key="q9o4">الأماكن الضيقة</option>
+          <option data-key="q9o5">ولا حاجة</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" data-key="q10">لو ربحت مليون جنيه، أول حاجة هتعملها؟</label>
+        <select class="form-select" name="million">
+          <option data-key="q10o1">أشتري عربية</option>
+          <option data-key="q10o2">أعمل مشروع</option>
+          <option data-key="q10o3">أتبرع بجزء</option>
+          <option data-key="q10o4">أسافر</option>
+          <option data-key="q10o5">أوفرهم</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" data-key="submit">
+        احفظ إجاباتك وابدأ التحدي
+      </button>
+    </form>
+  </div>
+</div>
   <!-- رسالة الترحيب -->
   <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
     <p id="welcome-text" data-key="welcome"></p>
@@ -91,93 +168,10 @@
   </div>
 
   <!-- سكريبتات -->
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      fetchUserName().then(name => {
-        showWelcomeModal(name);
-      }).catch(err => {
-        console.error('Error fetching user:', err);
-        showWelcomeModal(null);
-      });
 
-      document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
-      updateWelcomeModalColors();
-      updateWelcomeModalTexts();
-    });
-
-    async function fetchUserName() {
-      const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
-        credentials: 'include'
-      });
-      if (!response.ok) throw new Error('Failed to fetch user');
-      const data = await response.json();
-      return data.user ? data.user.name : null;
-    }
-
-    function getFirstName(fullName) {
-      if (!fullName) return null;
-      return fullName.split(' ')[0];
-    }
-      function showWelcomeModal(name) {
-      const modal = document.getElementById('welcome-modal');
-      const welcomeText = document.getElementById('welcome-text');
-      const lang = localStorage.getItem('lang') || 'ar';
-      const firstName = getFirstName(name);
-      const welcomeMessages = {
-        ar: name ? `أهلاً بيك يا <strong><em>${firstName}</em></strong>🙌في اعرفني` : "🙌 أهلاً بيك في اعرفني",
-        en: name ? `Welcome,<strong><em>${firstName}</em></strong>,🙌to E3rafni ` : "Welcome to E3rafni 🙌"
-      };
-      welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
-      document.getElementById('welcome-text').style.fontSize = '1.5rem';
-      modal.classList.add('show');
-
-    }
-
-
-    function hideWelcomeModal() {
-      document.getElementById('welcome-modal').classList.remove('show');
-    }
-
-    function updateWelcomeModalTexts() {
-      const lang = localStorage.getItem('lang') || 'ar';
-      const translations = {
-        ar: { closeBtn: "إغلاق" },
-        en: { closeBtn: "Close" }
-      };
-      document.querySelectorAll('#welcome-modal [data-key]').forEach(el => {
-        const key = el.getAttribute('data-key');
-        if (key === 'welcome') return;
-        el.textContent = translations[lang][key] || el.textContent;
-      });
-    }
-
-    function updateWelcomeModalColors() {
-      const mode = localStorage.getItem('mode') || 'light-gray2';
-      const colorsMap = {
-        "light-gray1": { bg: "#fff", color: "#222" },
-        "light-gray2": { bg: "#fff", color: "#222" },
-        "light-beige": { bg: "#fff9f0", color: "#222" },
-        "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
-        "light-pink": { bg: "#fff0f6", color: "#831843" },
-        "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
-        "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
-        "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
-        "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
-        "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
-      };
-      const modal = document.getElementById('welcome-modal');
-      const c = colorsMap[mode] || colorsMap['light-gray2'];
-      modal.style.backgroundColor = c.bg;
-      modal.style.color = c.color;
-    }
-
-    function logout() {
-      // لو عندك زر تسجيل خروج حقيقي، حط الرابط هنا
-      window.location.href = "https://knowme-backend-production.up.railway.app/auth/logout";
-    }
-  </script>
 
   <!-- ملف الجافاسكريبت الخارجي -->
   <script src="main.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>

@@ -69,6 +69,15 @@ function changeMode(value) {
       btn.classList.add('light');
     }
   }
+    const dashHeader = document.querySelector('.dashHeader');
+  if (dashHeader) {
+    
+    if (value.startsWith('dark')) {
+      dashHeader.style.color = '#fff';
+    } else {
+      dashHeader.style.color = '#000';
+    }
+  }
 
   // قائمة اللغة
   const langSelect = document.getElementById("langSelect");
@@ -107,8 +116,16 @@ function setLanguage(lang) {
   // تحديث النصوص
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
+     const translation = dashTranslations[lang]?.[key];
     if (translations[lang] && translations[lang][key]) {
       el.textContent = translations[lang][key];
+    }
+    if (translation) {
+      if (el.tagName === "OPTION") {
+        el.innerText = translation;
+      } else {
+        el.textContent = translation;
+      }
     }
   });
 
