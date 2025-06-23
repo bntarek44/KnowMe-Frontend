@@ -329,7 +329,7 @@ function updateWelcomeModalColors() {
 }
 // بيستقبل بيانات من الباك اند
 async function fetchUserName() {
-    const response = await fetch('http://localhost:3100/auth/user', {
+    const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
     credentials: 'include'
     });
     if (!response.ok) throw new Error('Failed to fetch user');
