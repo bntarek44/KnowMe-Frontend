@@ -3,46 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تسجيل الدخول - اعرفني</title>
+  <title>لوحة التحكم - اعرفني</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
-   <link rel="stylesheet" href="dashboard.css" />
-</head>
+
+ 
 <body>
-  <!-- test -->
-  
-<nav id="mainNav" class="navbar navbar-expand-lg  p-2">
-    <div class="container-fluid">
-        <select id="langSelect" class="form-select language-selector responsive-select" onchange="setLanguage(this.value)" style="max-width: 100px; ">
-            <option value="ar" data-key="ar">العربية</option>
-            <option value="en" data-key="en">English</option>
-        </select>
-        <select class="form-select mode-select responsive-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; ">
-            <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
-            <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
-            <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
-            <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
-            <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
-            <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
-            <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
-            <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
-            <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
-            <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
-        </select>
-    </div>
-</nav>
 
-<div class="container text-center">
-  <h1 class="mb-3" data-key="welcome">🙌 أهلاً بيك في اعرفني</h1>
-  <p class="mb-4" data-key="desc">سجّل دخول بجوجل، جاوب على شوية أسئلة، وشوف صحابك يعرفوك قد إيه! 🤔</p>
-  <button class="google-btn light" data-key="login" onclick="window.location.href='https://knowme-backend-production.up.railway.app/auth/google'">
-    سجّل دخول بجوجل
-  </button>
-</div>
+  <!-- الناف بار -->
+  <nav id="mainNav" class="navbar navbar-expand-lg  p-2">
+      <div class="container-fluid">
+          <select id="langSelect" class="form-select language-selector responsive-select" onchange="setLanguage(this.value)" style="max-width: 100px; ">
+              <option value="ar" data-key="ar">العربية</option>
+              <option value="en" data-key="en">English</option>
+          </select>
 
-<script src="main.js"></script>
- <script src="dashboard.js"></script>
+          <select class="form-select mode-select responsive-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; ">
+              <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
+              <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
+              <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
+              <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
+              <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
+              <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
+              <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
+              <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
+              <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
+              <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
+          </select>
+      </div>
+  </nav>
+
+  <div class="container text-center">
+    <h1 class="mb-3" data-key="welcome">🙌 أهلاً بيك في اعرفني</h1>
+    <p class="mb-4" data-key="desc">سجّل دخول بجوجل، جاوب على شوية أسئلة، وشوف صحابك يعرفوك قد إيه! 🤔</p>
+    <button class="google-btn light" data-key="login" onclick="window.location.href='http://localhost:3100/auth/google'">
+      سجّل دخول بجوجل
+    </button>
+  </div>
+
+
+  <!-- سكريبتات -->
+
+
+  <!-- ملف الجافاسكريبت الخارجي -->
+  <script src="main.js"></script>
 </body>
 </html>

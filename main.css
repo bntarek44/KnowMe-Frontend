@@ -27,7 +27,7 @@ body {
 @media (max-width: 509.98px) {
   .responsive-select {
     max-width: 70% !important;
-    margin:  auto 0 ; 
+    margin:  auto -10px ; 
     margin-bottom: 3px;
     
   }
@@ -236,14 +236,88 @@ body.dark-red button.google-btn:hover {
     box-shadow: 0 6px 16px rgba(127, 29, 29, 0.7);
 }
 
-/* Dropdown ثابت */
-/* .mode-select {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 999;
-  width: 300px;
-} */
+/* صفحة الداشبورد */
+.content{
+  padding-top: 70px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+@media (max-width: 509.98px) {
+  .content {
+    margin-top: 25px;
+    
+  }
+}
 
+    .mainDev{
+        width: 70%;
+    
+    }
+    .form-label {
+      font-weight: 600;
+    }
+    .form-select {
+      text-align: right;
+    }
+    .btn-primary {
+      font-weight: bold;
+    }
+    h2 {
+      color: #333;
+    }
+  /* الوضع الافتراضي: عربي */
+  select, option {
+    text-align: right;
+    direction: rtl;
+  }
+
+  /* لو اللغة إنجليزي */
+  body.lang-en select,
+  body.lang-en option {
+    text-align: left;
+    direction: ltr;
+  }
+   #welcome-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      padding: 20px 30px;
+      text-align: center;
+      z-index: 10000;
+      min-width: 300px;
+      max-width: 90%;
+      user-select: none;
+      background-color: var(--modal-bg, white);
+      color: var(--modal-color, #222);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+    }
+
+    #welcome-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #close-btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      border: none;
+      border-radius: 30px;
+      background-color: #555;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #close-btn:hover {
+      background-color: #333;
+    }
 
 

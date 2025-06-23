@@ -8,159 +8,163 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
-  <link rel="stylesheet" href="dashboard.css" />
-
+ 
+  <style>
+     body {
+      padding-top: 30px;
+    }
+  </style>
 
  
 <body>
 
   <!-- الناف بار -->
-<nav id="mainNav" class="navbar navbar-expand-lg  p-2">
-    <div class="container-fluid">
-        <select id="langSelect" class="form-select language-selector responsive-select" onchange="setLanguage(this.value)" style="max-width: 100px; ">
-            <option value="ar" data-key="ar">العربية</option>
-            <option value="en" data-key="en">English</option>
-        </select>
+  <nav id="mainNav" class="navbar navbar-expand-lg  p-2">
+      <div class="container-fluid">
+          <select id="langSelect" class="form-select language-selector responsive-select" onchange="setLanguage(this.value)" style="max-width: 100px; ">
+              <option value="ar" data-key="ar">العربية</option>
+              <option value="en" data-key="en">English</option>
+          </select>
 
-        <select class="form-select mode-select responsive-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; ">
-            <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
-            <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
-            <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
-            <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
-            <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
-            <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
-            <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
-            <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
-            <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
-            <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
-        </select>
-    </div>
-</nav>
+          <select class="form-select mode-select responsive-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; ">
+              <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
+              <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
+              <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
+              <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
+              <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
+              <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
+              <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
+              <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
+              <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
+              <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
+          </select>
+      </div>
+  </nav>
 
   <!-- المحتوى -->
 
-<div class="content">
-  <div class="mainDev">
-    <h2 class="text-center mb-5 fw-bold dashHeader" data-key="headline">
-     جاوب عن نفسكز..محدش هيستخبي..ويلا نكشف الغشاشين الل بيقولوا يعرفوك!
-    </h2>
+  <div class="content">
+    <div class="mainDev">
+      <h2 class="text-center mb-5 fw-bold dashHeader" data-key="headline">
+      جاوب عن نفسكز..محدش هيستخبي..ويلا نكشف الغشاشين الل بيقولوا يعرفوك!
+      </h2>
 
-    <form id="self-quiz-form" class="mx-auto" >
+      <form id="self-quiz-form" class="mx-auto" >
 
-      <!-- الأسئلة -->
-      <div class="mb-3">
-        <label class="form-label" data-key="q1">إيه أكتر أكلة بتحبها؟</label>
-        <select class="form-select" name="favFood">
-          <option data-key="q1o1">مكرونة</option>
-          <option data-key="q1o2">بيتزا</option>
-          <option data-key="q1o3">كشري</option>
-          <option data-key="q1o4">برجر</option>
-          <option data-key="q1o5">غير كده</option>
-        </select>
-      </div>
+        <!-- الأسئلة -->
+        <div class="mb-3">
+          <label class="form-label" data-key="q1">إيه أكتر أكلة بتحبها؟</label>
+          <select class="form-select" name="favFood">
+            <option data-key="q1o1">مكرونة</option>
+            <option data-key="q1o2">بيتزا</option>
+            <option data-key="q1o3">كشري</option>
+            <option data-key="q1o4">برجر</option>
+            <option data-key="q1o5">غير كده</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q2">إيه لونك المفضل؟</label>
-        <select class="form-select" name="favColor">
-          <option data-key="q2o1">أزرق</option>
-          <option data-key="q2o2">أحمر</option>
-          <option data-key="q2o3">أسود</option>
-          <option data-key="q2o4">أخضر</option>
-          <option data-key="q2o5">أصفر</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q2">إيه لونك المفضل؟</label>
+          <select class="form-select" name="favColor">
+            <option data-key="q2o1">أزرق</option>
+            <option data-key="q2o2">أحمر</option>
+            <option data-key="q2o3">أسود</option>
+            <option data-key="q2o4">أخضر</option>
+            <option data-key="q2o5">أصفر</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q3">إمتى تحب تقضي وقتك؟</label>
-        <select class="form-select" name="favTime">
-          <option data-key="q3o1">الصبح</option>
-          <option data-key="q3o2">الظهر</option>
-          <option data-key="q3o3">بالليل</option>
-          <option data-key="q3o4">مفيش وقت محدد</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q3">إمتى تحب تقضي وقتك؟</label>
+          <select class="form-select" name="favTime">
+            <option data-key="q3o1">الصبح</option>
+            <option data-key="q3o2">الظهر</option>
+            <option data-key="q3o3">بالليل</option>
+            <option data-key="q3o4">مفيش وقت محدد</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q4">إيه نوع الأفلام اللي تحب تتفرج عليها؟</label>
-        <select class="form-select" name="favGenre">
-          <option data-key="q4o1">أكشن</option>
-          <option data-key="q4o2">كوميدي</option>
-          <option data-key="q4o3">رعب</option>
-          <option data-key="q4o4">دراما</option>
-          <option data-key="q4o5">خيال علمي</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q4">إيه نوع الأفلام اللي تحب تتفرج عليها؟</label>
+          <select class="form-select" name="favGenre">
+            <option data-key="q4o1">أكشن</option>
+            <option data-key="q4o2">كوميدي</option>
+            <option data-key="q4o3">رعب</option>
+            <option data-key="q4o4">دراما</option>
+            <option data-key="q4o5">خيال علمي</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q5">لو عندك إجازة، تحب تعمل إيه؟</label>
-        <select class="form-select" name="dayOff">
-          <option data-key="q5o1">أنام</option>
-          <option data-key="q5o2">أخرج مع أصحابي</option>
-          <option data-key="q5o3">أتفرج على أفلام</option>
-          <option data-key="q5o4">أقرأ أو أتعلم حاجة</option>
-          <option data-key="q5o5">ألعب جيمز</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q5">لو عندك إجازة، تحب تعمل إيه؟</label>
+          <select class="form-select" name="dayOff">
+            <option data-key="q5o1">أنام</option>
+            <option data-key="q5o2">أخرج مع أصحابي</option>
+            <option data-key="q5o3">أتفرج على أفلام</option>
+            <option data-key="q5o4">أقرأ أو أتعلم حاجة</option>
+            <option data-key="q5o5">ألعب جيمز</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q6">إيه أكتر مشروب بتحبه؟</label>
-        <select class="form-select" name="favDrink">
-          <option data-key="q6o1">شاي</option>
-          <option data-key="q6o2">قهوة</option>
-          <option data-key="q6o3">عصير</option>
-          <option data-key="q6o4">مياه غازية</option>
-          <option data-key="q6o5">مية</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q6">إيه أكتر مشروب بتحبه؟</label>
+          <select class="form-select" name="favDrink">
+            <option data-key="q6o1">شاي</option>
+            <option data-key="q6o2">قهوة</option>
+            <option data-key="q6o3">عصير</option>
+            <option data-key="q6o4">مياه غازية</option>
+            <option data-key="q6o5">مية</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q7">إيه أكتر مادة كنت بتحبها في المدرسة؟</label>
-        <select class="form-select" name="favSubject">
-          <option data-key="q7o1">رياضيات</option>
-          <option data-key="q7o2">عربي</option>
-          <option data-key="q7o3">علوم</option>
-          <option data-key="q7o4">إنجليزي</option>
-          <option data-key="q7o5">تربية فنية</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q7">إيه أكتر مادة كنت بتحبها في المدرسة؟</label>
+          <select class="form-select" name="favSubject">
+            <option data-key="q7o1">رياضيات</option>
+            <option data-key="q7o2">عربي</option>
+            <option data-key="q7o3">علوم</option>
+            <option data-key="q7o4">إنجليزي</option>
+            <option data-key="q7o5">تربية فنية</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q8">إنت شخص صباحي ولا ليلي؟</label>
-        <select class="form-select" name="dayOrNight">
-          <option data-key="q8o1">صباحي</option>
-          <option data-key="q8o2">ليلي</option>
-          <option data-key="q8o3">حسب المزاج</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q8">إنت شخص صباحي ولا ليلي؟</label>
+          <select class="form-select" name="dayOrNight">
+            <option data-key="q8o1">صباحي</option>
+            <option data-key="q8o2">ليلي</option>
+            <option data-key="q8o3">حسب المزاج</option>
+          </select>
+        </div>
 
-      <div class="mb-3">
-        <label class="form-label" data-key="q9">إيه أكتر حاجة بتخاف منها؟</label>
-        <select class="form-select" name="fear">
-          <option data-key="q9o1">الحشرات</option>
-          <option data-key="q9o2">المرتفعات</option>
-          <option data-key="q9o3">الظلمة</option>
-          <option data-key="q9o4">الأماكن الضيقة</option>
-          <option data-key="q9o5">ولا حاجة</option>
-        </select>
-      </div>
+        <div class="mb-3">
+          <label class="form-label" data-key="q9">إيه أكتر حاجة بتخاف منها؟</label>
+          <select class="form-select" name="fear">
+            <option data-key="q9o1">الحشرات</option>
+            <option data-key="q9o2">المرتفعات</option>
+            <option data-key="q9o3">الظلمة</option>
+            <option data-key="q9o4">الأماكن الضيقة</option>
+            <option data-key="q9o5">ولا حاجة</option>
+          </select>
+        </div>
 
-      <div class="mb-4">
-        <label class="form-label" data-key="q10">لو ربحت مليون جنيه، أول حاجة هتعملها؟</label>
-        <select class="form-select" name="million">
-          <option data-key="q10o1">أشتري عربية</option>
-          <option data-key="q10o2">أعمل مشروع</option>
-          <option data-key="q10o3">أتبرع بجزء</option>
-          <option data-key="q10o4">أسافر</option>
-          <option data-key="q10o5">أوفرهم</option>
-        </select>
-      </div>
+        <div class="mb-4">
+          <label class="form-label" data-key="q10">لو ربحت مليون جنيه، أول حاجة هتعملها؟</label>
+          <select class="form-select" name="million">
+            <option data-key="q10o1">أشتري عربية</option>
+            <option data-key="q10o2">أعمل مشروع</option>
+            <option data-key="q10o3">أتبرع بجزء</option>
+            <option data-key="q10o4">أسافر</option>
+            <option data-key="q10o5">أوفرهم</option>
+          </select>
+        </div>
 
-      <button type="submit" class="btn btn-primary w-100" data-key="submit">
-        احفظ إجاباتك وابدأ التحدي
-      </button>
-    </form>
+        <button type="submit" class="btn btn-primary w-100" data-key="submit">
+          احفظ إجاباتك وابدأ التحدي
+        </button>
+      </form>
+    </div>
   </div>
-</div>
   <!-- رسالة الترحيب -->
   <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
     <p id="welcome-text" data-key="welcome"></p>
@@ -172,6 +176,5 @@
 
   <!-- ملف الجافاسكريبت الخارجي -->
   <script src="main.js"></script>
-  <script src="dashboard.js"></script>
 </body>
 </html>
