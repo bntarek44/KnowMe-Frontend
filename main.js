@@ -18,64 +18,10 @@ const translations = {
     darkBlue: "داكن - أزرق داكن",
     darkBrown: "داكن - بني غامق",
     darkRed: "داكن - أحمر غامق",
-     headline: "جاوب عن نفسك… محدش هيستخبى! 😂يلا نكشف الغشاشين اللي بيقولوا يعرفوك! 🤣",
-    q1: "إيه أكتر أكلة بتحبها؟",
-    q1o1: "مكرونة",
-    q1o2: "بيتزا",
-    q1o3: "كشري",
-    q1o4: "برجر",
-    q1o5: "غير كده",
-    q2: "إيه لونك المفضل؟",
-    q2o1: "أزرق",
-    q2o2: "أحمر",
-    q2o3: "أسود",
-    q2o4: "أخضر",
-    q2o5: "أصفر",
-    q3: "إمتى تحب تقضي وقتك؟",
-    q3o1: "الصبح",
-    q3o2: "الظهر",
-    q3o3: "بالليل",
-    q3o4: "مفيش وقت محدد",
-    q4: "إيه نوع الأفلام اللي تحب تتفرج عليها؟",
-    q4o1: "أكشن",
-    q4o2: "كوميدي",
-    q4o3: "رعب",
-    q4o4: "دراما",
-    q4o5: "خيال علمي",
-    q5: "لو عندك إجازة، تحب تعمل إيه؟",
-    q5o1: "أنام",
-    q5o2: "أخرج مع أصحابي",
-    q5o3: "أتفرج على أفلام",
-    q5o4: "أقرأ أو أتعلم حاجة",
-    q5o5: "ألعب جيمز",
-    q6: "إيه أكتر مشروب بتحبه؟",
-    q6o1: "شاي",
-    q6o2: "قهوة",
-    q6o3: "عصير",
-    q6o4: "مياه غازية",
-    q6o5: "مية",
-    q7: "إيه أكتر مادة كنت بتحبها في المدرسة؟",
-    q7o1: "رياضيات",
-    q7o2: "عربي",
-    q7o3: "علوم",
-    q7o4: "إنجليزي",
-    q7o5: "تربية فنية",
-    q8: "إنت شخص صباحي ولا ليلي؟",
-    q8o1: "صباحي",
-    q8o2: "ليلي",
-    q8o3: "حسب المزاج",
-    q9: "إيه أكتر حاجة بتخاف منها؟",
-    q9o1: "الحشرات",
-    q9o2: "المرتفعات",
-    q9o3: "الظلمة",
-    q9o4: "الأماكن الضيقة",
-    q9o5: "ولا حاجة",
-    q10: "لو ربحت مليون جنيه، أول حاجة هتعملها؟",
-    q10o1: "أشتري عربية",
-    q10o2: "أعمل مشروع",
-    q10o3: "أتبرع بجزء",
-    q10o4: "أسافر",
-    q10o5: "أوفرهم",
+    headline: "جاوب عن نفسك… محدش هيستخبى! 😂يلا نكشف الغشاشين اللي بيقولوا يعرفوك! 🤣",
+    q01: "١. بتفضل الصيف ولا الشتا؟",
+    summer: "الصيف",
+    winter: "الشتا",
     submit: "احفظ إجاباتك وابدأ التحدي",
     closeBtn: "إغلاق",
   },
@@ -93,64 +39,10 @@ const translations = {
     darkBlue: "Dark - Blue",
     darkBrown: "Dark - Brown",
     darkRed: "Dark - Red",
-     headline: "Answer about yourself… no hiding!😂 Let’s expose those fake friends who think they know you! 🤣",
-    q1: "What's your favorite food?",
-    q1o1: "Pasta",
-    q1o2: "Pizza",
-    q1o3: "Koshary",
-    q1o4: "Burger",
-    q1o5: "Other",
-    q2: "What's your favorite color?",
-    q2o1: "Blue",
-    q2o2: "Red",
-    q2o3: "Black",
-    q2o4: "Green",
-    q2o5: "Yellow",
-    q3: "When do you enjoy your time the most?",
-    q3o1: "Morning",
-    q3o2: "Afternoon",
-    q3o3: "Night",
-    q3o4: "Anytime",
-    q4: "What kind of movies do you like?",
-    q4o1: "Action",
-    q4o2: "Comedy",
-    q4o3: "Horror",
-    q4o4: "Drama",
-    q4o5: "Sci-Fi",
-    q5: "What would you do on a day off?",
-    q5o1: "Sleep",
-    q5o2: "Hang out with friends",
-    q5o3: "Watch movies",
-    q5o4: "Read or learn something",
-    q5o5: "Play games",
-    q6: "What's your favorite drink?",
-    q6o1: "Tea",
-    q6o2: "Coffee",
-    q6o3: "Juice",
-    q6o4: "Soda",
-    q6o5: "Water",
-    q7: "What was your favorite school subject?",
-    q7o1: "Math",
-    q7o2: "Arabic",
-    q7o3: "Science",
-    q7o4: "English",
-    q7o5: "Art",
-    q8: "Are you a morning or night person?",
-    q8o1: "Morning",
-    q8o2: "Night",
-    q8o3: "Depends",
-    q9: "What do you fear the most?",
-    q9o1: "Insects",
-    q9o2: "Heights",
-    q9o3: "Darkness",
-    q9o4: "Tight spaces",
-    q9o5: "Nothing",
-    q10: "If you win a million pounds, what would you do first?",
-    q10o1: "Buy a car",
-    q10o2: "Start a business",
-    q10o3: "Donate some",
-    q10o4: "Travel",
-    q10o5: "Save them",
+    headline: "Answer about yourself… no hiding!😂 Let’s expose those fake friends who think they know you! 🤣",
+    q01: "1. Do you prefer summer or winter?",
+    summer : "Summer",
+    winter : "Winter",
     submit: "Save Answers & Start the Challenge",
     closeBtn: "Close",
   }
@@ -209,6 +101,7 @@ function changeMode(value) {
       dashHeader.style.color = '#000';
     }
   }
+
 
   // قائمة اللغة
   const langSelect = document.getElementById("langSelect");
