@@ -418,7 +418,7 @@ body.light-pink input[type="radio"]:checked + label.custom-btn {
 /* dark mode */
 body.dark-gray1 .custom-btn {
   background: transparent;
-  color: #4973e9;
+  color: white;
   border: #2563eb 1px solid;
 }
 body.dark-gray1 .custom-btn:hover {
@@ -434,7 +434,7 @@ body.dark-gray1 input[type="radio"]:checked + label.custom-btn {
 
 body.dark-gray2 .custom-btn {
   background: transparent;
-  color: #2563eb;
+  color: white;
   border: #2563eb 1px solid;
 }
 body.dark-gray2 .custom-btn:hover {
@@ -514,9 +514,9 @@ body.dark-red input[type="radio"]:checked + label.custom-btn {
     
   }
   .custom-btn{
-    width: 100% !important;
+    width: 90% !important;
     font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.6rem;
   }
 }
 
