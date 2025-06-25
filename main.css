@@ -37,9 +37,6 @@ body {
     margin-top: 25px;
     
   }
-  .custom-btn{
-    padding: .75rem 1.5rem;
-  }
 }
 
 
@@ -338,7 +335,7 @@ body.dark-red button.google-btn:hover {
 
 .custom-btn {
   display: inline-block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 1rem;
