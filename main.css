@@ -26,18 +26,7 @@ body {
 .form-select{
   margin: 0;
 }
-@media (max-width: 509.98px) {
-  .responsive-select {
-    max-width: 70% !important;
-    margin:  auto -10px ; 
-    margin-bottom: 3px;
-    
-  }
-    .content {
-    margin-top: 25px;
-    
-  }
-}
+
 
 
 
@@ -335,7 +324,7 @@ body.dark-red button.google-btn:hover {
 
 .custom-btn {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.1rem;
   border-radius: 999px;
   font-weight: 600;
   font-size: 1rem;
@@ -344,7 +333,6 @@ body.dark-red button.google-btn:hover {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
-  
 }
 /* light mode */
 body.light-gray1 .custom-btn {
@@ -514,6 +502,22 @@ body.dark-red input[type="radio"]:checked + label.custom-btn {
 
 
 
-
+@media (max-width: 509.98px) {
+  .responsive-select {
+    max-width: 70% !important;
+    margin:  auto -10px ; 
+    margin-bottom: 3px;
+    
+  }
+    .content {
+    margin-top: 25px;
+    
+  }
+  .custom-btn{
+    width: 100% !important;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
 
 
