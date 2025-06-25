@@ -24,6 +24,9 @@ const translations = {
     winter: "الشتا",
     submit: "احفظ إجاباتك وابدأ التحدي",
     closeBtn: "إغلاق",
+    required: "من فضلك اختر إجابة للسؤال.",
+    success: "تم حفظ إجابتك بنجاح!",
+    error: "حدث خطأ أثناء الحفظ.",
   },
   en: {
     welcome: "🙌 Welcome to E3rafni",
@@ -45,6 +48,9 @@ const translations = {
     winter : "Winter",
     submit: "Save Answers & Start the Challenge",
     closeBtn: "Close",
+    required: "Please select an answer.",
+    success: "Your answer has been saved successfully!",
+    error: "An error occurred while saving.",
   }
 };
 // الدوال الل بتتنفذ عند تحميل الصفحة
@@ -238,3 +244,71 @@ function getFirstName(fullName) {
 // جعل الدوال متاحة للاستخدام من الـ HTML
 window.setLanguage = setLanguage;
 window.changeMode = changeMode;
+
+// بيبعت البيانات للباك اند
+document.getElementById("self-quiz-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const lang = localStorage.getItem("lang") || "ar";
+  const selectedSeason = document.querySelector('input[name="season"]:checked');
+  const submitBtn = document.querySelector('button[type="submit"]');
+
+  if (!selectedSeason) {
+    showCustomModal(translations[lang].required, 'error');
+    return;
+  }
+
+  const data = {
+    season: selectedSeason.value,
+  };
+
+  // تعطيل الزر لتفادي التكرار
+  submitBtn.disabled = true;
+  submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
+
+  fetch("https://knowme-backend-production.up.railway.app/auth/data", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include", // ضروري عشان اليوزر يوصل للباك
+    body: JSON.stringify(data),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error("Failed to save");
+      return res.json();
+    })
+    .then((result) => {
+      console.log("تم الحفظ:", result);
+      showCustomModal(translations[lang].success);
+      submitBtn.textContent = lang === 'ar' ? ' ✅ تم الحفظ بنجاح' : 'Saved ✅';
+      // لو حابب تعمل redirect بعد الحفظ
+      // setTimeout(() => window.location.href = "/challenge.html", 3000);
+    })
+    .catch((err) => {
+      console.error(err);
+      showCustomModal(translations[lang].error, 'error');
+      submitBtn.disabled = false;
+      submitBtn.textContent = translations[lang].submit;
+    });
+});
+function showCustomModal(message, type = 'success') {
+  const modal = document.getElementById('welcome-modal');
+  const welcomeText = document.getElementById('welcome-text');
+
+  welcomeText.innerHTML = message;
+  welcomeText.style.fontSize = '1.4rem';
+
+  if (type === 'error') {
+    welcomeText.style.color = '#dc2626';
+  } else {
+    welcomeText.style.color = ''; // يرجع للون حسب المود
+  }
+
+  modal.classList.add('show');
+  updateWelcomeModalColors();
+
+}
+
+
+
