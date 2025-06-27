@@ -32,35 +32,94 @@
           </select>
       </div>
   </nav>
+  <!-- بلوك المعلومات الشخصية -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-11 col-sm-10 col-md-8 col-lg-6">
+        <div class="profile-card">
+          <img id="userPhoto" src="./images/gravater-icon.jpg" class="profile-img" alt="الصورة الشخصية">
+
+          <div class="profile-info">
+            <h3 id="userName">اسم المستخدم</h3>
+
+            <p>
+              <strong data-key="emailLabel">البريد الإلكتروني:</strong>
+              <span id="userEmail">email@example.com</span>
+            </p>
+              <p>
+              <strong data-key="createdAt">تاريخ التسجيل:</strong>
+              <span id="createdAt">now</span>
+            </p>
 
 
+        
+          </div>
 
-
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-11 col-sm-10 col-md-8 col-lg-6">
-      <div class="profile-card">
-        <img id="userPhoto" src="https://i.imgur.com/JP5K8E3.png" class="profile-img" alt="الصورة الشخصية">
-
-        <div class="profile-info">
-          <h3 id="userName">اسم المستخدم</h3>
-
-          <p>
-            <strong data-key="emailLabel">البريد الإلكتروني:</strong>
-            <span id="userEmail">email@example.com</span>
-          </p>
-
-
-       
+          <a href="#" data-key="getLink" class="btn w-75 btn-edit google-btn" id="googleLoginBtn">
+            احصل على الرابط
+          </a>
         </div>
-
-        <a href="#" data-key="getLink" class="btn w-75 btn-edit google-btn" id="googleLoginBtn">
-          احصل على الرابط
-        </a>
       </div>
     </div>
   </div>
+
+
+
+
+<!-- ✅ البلوك الأخير في الصفحة -->
+<div class="container my-5">
+
+  <!-- الأزرار -->
+  <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
+    <button id="logoutBtn" data-key="logOut"  class="btn btn-secondary custom-btn w-75 w-md-auto">
+      🔓 تسجيل خروج
+    </button>
+
+    <button id="editAnswersBtn" data-key="updateAnswer"  class="btn custom-btn btn-info  w-75 w-md-auto">
+      ✏️ تعديل إجاباتك
+    </button>
+
+    <button id="deleteAccountBtn" data-key="deleteAccount" class="btn btn-danger custom-btn w-75 w-md-auto">
+      🗑️ حذف الحساب
+    </button>
+  </div>
+
+  <!-- رابط واتساب -->
+  <!-- رابط واتساب -->
+  <div class="text-center mt-4">
+    <a href="https://wa.me/201029467830" data-key="WhatsApp" target="_blank" class="text-decoration-none d-inline-flex align-items-center gap-2">
+      تواصل معنا عبر واتساب
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="واتساب" width="24" height="24">
+
+    </a>
+  </div>
+
+
 </div>
+
+
+
+
+
+
+<!-- الموديل الخاص بالزراير -->
+<div id="modal-overlay"></div>
+<div id="confirm-modal" class="confirm-modal" role="dialog" aria-modal="true">
+  <p style="font-size: large; color: white; font-weight: bold;" id="confirm-message"></p>
+  <div class="modal-buttons mt-3" style="display: flex; justify-content: space-around;">
+    <button id="cancel-btn" data-key="closeBtn" class="btn btn-secondary me-2">إلغاء</button>
+    <button id="confirm-btn" data-key="confirmBtn" class="btn btn-danger">تأكيد</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 <script src="./javaScripts/main.js"></script>
 <script src="./javaScripts/profile.js"></script>

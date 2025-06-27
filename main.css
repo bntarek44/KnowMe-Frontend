@@ -246,74 +246,99 @@ body.dark-red .google-btn:hover {
   width: 100%;
 }
 
-    .mainDev{
-        width: 70%;
-    
-    }
-    .form-label {
-      font-weight: 600;
-    }
-    .form-select {
-      text-align: right;
-    }
-    .btn-primary {
-      font-weight: bold;
-    }
-    h2 {
-      color: #333;
-    }
+.mainDev{
+    width: 70%;
+
+}
+.form-label {
+  font-weight: 600;
+}
+.form-select {
+  text-align: right;
+}
+.btn-primary {
+  font-weight: bold;
+}
+h2 {
+  color: #333;
+}
   /* الوضع الافتراضي: عربي */
-  select, option {
-    text-align: right;
-    direction: rtl;
-  }
+select, option {
+  text-align: right;
+  direction: rtl;
+}
 
   /* لو اللغة إنجليزي */
-  body.lang-en select,
-  body.lang-en option {
-    text-align: left;
-    direction: ltr;
-  }
-   #welcome-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      padding: 20px 30px;
-      text-align: center;
-      z-index: 10000;
-      min-width: 300px;
-      max-width: 90%;
-      user-select: none;
-      background-color: var(--modal-bg, white);
-      color: var(--modal-color, #222);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
-    }
+body.lang-en select,
+body.lang-en option {
+  text-align: left;
+  direction: ltr;
+}
+/* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
+#welcome-modal, #confirm-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  padding: 20px 30px;
+  text-align: center;
+  z-index: 10000;
+  min-width: 300px;
+  max-width: 90%;
+  user-select: none;
+  background-color: var(--modal-bg, white);
+  color: var(--modal-color, #222);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
+}
 
-    #welcome-modal.show {
-      opacity: 1;
-      visibility: visible;
-    }
+#welcome-modal.show , #confirm-modal.show{
+  opacity: 1;
+  visibility: visible;
+}
+/* لاخفاء المحتوي الداخلي عند ظهور الموديل */
+#modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* تعتيم أسود خفيف */
+  z-index: 9998;
+  display: none;
+}
 
-    #close-btn {
-      margin-top: 15px;
-      padding: 8px 20px;
-      border: none;
-      border-radius: 30px;
-      background-color: #555;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+#close-btn , #cancel-btn{
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #555;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-    #close-btn:hover {
-      background-color: #333;
-    }
+#close-btn:hover ,#cancel-btn:hover{
+  background-color: #333;
+}
+#confirm-btn{
+  margin-top: 15px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#confirm-btn:hover{
+  background-color: red;
+}
 
 .option-box img {
   width: 100%;
@@ -570,6 +595,49 @@ body.light-purple .profile-img{
 body.light-pink .profile-img{
   border: 3px solid #ec4899;
 }
+
+
+
+/* زراير تسجيل الخروج وحذف الحساب  */
+
+#deleteAccountBtn:hover{
+  background-color: #dc2626;
+}
+#logoutBtn:hover{
+  background-color: grey;
+}
+.modal-buttons{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+/* الموديل الخاص بالزراير */
+
+.confirm-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #eee;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.confirm-modal.show {
+  display: block;
+}
+
+.confirm-modal .modal-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+
+
 
 @media (max-width: 509.98px) {
   .responsive-select {

@@ -7,7 +7,9 @@ const translations = {
   ar: {
     welcome: "🙌 أهلاً بيك في اعرفني",
     desc: "سجّل دخول بجوجل، جاوب على شوية أسئلة، وشوف صحابك يعرفوك قد إيه! 🤔",
-    login: "سجّل دخول بجوجل",
+    login:{
+      html: ` سجل دخول بجوجل <i class="fab fa-google me-2"></i> `
+    },
     lightGray1: "فاتح - رمادي فاتح جداً",
     lightGray2: "فاتح - رمادي فاتح",
     lightBeige: "فاتح - بيج فاتح",
@@ -24,17 +26,27 @@ const translations = {
     winter: "الشتا",
     submit: "احفظ إجاباتك وابدأ التحدي",
     closeBtn: "إغلاق",
+    confirmBtn: "تأكيد",
     required: "من فضلك اختر إجابة لجميع الأسئلة.",
     success: "تم حفظ إجابتك بنجاح!",
     error: "حدث خطأ أثناء الحفظ.",
     emailLabel: "البريد الإلكتروني: ",
     ageLabel: "العمر: ",
     getLink: "احصل علي الرابط",
+    createdAt: "تاريخ التسجيل: ",
+    logOut: "تسجيل الخروج 🔓",   
+    updateAnswer: "تحديث الإجابة" +" ✏️",
+    deleteAccount: "حذف الحساب" + " 🗑️",
+    WhatsApp:{
+      html: `تواصل معنا عبر واتساب <img src='https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg' width='20' height='20'>` 
+    },
   },
   en: {
     welcome: "🙌 Welcome to E3rafni",
     desc: "Login with Google, answer a few questions, and see how well your friends know you! 🤔",
-    login: "Login with Google",
+    login:{
+      html: `Login with Google <i class="fab fa-google me-2"></i>`
+    },
     lightGray1: "Light - Very Light Gray",
     lightGray2: "Light - Light Gray",
     lightBeige: "Light - Beige",
@@ -51,14 +63,22 @@ const translations = {
     winter : "Winter",
     submit: "Save Answers & Start the Challenge",
     closeBtn: "Close",
+    confirmBtn: "confirm",
     required: "Please select an answer for all Qs.",
     success: "Your answer has been saved successfully!",
     error: "An error occurred while saving.",
     emailLabel: "Email: ",
     ageLabel: "Age: ",
     getLink: "Get the URL",
+    createdAt: "Login Date: ",
+    logOut: "Log Out 🔓",
+    updateAnswer: "Update Answer ✏️",
+    deleteAccount: "Delete Account 🗑️",
+    WhatsApp: {
+      html: `Contact us on WhatsApp <img src='https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg' width='20' height='20'>`,
+    }
   }
-};
+}
 
 
 
@@ -90,8 +110,6 @@ function changeMode(value) {
       dashHeader.style.color = '#000';
     }
   }
-
-
   // قائمة اللغة
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {
@@ -126,6 +144,7 @@ function changeMode(value) {
   if (userPhoto && userName && userPhoto.src.includes('data:image/svg+xml')) {
     userPhoto.src = generateAvatar(userName);
   }
+  
 }
 // بتغير اللغة عند اختيارها من السيلكت
 function setLanguage(lang) {
@@ -139,10 +158,12 @@ function setLanguage(lang) {
      const translation = translations[lang]?.[key];
  
     if (translation) {
-      if (el.tagName === "OPTION") {
+      if (typeof translation === 'object' && translation.html) {
+        el.innerHTML = translation.html;
+      } else if(el.tagName === "OPTION") {
         el.innerText = translation;
-      } else {
-        el.textContent = translation;
+      }else {
+        el.innerHTML = translation;
       }
     }
   });
@@ -160,16 +181,6 @@ function setLanguage(lang) {
   document.body.classList.toggle("lang-ar", lang === "ar");
 
 
-
-
-
-    // تحديث أسماء الخيارات في قائمة الوضع
-  // document.querySelectorAll('option[data-key]').forEach(opt => {
-  //   const key = opt.getAttribute('data-key');
-  //   if (translations[lang] && translations[lang][key]) {
-  //     opt.textContent = translations[lang][key];
-  //   }
-  // });
   };
 
 

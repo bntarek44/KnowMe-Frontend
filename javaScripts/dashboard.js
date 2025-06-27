@@ -1,3 +1,17 @@
+let redirectAfterModalClose = false;
+const overlay = document.getElementById('modal-overlay');
+
+function showOverlay() {
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function hideOverlay() {
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
 // خاص بال ويلكام موديل
@@ -31,6 +45,7 @@ function getFirstName(fullName) {
 
 // بتكنب الرسالة في الموديل واحنا مدينها السيناريوهين بتوع اللغة بالتفصيل مش محتاجين نحطهم ف القاموس
 function showWelcomeModal(name) {
+    redirectAfterModalClose = false;
     const modal = document.getElementById('welcome-modal');
     const welcomeText = document.getElementById('welcome-text');
     const lang = localStorage.getItem('lang') || 'ar';
@@ -42,13 +57,24 @@ function showWelcomeModal(name) {
     welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
     welcomeText.style.fontSize = '1.5rem';
     modal.classList.add('show');
-
+    showOverlay();
 }
 
 // بتخفي الموديل
 function hideWelcomeModal() {
-    document.getElementById('welcome-modal').classList.remove('show');
+  document.getElementById('welcome-modal').classList.remove('show');
+  hideOverlay();
+
+  if (redirectAfterModalClose) {
+    // تأخير قبل التحويل - هنا 2 ثانية (2000 ملي ثانية)
+    setTimeout(() => {
+      window.location.href = 'https://know-me-frontend-swart.vercel.app/profile.html';
+    }, 1000);
+  }
 }
+
+
+
 
 // بتغير الالوان والخلفيى بتاع الموديل 
 function updateWelcomeModalColors() {
@@ -133,13 +159,15 @@ function showCustomModal(message, type = 'success') {
 
   if (type === 'error') {
     welcomeText.style.color = '#dc2626';
+    redirectAfterModalClose = false; // لا تحويل لو خطأ
   } else {
-    welcomeText.style.color = ''; // يرجع للون حسب المود
+    welcomeText.style.color = ''; // اللون العادي
+    redirectAfterModalClose = true; // لما يكون حفظ ناجح نفعّل التحويل
   }
 
   modal.classList.add('show');
   updateWelcomeModalColors();
-
+  showOverlay();
 }
 
 
