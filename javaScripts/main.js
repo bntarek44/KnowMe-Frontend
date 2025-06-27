@@ -110,6 +110,16 @@ function changeMode(value) {
       dashHeader.style.color = '#000';
     }
   }
+      const confirm_message = document.querySelector('#confirm-message');
+  if (confirm_message) {
+    
+    if (value.startsWith('dark')) {
+      confirm_message.style.color = '#fff';
+    } else {
+      confirm_message.style.color = '#000';
+    }
+  }
+
   // قائمة اللغة
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {

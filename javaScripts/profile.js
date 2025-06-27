@@ -99,7 +99,9 @@ function showConfirmationModal(message, onConfirm) {
   const text = document.getElementById('confirm-message');
   const confirmBtn = document.getElementById('confirm-btn');
   const cancelBtn = document.getElementById('cancel-btn');
-
+ 
+ 
+   updateConfirmModalColors()
 
   text.textContent = message;
   modal.classList.add('show');
