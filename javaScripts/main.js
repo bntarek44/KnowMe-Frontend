@@ -29,7 +29,7 @@ const translations = {
     error: "حدث خطأ أثناء الحفظ.",
     emailLabel: "البريد الإلكتروني: ",
     ageLabel: "العمر: ",
-    URL: "احصل علي الرابط",
+    getLink: "احصل علي الرابط",
   },
   en: {
     welcome: "🙌 Welcome to E3rafni",
@@ -56,7 +56,7 @@ const translations = {
     error: "An error occurred while saving.",
     emailLabel: "Email: ",
     ageLabel: "Age: ",
-    URL: "Get the URL",
+    getLink: "Get the URL",
   }
 };
 
