@@ -1,5 +1,5 @@
 const overlay = document.getElementById('modal-overlay');
-// لما المودل يظهر كل حاجة ورا تختفي
+
 function showOverlay() {
   overlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -94,19 +94,25 @@ async function fetchUserData() {
 
 
 // لعرض الموديل بتاع التأكيد او الالغاء
-function showConfirmationModal(message, onConfirm) {
+function showConfirmationModal(message, onConfirm, singleButton = false) {
   const modal = document.getElementById('confirm-modal');
   const text = document.getElementById('confirm-message');
   const confirmBtn = document.getElementById('confirm-btn');
   const cancelBtn = document.getElementById('cancel-btn');
- 
- 
-   updateConfirmModalColors()
 
+  updateConfirmModalColors();
   text.textContent = message;
   modal.classList.add('show');
-  overlay.style.display = 'block';
- showOverlay();
+  showOverlay();
+
+  // تحكم في إظهار الأزرار
+  if (singleButton) {
+    cancelBtn.style.display = 'none';
+    confirmBtn.style.width = '75%';     // زرار عريض في النص
+  } else {
+    cancelBtn.style.display = 'inline-block';
+    confirmBtn.style.width = '';         // رجع الحجم الطبيعي
+  }
 
   // امسح أي لسنرات قديمة
   confirmBtn.replaceWith(confirmBtn.cloneNode(true));
@@ -117,9 +123,10 @@ function showConfirmationModal(message, onConfirm) {
 
   newConfirmBtn.addEventListener('click', () => {
     modal.classList.remove('show');
-    hideOverlay()
-    onConfirm();
+    hideOverlay();
+    if (onConfirm) onConfirm();
   });
+
   newCancelBtn.addEventListener('click', () => {
     modal.classList.remove('show');
     hideOverlay();
@@ -152,7 +159,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     .then(res => {
       if (!res.ok) throw new Error('Logout failed');
       setTimeout(() => {
-        window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
       }, 1000);
     })
     .catch(err => {
@@ -163,6 +170,64 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 });
 
 
+// لتنفيذ حذف الحساب
+document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+  const lang = localStorage.getItem('lang') || 'ar';
+
+  // رسائل الترجمة قبل التأكيد
+  const messages = {
+    confirm: {
+      ar: 'هل أنت متأكد أنك تريد حذف الحساب نهائيا؟ لن تسطيع استرداده مرة أخري.',
+      en: 'Are you sure you want to delete your account? you will NOT get it again.'
+    },
+    error: {
+      ar: 'حدث خطأ أثناء حذف الحساب',
+      en: 'An error occurred during Account Deletion'
+    }
+  };
+// رسائل الترجمة بعد التأكيد
+ const messagesAfterConfirm ={
+      confirm: {
+      ar:  "تم طلب حذف الحساب. سيتم حذفه نهائيًا بعد ثلاثة أيام . لقد تم تسجيل خروجك.",
+      en: 'your Deletion Request done. your Account will be deleted finally after 3 DAYS. your LogOut done.'
+    },
+ 
+ }
+
+
+
+  showConfirmationModal(messages.confirm[lang], () => {
+    fetch('https://knowme-backend-production.up.railway.app/auth/request-delete', {
+      method: 'DELETE',
+      credentials: 'include'
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Logout failed');
+       // لما ينجح طلب الحذف، افتح المودال التاني
+      setTimeout(() => {
+        showConfirmationModal(messagesAfterConfirm.confirm[lang], () => {
+          setTimeout(() => {
+          window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
+        }, 1000);    
+      },true);
+      }, 1000)
+    })
+    .catch(err => {
+      console.error('Error logging out:', err);
+      alert(messages.error[lang]);
+    });
+  });
+
+
+});
+
+
+
+
+
+
+
+// لظبط الوان الموديل حسب الوضع
 function updateConfirmModalColors() {
     const mode = localStorage.getItem('mode') || 'light-gray2';
     const colorsMap = {
@@ -182,14 +247,6 @@ function updateConfirmModalColors() {
     modal.style.backgroundColor = c.bg;
     modal.style.color = c.color;
 }
-
-
-
-
-
-
-
-
 
 
 
