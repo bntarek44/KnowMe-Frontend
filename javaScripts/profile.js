@@ -94,7 +94,7 @@ async function fetchUserData() {
 
 
 // لعرض الموديل بتاع التأكيد او الالغاء
-function showConfirmationModal(message, onConfirm, singleButton = false) {
+function showConfirmationModal(message, onConfirm, singleButton = false , updateButton = false) {
   const modal = document.getElementById('confirm-modal');
   const text = document.getElementById('confirm-message');
   const confirmBtn = document.getElementById('confirm-btn');
@@ -105,13 +105,18 @@ function showConfirmationModal(message, onConfirm, singleButton = false) {
   modal.classList.add('show');
   showOverlay();
 
-  // تحكم في إظهار الأزرار
+  //  اخليه زرار واحد بعد تأكيد طلب الحذف  
   if (singleButton) {
     cancelBtn.style.display = 'none';
     confirmBtn.style.width = '75%';     // زرار عريض في النص
   } else {
     cancelBtn.style.display = 'inline-block';
     confirmBtn.style.width = '';         // رجع الحجم الطبيعي
+  };
+
+// اخلي لون زرار تأكيد التعديل حسب المود
+  if(updateButton){
+    confirmBtn.classList.add("google-btn");
   }
 
   // امسح أي لسنرات قديمة
@@ -202,7 +207,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
       credentials: 'include'
     })
     .then(res => {
-      if (!res.ok) throw new Error('Logout failed');
+      if (!res.ok) throw new Error('process failed');
        // لما ينجح طلب الحذف، افتح المودال التاني
       setTimeout(() => {
         showConfirmationModal(messagesAfterConfirm.confirm[lang], () => {
@@ -220,6 +225,39 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 
 
 });
+
+
+document.getElementById('editAnswersBtn').addEventListener('click', () => {
+  const lang = localStorage.getItem('lang') || 'ar';
+
+  // رسائل الترجمة
+  const messages = {
+    confirm: {
+      ar: 'هل أنت متأكد أنك تريد تعديل اجاباتك؟',
+      en: 'Are you sure you want to update your answers?'
+    },
+    error: {
+      ar: 'حدث خطأ أثناء تسجيل الخروج',
+      en: 'An error occurred during logout'
+    }
+  };
+
+
+  showConfirmationModal(messages.confirm[lang], () => {
+
+      setTimeout(() => {
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/dashboard.html'; // غير المسار لو حبيت
+      }, 1000)
+    .catch(err => {
+      console.error('Error logging out:', err);
+      alert(messages.error[lang]);
+    });
+  },false,true);
+});
+
+
+ 
+
 
 
 
@@ -247,11 +285,6 @@ function updateConfirmModalColors() {
     modal.style.backgroundColor = c.bg;
     modal.style.color = c.color;
 }
-
-
-
-
-
 
 
 // الدوال الل بتتنفذ عند تحميل الصفحة

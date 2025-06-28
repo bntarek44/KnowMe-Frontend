@@ -1,6 +1,6 @@
 let redirectAfterModalClose = false;
 const overlay = document.getElementById('modal-overlay');
-
+// عشان تمنع اي اكشن وقت عرض الموديل
 function showOverlay() {
   overlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -24,6 +24,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
     updateWelcomeModalColors();
+    loadSavedQuizAnswer();
+
 });
 
 
@@ -68,7 +70,7 @@ function hideWelcomeModal() {
   if (redirectAfterModalClose) {
     // تأخير قبل التحويل - هنا 2 ثانية (2000 ملي ثانية)
     setTimeout(() => {
-      window.location.href = 'https://know-me-frontend-swart.vercel.app/profile.html';
+      window.location.href = 'http://localhost:3001/profile.html';
     }, 1000);
   }
 }
@@ -96,6 +98,37 @@ function updateWelcomeModalColors() {
     modal.style.backgroundColor = c.bg;
     modal.style.color = c.color;
 }
+
+
+
+// لاستقبال الاجابات من الباك اند وحفظها عند التعديل
+async function loadSavedQuizAnswer() {
+  try {
+    const res = await fetch('https://knowme-backend-production.up.railway.app/auth/data', {
+      method: "GET",
+      credentials: 'include'
+    });
+    if (!res.ok) throw new Error('No previous answer');
+    
+    const radioInputs = document.querySelectorAll('input[name="season"]');
+    if (!radioInputs.length) return; // مفيش فورم اصلا
+
+    const data = await res.json();
+    if (data && data.data && data.data.season) {
+      const savedSeason = data.data.season;
+      const radio = document.querySelector(`input[name="season"][value="${savedSeason}"]`);
+      if (radio) {
+        radio.checked = true;
+      }
+    }
+  } catch (err) {
+    console.log('No saved answer or error:', err.message);
+  }
+}
+
+
+
+
 
 
 
@@ -137,8 +170,7 @@ if (form) {
       console.log("تم الحفظ:", result);
       showCustomModal(translations[lang].success);
       submitBtn.textContent = lang === 'ar' ? ' ✅ تم الحفظ بنجاح' : 'Saved ✅';
-      // لو حابب تعمل redirect بعد الحفظ
-      // setTimeout(() => window.location.href = "/challenge.html", 3000);
+
     })
     .catch((err) => {
       console.error(err);
