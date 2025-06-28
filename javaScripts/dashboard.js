@@ -70,7 +70,7 @@ function hideWelcomeModal() {
   if (redirectAfterModalClose) {
     // تأخير قبل التحويل - هنا 2 ثانية (2000 ملي ثانية)
     setTimeout(() => {
-      window.location.href = 'http://localhost:3001/profile.html';
+      window.location.href = 'https://know-me-frontend-swart.vercel.app/profile.html';
     }, 1000);
   }
 }
