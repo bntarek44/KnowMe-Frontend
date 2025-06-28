@@ -188,8 +188,8 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 // رسائل الترجمة بعد التأكيد
  const messagesAfterConfirm ={
       confirm: {
-      ar:  "تم طلب حذف الحساب. سيتم حذفه نهائيًا بعد ثلاثة أيام . لقد تم تسجيل خروجك.",
-      en: 'your Deletion Request done. your Account will be deleted finally after 3 DAYS. your LogOut done.'
+      ar:  "تم طلب حذف الحساب. سيتم حذفه نهائيًا بعد ثلاثة أيام . يمكنك استعادة الحساب تلقائيا باعادة تسجيل الدخول   .",
+      en: 'your Deletion Request sent. your Account will be deleted finally after 3 DAYS. your can restore it by returning to LOGIN again.'
     },
  
  }
