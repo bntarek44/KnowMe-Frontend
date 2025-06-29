@@ -21,9 +21,27 @@ const translations = {
     darkBrown: "داكن - بني غامق",
     darkRed: "داكن - أحمر غامق",
     headline: "جاوب عن نفسك… محدش هيستخبى! 😂يلا نكشف الغشاشين اللي بيقولوا يعرفوك! 🤣",
-    q01: "١. بتفضل الصيف ولا الشتا؟",
+    q01: " 1️⃣"+"بتفضل الصيف ولا الشتا!!" ,
     summer: "الصيف",
     winter: "الشتا",
+    q02: "2️⃣" + "أي نوع من الرحلات تفضل!!",
+    sea: "البحر",
+    mountain: "الجبل",
+    q03: "3️⃣" + "أكتر حاجة بتحبها ف صحابك!!",
+    support: "الدعم",
+    fun: "المرح",
+    love: "الحب والوفاء",
+    noFriend: "يا رب سامحني على ذنوبي اللي جابتلي الكائنات دي" + "😂",
+    q04: "4️⃣"+ "أكتر حاجة مهمة في حياتك من دول !!",
+    sleep: "النوم",
+    food: "الأكل",
+    mobile: "الموبايل",
+    laughing: "الضحك",
+    q05: "5️⃣"+ "أكتر حيوان بتحبه !!",
+    cats: "القطط",
+    dogs: "الكلاب",
+    horses: "الخيل",
+    noAnimal: "مليش ف الكلام ده يعم..خليها علي الله",
     submit: "احفظ إجاباتك وابدأ التحدي",
     closeBtn: "إغلاق",
     confirmBtn: "تأكيد",
@@ -58,9 +76,27 @@ const translations = {
     darkBrown: "Dark - Brown",
     darkRed: "Dark - Red",
     headline: "Answer about yourself… no hiding!😂 Let’s expose those fake friends who think they know you! 🤣",
-    q01: "1. Do you prefer summer or winter?",
+    q01: "1️⃣ You prefer summer or winter!!",
     summer : "Summer",
     winter : "Winter",
+    q02: "2️⃣ You prefer which type of the trips !!",
+    sea: "Sea",
+    mountain: "Mountain",
+    q03: "3️⃣ The most thing you love in your friend !!",
+    support: "Support",
+    fun: "Fun",
+    love: "Love and Loyality",
+    noFriend: "😂"+ "يا رب سامحني على ذنوبي اللي جابتلي الكائنات دي" ,
+    q04: "4️⃣ The most thing important to you from these !!",
+    sleep: "Sleep",
+    food: "Food",
+    mobile: "Mobile",
+    laughing: "Laughing",
+    q05: "5️⃣ The most animal you like !!",
+    cats: "Cats",
+    dogs: "Dogs",
+    horses: "Horses",
+    noAnimal: "None of the above",
     submit: "Save Answers & Start the Challenge",
     closeBtn: "Close",
     confirmBtn: "confirm",
@@ -110,7 +146,7 @@ function changeMode(value) {
       dashHeader.style.color = '#000';
     }
   }
-      const confirm_message = document.querySelector('#confirm-message');
+        const confirm_message = document.querySelector('#confirm-message');
   if (confirm_message) {
     
     if (value.startsWith('dark')) {
@@ -119,7 +155,6 @@ function changeMode(value) {
       confirm_message.style.color = '#000';
     }
   }
-
   // قائمة اللغة
   const langSelect = document.getElementById("langSelect");
   if (langSelect) {
