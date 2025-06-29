@@ -1,6 +1,6 @@
 let redirectAfterModalClose = false;
 const overlay = document.getElementById('modal-overlay');
-// عشان تمنع اي اكشن وقت عرض الموديل
+
 function showOverlay() {
   overlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -101,7 +101,7 @@ function updateWelcomeModalColors() {
 
 
 
-// لاستقبال الاجابات من الباك اند وحفظها عند التعديل
+// لاستقبال الاجابات من الباك اند وملء بها النموذج تلقائيا عند التعديل
 async function loadSavedQuizAnswer() {
   try {
     const res = await fetch('https://knowme-backend-production.up.railway.app/auth/data', {
@@ -109,14 +109,15 @@ async function loadSavedQuizAnswer() {
       credentials: 'include'
     });
     if (!res.ok) throw new Error('No previous answer');
-    
-    const radioInputs = document.querySelectorAll('input[name="season"]');
-    if (!radioInputs.length) return; // مفيش فورم اصلا
 
     const data = await res.json();
-    if (data && data.data && data.data.season) {
-      const savedSeason = data.data.season;
-      const radio = document.querySelector(`input[name="season"][value="${savedSeason}"]`);
+    if (!data || !data.data || !data.data.answers) return;
+
+    const answers = data.data.answers;
+
+    // لف على كل سؤال وإجابته
+    for (const [questionName, selectedValue] of Object.entries(answers)) {
+      const radio = document.querySelector(`input[name="${questionName}"][value="${selectedValue}"]`);
       if (radio) {
         radio.checked = true;
       }
@@ -132,54 +133,73 @@ async function loadSavedQuizAnswer() {
 
 
 
+
 // بيبعت البيانات للباك اند
 const form = document.getElementById("self-quiz-form");
+
 if (form) {
-  form.addEventListener("submit", function (e) {
-     e.preventDefault();
-  const lang = localStorage.getItem("lang") || "ar";
-  const selectedSeason = document.querySelector('input[name="season"]:checked');
-  const submitBtn = document.querySelector('button[type="submit"]');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-  if (!selectedSeason) {
-    showCustomModal(translations[lang].required, 'error');
-    return;
-  }
+    const lang = localStorage.getItem("lang") || "ar";
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const answers = {};
 
-  const data = {
-    season: selectedSeason.value,
-  };
+    // تجميع الأسئلة
+    const questionNames = [...new Set(
+      Array.from(form.querySelectorAll('input[type="radio"]')).map(input => input.name)
+    )];
 
-  // تعطيل الزر لتفادي التكرار
-  submitBtn.disabled = true;
-  submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
-
-  fetch("https://knowme-backend-production.up.railway.app/auth/data", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include", // ضروري عشان اليوزر يوصل للباك
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to save");
-      return res.json();
-    })
-    .then((result) => {
-      console.log("تم الحفظ:", result);
-      showCustomModal(translations[lang].success);
-      submitBtn.textContent = lang === 'ar' ? ' ✅ تم الحفظ بنجاح' : 'Saved ✅';
-
-    })
-    .catch((err) => {
-      console.error(err);
-      showCustomModal(translations[lang].error, 'error');
-      submitBtn.disabled = false;
-      submitBtn.textContent = translations[lang].submit;
+    // التأكد من وجود إجابات
+    let missing = false;
+    questionNames.forEach(name => {
+      const selected = form.querySelector(`input[name="${name}"]:checked`);
+      if (selected) {
+        answers[name] = selected.value;
+      } else {
+        missing = true;
+      }
     });
+
+    if (missing) {
+      showCustomModal(translations[lang].required, 'error');
+      return;
+    }
+
+    // تعطيل الزر
+    submitBtn.disabled = true;
+    submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
+
+    // الإرسال للباك إند
+    fetch("https://knowme-backend-production.up.railway.app/auth/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ answers })
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save");
+        return res.json();
+      })
+      .then((result) => {
+        console.log("تم الحفظ:", result);
+        showCustomModal(translations[lang].success);
+        submitBtn.textContent = lang === 'ar' ? ' ✅ تم الحفظ بنجاح' : 'Saved ✅';
+      })
+      .catch((err) => {
+        console.error(err);
+        showCustomModal(translations[lang].error, 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = translations[lang].submit;
+      });
   });
 }
+
+
+
+
 
 // دالة لعرض الموديل المخصص مع نجاح الحفظ او عدمه
 function showCustomModal(message, type = 'success') {
