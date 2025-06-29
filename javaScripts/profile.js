@@ -1,4 +1,5 @@
 const overlay = document.getElementById('modal-overlay');
+const lang = localStorage.getItem('lang') || 'ar';
 
 function showOverlay() {
   overlay.style.display = 'block';
@@ -93,17 +94,35 @@ async function fetchUserData() {
 }
 
 
+
+
+
+
+
+
+
 // لعرض الموديل بتاع التأكيد او الالغاء
-function showConfirmationModal(message, onConfirm, singleButton = false , updateButton = false) {
+
+function showConfirmationModal(message, onConfirm, singleButton = false , updateButton = false, copyingButton = false,) {
   const modal = document.getElementById('confirm-modal');
   const text = document.getElementById('confirm-message');
   const confirmBtn = document.getElementById('confirm-btn');
   const cancelBtn = document.getElementById('cancel-btn');
 
   updateConfirmModalColors();
-  text.textContent = message;
+  text.innerHTML = message;
   modal.classList.add('show');
   showOverlay();
+    const messages = {
+    copying: {
+      ar: 'نسخ',
+      en: 'Copy'
+    },
+    confirming: {
+      ar: 'تأكيد',
+      en: "Confirm"
+    }
+  };
 
   //  اخليه زرار واحد بعد تأكيد طلب الحذف  
   if (singleButton) {
@@ -118,7 +137,13 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
   if(updateButton){
     confirmBtn.classList.add("google-btn");
   }
-
+// زرار النسخ بتاع الرابط
+  if (copyingButton) {
+    confirmBtn.textContent = messages.copying[lang];
+    confirmBtn.classList.add("google-btn");
+  } else {
+    confirmBtn.textContent = messages.confirming[lang];
+  };
   // امسح أي لسنرات قديمة
   confirmBtn.replaceWith(confirmBtn.cloneNode(true));
   cancelBtn.replaceWith(cancelBtn.cloneNode(true));
@@ -138,11 +163,76 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
   });
 }
 
+// دالة الرسايل الل هتتحط ف الموديل الل فيه اللينك
+function getMessage(key, replacements = {}) {
+  const currentLang = localStorage.getItem('lang') || 'ar';
+
+  const messages = {
+    copySuccess: {
+      ar: " تم نسخ رابطك بنجاح! ✅ أرسله الي أصدقاءك وابدأالتحدي<br><a href='{LINK}' target='_blank'>{LINK}</a>",
+      en: "Your link has been copied successfully!✅.Sent it to your friends and start the challange<br><a href='{LINK}' target='_blank'>{LINK}</a>"
+    },
+    noUser: {
+      ar: "❌ لا يوجد مستخدم مسجل دخول!",
+      en: "❌ No user logged in!"
+    },
+    noToken: {
+      ar: "❌ هذا المستخدم ليس لديه توكن!",
+      en: "❌ This user doesn't have a token!"
+    },
+    errorFetching: {
+      ar: "❌ حدث خطأ أثناء جلب الرابط:<br>{ERROR}",
+      en: "❌ An error occurred while fetching the link:<br>{ERROR}"
+    }
+  };
+
+  const template = messages[key][currentLang] || messages[key]['ar'];
+  return template.replace(/\{(\w+)\}/g, (_, k) => replacements[k] || '');
+}
+
+
+
+// زرار الحصول علي الرابط
+document.getElementById('URLButton').addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch('https://knowme-backend-production.up.railway.app/auth/user', { credentials: 'include' });
+
+    if (!res.ok) {
+      throw new Error(`❌ Server responded with ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    console.log('✅ API response:', data);
+
+    if (!data.user) {
+      showConfirmationModal(getMessage('noUser'), null, true);
+      return;
+    }
+
+    if (!data.user.linkToken) {
+      showConfirmationModal(getMessage('noToken'), null, true);
+      return;
+    }
+
+    const link = `${window.location.origin}/quiz.html?token=${data.user.linkToken}`;
+    await navigator.clipboard.writeText(link);
+
+    showConfirmationModal(getMessage('copySuccess', { LINK: link }), null,false,false, true);
+
+  } catch (error) {
+    console.error(error);
+    showConfirmationModal(getMessage('errorFetching', { ERROR: error.message }), null, true);
+  }
+});
+
 
 
 // لتنفيذ تسجيل الخروج حال التأكيد
 document.getElementById('logoutBtn').addEventListener('click', () => {
-  const lang = localStorage.getItem('lang') || 'ar';
+  
 
   // رسائل الترجمة
   const messages = {
@@ -164,7 +254,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     .then(res => {
       if (!res.ok) throw new Error('Logout failed');
       setTimeout(() => {
-        window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
       }, 1000);
     })
     .catch(err => {
@@ -177,8 +267,6 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // لتنفيذ حذف الحساب
 document.getElementById('deleteAccountBtn').addEventListener('click', () => {
-  const lang = localStorage.getItem('lang') || 'ar';
-
   // رسائل الترجمة قبل التأكيد
   const messages = {
     confirm: {
@@ -226,9 +314,8 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 
 });
 
-
+// زرار تعديل الأجابة
 document.getElementById('editAnswersBtn').addEventListener('click', () => {
-  const lang = localStorage.getItem('lang') || 'ar';
 
   // رسائل الترجمة
   const messages = {
@@ -285,6 +372,19 @@ function updateConfirmModalColors() {
     modal.style.backgroundColor = c.bg;
     modal.style.color = c.color;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // الدوال الل بتتنفذ عند تحميل الصفحة
