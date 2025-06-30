@@ -217,8 +217,7 @@ function changeMode(value) {
     userPhoto.src = generateAvatar(userName);
   };
 
-  updateOwnerNameColors() ;
-  
+window.updateOwnerNameColors?.();  
 };
 // بتغير اللغة عند اختيارها من السيلكت
 function setLanguage(lang) {
@@ -242,7 +241,7 @@ function setLanguage(lang) {
     }
   });
 
-  getQuizHeader();
+ window.getQuizHeader?.();
 
 
 

@@ -243,3 +243,8 @@ showCustomModal(massages[lang]);
 getOwnerName();
   
 });
+
+
+// بيخلي الدالة متاحة عالميا عشان نقدر نناديها ف اي ملف تاني 
+window.updateOwnerNameColors = updateOwnerNameColors;
+window.getQuizHeader = getQuizHeader;
