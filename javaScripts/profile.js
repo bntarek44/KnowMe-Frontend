@@ -1,5 +1,4 @@
 const overlay = document.getElementById('modal-overlay');
-const lang = localStorage.getItem('lang') || 'ar';
 
 function showOverlay() {
   overlay.style.display = 'block';
@@ -108,6 +107,7 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
   const text = document.getElementById('confirm-message');
   const confirmBtn = document.getElementById('confirm-btn');
   const cancelBtn = document.getElementById('cancel-btn');
+  const lang = localStorage.getItem('lang') || 'ar'; // لو اللغة مش موجودة في التخزين المحلي، نستخدم العربية
 
   updateConfirmModalColors();
   text.innerHTML = message;
@@ -123,6 +123,11 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
       en: "Confirm"
     }
   };
+  // امسح أي ستايلات مضافة سابقًا
+confirmBtn.classList.remove("google-btn");
+confirmBtn.classList.remove("copy-btn");
+confirmBtn.classList.remove("edit-btn");
+
 
   //  اخليه زرار واحد بعد تأكيد طلب الحذف  
   if (singleButton) {
@@ -143,7 +148,8 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
     confirmBtn.classList.add("google-btn");
   } else {
     confirmBtn.textContent = messages.confirming[lang];
-  };
+  }
+    
   // امسح أي لسنرات قديمة
   confirmBtn.replaceWith(confirmBtn.cloneNode(true));
   cancelBtn.replaceWith(cancelBtn.cloneNode(true));
@@ -196,6 +202,7 @@ function getMessage(key, replacements = {}) {
 document.getElementById('URLButton').addEventListener('click', async (e) => {
   e.preventDefault();
 
+
   try {
     const res = await fetch('https://knowme-backend-production.up.railway.app/auth/user', { credentials: 'include' });
 
@@ -217,10 +224,17 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `${window.location.origin}/quiz.html?token=${data.user.linkToken}`;
-    await navigator.clipboard.writeText(link);
+    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?token=${data.user.linkToken}`;
+    showConfirmationModal(
+      getMessage('copySuccess', { LINK: link }),
+      async () => {
+        await navigator.clipboard.writeText(link);
+      },
+      false,
+      false,
+      true
+    );
 
-    showConfirmationModal(getMessage('copySuccess', { LINK: link }), null,false,false, true);
 
   } catch (error) {
     console.error(error);
@@ -233,6 +247,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 // لتنفيذ تسجيل الخروج حال التأكيد
 document.getElementById('logoutBtn').addEventListener('click', () => {
   
+  const lang = localStorage.getItem('lang') || 'ar';
 
   // رسائل الترجمة
   const messages = {
@@ -254,7 +269,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     .then(res => {
       if (!res.ok) throw new Error('Logout failed');
       setTimeout(() => {
-        window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
       }, 1000);
     })
     .catch(err => {
@@ -267,6 +282,8 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 
 // لتنفيذ حذف الحساب
 document.getElementById('deleteAccountBtn').addEventListener('click', () => {
+   const lang = localStorage.getItem('lang') || 'ar';
+
   // رسائل الترجمة قبل التأكيد
   const messages = {
     confirm: {
@@ -316,6 +333,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 
 // زرار تعديل الأجابة
 document.getElementById('editAnswersBtn').addEventListener('click', () => {
+  const lang = localStorage.getItem('lang') || 'ar';
 
   // رسائل الترجمة
   const messages = {

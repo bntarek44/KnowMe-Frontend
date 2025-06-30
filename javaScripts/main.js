@@ -20,7 +20,8 @@ const translations = {
     darkBlue: "داكن - أزرق داكن",
     darkBrown: "داكن - بني غامق",
     darkRed: "داكن - أحمر غامق",
-    headline: "جاوب عن نفسك… محدش هيستخبى! 😂يلا نكشف الغشاشين اللي بيقولوا يعرفوك! 🤣",
+    ownerName: "صاحب التحدي :",
+    dashHeader: "جاوب عن نفسك… محدش هيستخبى! 😂يلا نكشف الغشاشين اللي بيقولوا يعرفوك! 🤣",
     q01: " 1️⃣"+"بتفضل الصيف ولا الشتا!!" ,
     summer: "الصيف",
     winter: "الشتا",
@@ -75,7 +76,8 @@ const translations = {
     darkBlue: "Dark - Blue",
     darkBrown: "Dark - Brown",
     darkRed: "Dark - Red",
-    headline: "Answer about yourself… no hiding!😂 Let’s expose those fake friends who think they know you! 🤣",
+    ownerName: "Challenge Owner:",
+    dashHeader: "Answer about yourself… no hiding!😂 Let’s expose those fake friends who think they know you! 🤣",
     q01: "1️⃣ You prefer summer or winter!!",
     summer : "Summer",
     winter : "Winter",
@@ -137,7 +139,9 @@ function changeMode(value) {
       btn.classList.add('light');
     }
   }
-    const dashHeader = document.querySelector('.dashHeader');
+
+  // تغيير لون النصوص في الهيدر بتاع الداشبورد
+  const dashHeader = document.querySelector('.dashHeader');
   if (dashHeader) {
     
     if (value.startsWith('dark')) {
@@ -146,7 +150,30 @@ function changeMode(value) {
       dashHeader.style.color = '#000';
     }
   }
-        const confirm_message = document.querySelector('#confirm-message');
+
+// تغيير لون النصوص في الهيدر بتاع الكويز
+  const quizHeader = document.querySelector('#quizHeader');
+  if (quizHeader) {
+    
+    if (value.startsWith('dark')) {
+      quizHeader.style.color = '#fff';
+    } else {
+      quizHeader.style.color = '#000';
+    }
+  }
+  // تغيير لون النصوص في الهيدر بتاع صاحب التحدي
+  const quizOwner = document.querySelector('#quizOwner');
+  if (quizOwner) {
+    
+    if (value.startsWith('dark')) {
+      quizOwner.style.color = '#fff';
+    } else {
+      quizOwner.style.color = '#000';
+    }
+  }
+
+
+  const confirm_message = document.querySelector('#confirm-message');
   if (confirm_message) {
     
     if (value.startsWith('dark')) {
@@ -188,9 +215,11 @@ function changeMode(value) {
   const userName = document.getElementById('userName')?.textContent;
   if (userPhoto && userName && userPhoto.src.includes('data:image/svg+xml')) {
     userPhoto.src = generateAvatar(userName);
-  }
+  };
+
+  updateOwnerNameColors() ;
   
-}
+};
 // بتغير اللغة عند اختيارها من السيلكت
 function setLanguage(lang) {
   localStorage.setItem('lang', lang);
@@ -213,6 +242,8 @@ function setLanguage(lang) {
     }
   });
 
+  getQuizHeader();
+
 
 
 
@@ -224,6 +255,8 @@ function setLanguage(lang) {
   // تغيير كلاس اللغة عشان نتحكم في التنسيق
   document.body.classList.toggle("lang-en", lang === "en");
   document.body.classList.toggle("lang-ar", lang === "ar");
+
+
 
 
   };
