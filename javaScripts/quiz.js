@@ -120,7 +120,7 @@ const getQuizHeader = async function (){
        "حان وقت التحدي الحقيقي! ⚠️..سألنا صاحبك الأسئلة دي 🧠🎯.. ودلوقتي دورك يلا حاول تخمن صاحبك بيفكر ازاي" +"😂🤓"
         } else {
     title = 
-       `Time for the ultimate test! ⚠️.
+       `Time for the ultimate challenge! ⚠️.
 We asked your friend these questions and they answered 🧠🎯.Now it’s your turn to guess how they think 😂🤓`  }
 
   document.querySelector('#quizHeader').innerHTML = title;

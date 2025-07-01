@@ -84,7 +84,7 @@ const translations = {
     q02: "2️⃣ You prefer which type of the trips !!",
     sea: "Sea",
     mountain: "Mountain",
-    q03: "3️⃣ The most thing you love in your friend !!",
+    q03: "3️⃣ The most thing you love in your friends !!",
     support: "Support",
     fun: "Fun",
     love: "Love and Loyality",
