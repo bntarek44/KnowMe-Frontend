@@ -111,23 +111,17 @@ const getOwnerName = async function () {
 
 // ✅ إعداد عنوان التحدي
 const getQuizHeader = async function (){
-    const ownerName = await fetchOwnerName(token);
+    
     const lang = localStorage.getItem('lang') || 'ar';
   let title = '';
 
   if (lang === 'ar') {
-    title = ownerName
-      ? `حان وقت التحدي الحقيقي! ⚠️
-جاوب الأسئلة بسرعة قبل ما صاحبك يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 `    
-      :`حان وقت التحدي الحقيقي! ⚠️🤣
-جاوب الأسئلة بسرعة قبل ما صاحبك يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂`
-  } else {
-    title = ownerName
-      ? `Time for the ultimate test! 🧠🎯
-        Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓 `
-      : `Time for the ultimate test! 🧠🎯
-        Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓`;
-  }
+    title = 
+       "حان وقت التحدي الحقيقي! ⚠️..سألنا صاحبك الأسئلة دي 🧠🎯.. ودلوقتي دورك يلا حاول تخمن صاحبك بيفكر ازاي" +"😂🤓"
+        } else {
+    title = 
+       `Time for the ultimate test! ⚠️.
+We asked your friend these questions and they answered 🧠🎯.Now it’s your turn to guess how they think 😂🤓`  }
 
   document.querySelector('#quizHeader').innerHTML = title;
 }
@@ -235,8 +229,8 @@ if (form) {
 addEventListener('DOMContentLoaded', () => {
 const lang = localStorage.getItem('lang') || 'ar';
 const massages = {
-  ar:  "🙌 أهلاً بيك في اعرفني",
-  en:  "Welcome to E3rafni 🙌" 
+  ar:  "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا" + "🕵️‍♂️😂 ", 
+  en:  "Welcome to E3rafni 🙌.Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓" 
 };
 showCustomModal(massages[lang]);
 

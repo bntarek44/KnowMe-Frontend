@@ -175,8 +175,8 @@ function getMessage(key, replacements = {}) {
 
   const messages = {
     copySuccess: {
-      ar: " تم نسخ رابطك بنجاح! ✅ أرسله الي أصدقاءك وابدأالتحدي<br><a href='{LINK}' target='_blank'>{LINK}</a>",
-      en: "Your link has been copied successfully!✅.Sent it to your friends and start the challange<br><a href='{LINK}' target='_blank'>{LINK}</a>"
+      ar: " تم توليد رابطك بنجاح! ✅ أرسله الي أصدقاءك وابدأالتحدي<br><a href='{LINK}' target='_blank'>{LINK}</a>",
+      en: "Your link has been generated successfully!✅.Sent it to your friends and start the challange<br><a href='{LINK}' target='_blank'>{LINK}</a>"
     },
     noUser: {
       ar: "❌ لا يوجد مستخدم مسجل دخول!",
@@ -195,7 +195,6 @@ function getMessage(key, replacements = {}) {
   const template = messages[key][currentLang] || messages[key]['ar'];
   return template.replace(/\{(\w+)\}/g, (_, k) => replacements[k] || '');
 }
-
 
 
 // زرار الحصول علي الرابط
