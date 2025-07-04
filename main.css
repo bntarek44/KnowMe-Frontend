@@ -271,7 +271,7 @@ body.lang-en option {
   direction: ltr;
 }
 /* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
-#welcome-modal, #confirm-modal {
+#welcome-modal, #confirm-modal, #login-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -291,7 +291,7 @@ body.lang-en option {
   transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
-#welcome-modal.show , #confirm-modal.show{
+#welcome-modal.show , #confirm-modal.show , #login-modal.show {
   opacity: 1;
   visibility: visible;
 }
@@ -305,6 +305,9 @@ body.lang-en option {
   background-color: rgba(0, 0, 0, 0.5); /* تعتيم أسود خفيف */
   z-index: 9998;
   display: none;
+}
+#modal-overlay.show {
+  display: block;
 }
 
 #close-btn , #cancel-btn{
@@ -607,7 +610,7 @@ body.light-pink .profile-img{
 }
 /* الموديل الخاص بالزراير */
 
-.confirm-modal {
+/* .confirm-modal{
   display: none;
   position: fixed;
   z-index: 9999;
@@ -623,7 +626,7 @@ body.light-pink .profile-img{
 
 .confirm-modal.show {
   display: block;
-}
+}  */
 
 .confirm-modal .modal-buttons {
   display: flex;
@@ -639,8 +642,12 @@ body.light-pink .profile-img{
 }
 #ownerName{
   font-style: italic;
-  z-index: 1000;
 }
+
+
+
+
+
 
 
 
@@ -662,6 +669,7 @@ body.light-pink .profile-img{
     font-size: 0.9rem;
     padding: 0.5rem 0.6rem;
   }
+  
 }
 
 

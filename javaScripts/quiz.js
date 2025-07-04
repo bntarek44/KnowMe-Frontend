@@ -1,16 +1,34 @@
-// ====================
-// ✅ إعدادات مودال الرسالة
+// ✅ 1. التوكن في الرابط
+const urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('state') || urlParams.get('token');
+
 // ====================
 const overlay = document.getElementById('modal-overlay');
+// Welcome Modal
 const welcomeModal = document.getElementById('welcome-modal');
 const welcomeText = document.getElementById('welcome-text');
 const closeBtn = document.getElementById('close-btn');
+// Login Modal
+const loginModal = document.getElementById('login-modal');
+const loginText = document.getElementById('login-text');
+const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 
-if (closeBtn) {
-  closeBtn.addEventListener('click', hideCustomModal);
+
+// ======================
+// ✅ خلفية المودال
+// ======================
+function showOverlay() {
+  overlay.style.display = 'block';
+  document.body.style.overflow = 'hidden';
 }
+function hideOverlay() {
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+};
 
-// ✅ لإظهار المودال
+// ======================
+// ✅ مودال الترحيب
+// ======================
 function showCustomModal(message, type = 'success') {
   welcomeText.innerHTML = message;
   welcomeText.style.fontSize = '1.4rem';
@@ -22,29 +40,56 @@ function showCustomModal(message, type = 'success') {
   }
 
   welcomeModal.classList.add('show');
-  updateCustomModalColors();
+  updateTwoModalsColors();
   showOverlay();
 }
 
-// ✅ لإخفاء المودال
 function hideCustomModal() {
   welcomeModal.classList.remove('show');
   hideOverlay();
 }
-
-// ✅ خلفية المودال
-function showOverlay() {
-  overlay.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+// ======================
+// ✅ مودال تسجيل الدخول
+// ======================
+function showLoginModal(message) {
+  loginText.innerHTML = message;
+  loginText.style.fontSize = '1.4rem';
+  loginModal.classList.add('show');
+  updateTwoModalsColors();
+  showOverlay();
 }
 
-function hideOverlay() {
-  overlay.style.display = 'none';
-  document.body.style.overflow = '';
+function hideLoginModal() {
+  loginModal.classList.remove('show');
+  hideOverlay();
 }
+// ✅ زر تسجيل الدخول
+if (quizGoogleLoginBtn) {
+quizGoogleLoginBtn.addEventListener('click', () => {
+
+if (token) {
+  // صديق بيحل التحدي
+  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google?state=${token}`;
+} else {
+  // صاحب التحدي
+  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+}
+});
+
+}
+
+// ✅ عند إغلاق الترحيب ➜ افتح تسجيل الدخول
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    hideCustomModal();
+  });
+};
+
+
+
 
 // ✅ ألوان المودال حسب المود
-function updateCustomModalColors() {
+function updateTwoModalsColors() {
   const mode = localStorage.getItem('mode') || 'light-gray2';
   const colorsMap = {
     "light-gray1": { bg: "#fff", color: "#222" },
@@ -60,9 +105,16 @@ function updateCustomModalColors() {
   };
 
   const c = colorsMap[mode] || colorsMap['light-gray2'];
-  welcomeModal.style.backgroundColor = c.bg;
-  welcomeModal.style.color = c.color;
-}
+  // طبعاً لو المودال ظاهر بنغير لونه
+  if (welcomeModal) {
+    welcomeModal.style.backgroundColor = c.bg;
+    welcomeModal.style.color = c.color;
+  }
+  if (loginModal) {
+    loginModal.style.backgroundColor = c.bg;
+    loginModal.style.color = c.color;
+  }
+};
 
 
 
@@ -70,9 +122,6 @@ function updateCustomModalColors() {
 // ✅ من هنا يبدأ كود الصفحة
 // ====================
 
-// ✅ 1. التوكن في الرابط
-const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('token');
 
 if (!token) {
   const lang = localStorage.getItem('lang') || 'ar';
@@ -86,7 +135,12 @@ if (!token) {
 // ✅  جلب اسم المالك
 async function fetchOwnerName(token) {
   try {
-    const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/owner?token=${token}`);
+    const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/owner?token=${token}` ,
+      {
+        method: 'GET',
+        credentials: 'include',
+      }
+    );
     if (!res.ok) throw new Error('Failed to fetch owner name');
     const data = await res.json();
     return data.name;
@@ -188,6 +242,7 @@ if (form) {
     try {
       const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/answer`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -226,17 +281,98 @@ if (form) {
 }
 
 
-addEventListener('DOMContentLoaded', () => {
-const lang = localStorage.getItem('lang') || 'ar';
-const massages = {
-  ar:  "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا" + "🕵️‍♂️😂 ", 
-  en:  "Welcome to E3rafni 🙌.Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓" 
-};
-showCustomModal(massages[lang]);
 
-getOwnerName();
-  
+
+
+async function checkLoginAndOwnerAndShowModal() {
+  const lang = localStorage.getItem('lang') || 'ar';
+
+  try {
+    // 1️⃣ هات بيانات المستخدم الحالي من السيشن
+    const userRes = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
+      credentials: 'include',
+      cache: 'no-store'
+    });
+    const userData = await userRes.json();
+
+    if (!userData.user) {
+      // ➜ مش مسجل دخول
+      showLoginModal(
+        lang === 'ar'
+          ? 'سجل دخولك بجوجل علشان نعرفك 👀'
+          : 'Sign in with Google so we know who you are 👀'
+      );
+      return;
+    }
+
+    // 2️⃣ هات بيانات صاحب التوكن
+    const ownerRes = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/owner?token=${token}`, {
+      credentials: 'include',
+      cache: 'no-store'
+    });
+    const ownerData = await ownerRes.json();
+
+    if (!ownerData || !ownerData.id) {
+      // ➜ التوكن غلط أو ملوش صاحب
+      showCustomModal(
+        lang === 'ar'
+          ? '❌ الرابط غير صالح أو التوكن خاطئ'
+          : 'Invalid or broken link ❌',
+        'error'
+      );
+      return;
+    }
+    // 3️⃣ تأكيد وجود الـ IDs قبل المقارنة
+    if (!userData.user.id || !ownerData.id) {
+      showCustomModal(
+        lang === 'ar'
+          ? '❌ حصل خطأ في التحقق من الهوية، حاول مرة تانية.'
+          : '❌ Error verifying user identity. Please try again.',
+        'error'
+      );
+      return;
+    }
+
+
+    // 3️⃣ قارن الـ IDs
+    if (userData.user.id.toString() === ownerData.id.toString()){
+      // ➜ هو صاحب التوكن ➜ مينفعش يحل عن نفسه
+      showLoginModal(
+        lang === 'ar'
+          ? '❌ مينفعش تحل التحدي بتاعك يا ناصح 😅.. روح سجل دخول بحساب تاني'
+          : '❌You cannot answer your own quiz! 😅 .. go login with another email'
+      );
+      return;
+    }
+
+    // 4️⃣ الشخص مسجل دخول ومش هو صاحب التوكن ➜ تمام
+    const messages = {
+      ar: "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 ", 
+      en: "Welcome to E3rafni 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓" 
+    };
+
+    showCustomModal(messages[lang]);
+ 
+
+  } catch (error) {
+    console.error('Error checking user and owner:', error);
+    showCustomModal(
+      lang === 'ar'
+        ? '⚠️ حصل خطأ، حاول تحدث الصفحة'
+        : '⚠️ An error occurred. Please try refreshing the page',
+      'error'
+    );
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    checkLoginAndOwnerAndShowModal();
+    getOwnerName();
 });
+
+
+
 
 
 // بيخلي الدالة متاحة عالميا عشان نقدر نناديها ف اي ملف تاني 

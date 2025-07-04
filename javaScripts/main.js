@@ -43,7 +43,8 @@ const translations = {
     dogs: "الكلاب",
     horses: "الخيل",
     noAnimal: "مليش ف الكلام ده يعم..خليها علي الله",
-    submit: "احفظ إجاباتك وابدأ التحدي",
+    dashSubmit: "احفظ إجاباتك وابدأ التحدي",
+    quizSubmit: "احفظ إجابتك يلا بينا نكشف حقيقتك" + " 🕵️‍♂️",
     closeBtn: "إغلاق",
     confirmBtn: "تأكيد",
     required: "من فضلك اختر إجابة لجميع الأسئلة.",
@@ -99,7 +100,8 @@ const translations = {
     dogs: "Dogs",
     horses: "Horses",
     noAnimal: "None of the above",
-    submit: "Save Answers & Start the Challenge",
+    dashSubmit: "Save Answers & Start the Challenge",
+    quizSubmit: "Save your answer, let’s see your truth 🕵️‍♂️",
     closeBtn: "Close",
     confirmBtn: "confirm",
     required: "Please select an answer for all Qs.",
@@ -217,7 +219,8 @@ function changeMode(value) {
     userPhoto.src = generateAvatar(userName);
   };
 
-window.updateOwnerNameColors?.();  
+window.updateOwnerNameColors?.();
+  
 };
 // بتغير اللغة عند اختيارها من السيلكت
 function setLanguage(lang) {
@@ -240,8 +243,7 @@ function setLanguage(lang) {
       }
     }
   });
-
- window.getQuizHeader?.();
+window.getQuizHeader?.();
 
 
 
@@ -262,19 +264,14 @@ function setLanguage(lang) {
 
 
 
-
-
-
-
-
-
-// جعل الدوال متاحة للاستخدام من الـ HTML
-window.setLanguage = setLanguage;
-window.changeMode = changeMode;
-
-
-
-
+// ====================
+const mainGoogleLoginBtn = document.getElementById('mainGoogleLoginBtn');
+  if (mainGoogleLoginBtn) {
+  mainGoogleLoginBtn.addEventListener('click', () => {
+    // هنا بقى اعمل ريديركت للـ جوجل
+    window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+  });
+};
 
 
 // الدوال الل بتتنفذ عند تحميل الصفحة
@@ -293,3 +290,23 @@ window.addEventListener('DOMContentLoaded', () => {
   if (langSelect) langSelect.value = savedLang;
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// جعل الدوال متاحة للاستخدام من الـ HTML
+window.setLanguage = setLanguage;
+window.changeMode = changeMode;

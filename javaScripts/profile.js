@@ -197,6 +197,7 @@ function getMessage(key, replacements = {}) {
 }
 
 
+
 // زرار الحصول علي الرابط
 document.getElementById('URLButton').addEventListener('click', async (e) => {
   e.preventDefault();
@@ -211,7 +212,6 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 
     const data = await res.json();
 
-    console.log('✅ API response:', data);
 
     if (!data.user) {
       showConfirmationModal(getMessage('noUser'), null, true);
@@ -267,6 +267,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
     })
     .then(res => {
       if (!res.ok) throw new Error('Logout failed');
+      localStorage.removeItem('loggedIn');
       setTimeout(() => {
         window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
       }, 1000);
