@@ -339,8 +339,8 @@ async function checkLoginAndOwnerAndShowModal() {
       // ➜ هو صاحب التوكن ➜ مينفعش يحل عن نفسه
       showLoginModal(
         lang === 'ar'
-          ? '❌ مينفعش تحل التحدي بتاعك يا ناصح 😅.. روح سجل دخول بحساب تاني'
-          : '❌You cannot answer your own quiz! 😅 .. go login with another email'
+          ? '❌ مينفعش تحل التحدي بتاعك يا ناصح 😅.. ابعت اللينك لحبايبك هم الل يجاوبوا'
+          : '❌You cannot answer your own quiz! 😅 .. Send URL to your friends who they answer'
       );
       return;
     }
