@@ -271,7 +271,7 @@ body.lang-en option {
   direction: ltr;
 }
 /* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
-#welcome-modal, #confirm-modal, #login-modal {
+#welcome-modal, #confirm-modal, #quiz-login-modal,#quiz-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -291,12 +291,12 @@ body.lang-en option {
   transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
-#welcome-modal.show , #confirm-modal.show , #login-modal.show {
+#welcome-modal.show , #confirm-modal.show , #quiz-login-modal.show, #quiz-modal.show {
   opacity: 1;
   visibility: visible;
 }
 /* لاخفاء المحتوي الداخلي عند ظهور الموديل */
-#modal-overlay {
+#modal-overlay,#quiz-modal-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -306,11 +306,11 @@ body.lang-en option {
   z-index: 9998;
   display: none;
 }
-#modal-overlay.show {
+#modal-overlay.show,#quiz-modal-overlay.show {
   display: block;
 }
-
-#close-btn , #cancel-btn{
+/* ورار الاغلاق */
+#close-btn , #cancel-btn ,#quiz-close-btn{
   margin-top: 15px;
   padding: 8px 20px;
   border: none;
@@ -322,7 +322,7 @@ body.lang-en option {
   transition: background-color 0.3s;
 }
 
-#close-btn:hover ,#cancel-btn:hover{
+#close-btn:hover ,#cancel-btn:hover,#quiz-close-btn:hover {
   background-color: #333;
 }
 #confirm-btn{

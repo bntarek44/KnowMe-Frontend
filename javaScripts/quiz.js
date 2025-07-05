@@ -3,64 +3,65 @@ const urlParams = new URLSearchParams(window.location.search);
 const token = urlParams.get('state') || urlParams.get('token');
 
 // ====================
-const overlay = document.getElementById('modal-overlay');
+const quizOverlay = document.getElementById('quiz-modal-overlay');
 // Welcome Modal
-const welcomeModal = document.getElementById('welcome-modal');
-const welcomeText = document.getElementById('welcome-text');
-const closeBtn = document.getElementById('close-btn');
+const quizModal = document.getElementById('quiz-modal');
+const quizModalText = document.getElementById('quiz-modal-text');
+const quizCloseBtn = document.getElementById('quiz-close-btn');
 // Login Modal
-const loginModal = document.getElementById('login-modal');
-const loginText = document.getElementById('login-text');
+const quizLoginModal = document.getElementById('quiz-login-modal');
+const quizLoginText = document.getElementById('quiz-login-text');
 const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 
 
 // ======================
 // ✅ خلفية المودال
 // ======================
+
 function showOverlay() {
-  overlay.style.display = 'block';
+  quizOverlay.style.display = 'block';
   document.body.style.overflow = 'hidden';
 }
 function hideOverlay() {
-  overlay.style.display = 'none';
+  quizOverlay.style.display = 'none';
   document.body.style.overflow = '';
 };
 
 // ======================
 // ✅ مودال الترحيب
 // ======================
-function showCustomModal(message, type = 'success') {
-  welcomeText.innerHTML = message;
-  welcomeText.style.fontSize = '1.4rem';
+function showQuizModal(message, type = 'success') {
+  quizModalText.innerHTML = message;
+  quizModalText.style.fontSize = '1.4rem';
 
   if (type === 'error') {
-    welcomeText.style.color = '#dc2626';
+    quizModalText.style.color = '#dc2626';
   } else {
-    welcomeText.style.color = '';
+    quizModalText.style.color = '';
   }
 
-  welcomeModal.classList.add('show');
+  quizModal.classList.add('show');
   updateTwoModalsColors();
   showOverlay();
 }
 
-function hideCustomModal() {
-  welcomeModal.classList.remove('show');
+function hideQuizModal() {
+  quizModal.classList.remove('show');
   hideOverlay();
 }
 // ======================
 // ✅ مودال تسجيل الدخول
 // ======================
 function showLoginModal(message) {
-  loginText.innerHTML = message;
-  loginText.style.fontSize = '1.4rem';
-  loginModal.classList.add('show');
+  quizLoginText.innerHTML = message;
+  quizLoginText.style.fontSize = '1.4rem';
+  quizLoginModal.classList.add('show');
   updateTwoModalsColors();
   showOverlay();
 }
 
 function hideLoginModal() {
-  loginModal.classList.remove('show');
+  quizLoginModal.classList.remove('show');
   hideOverlay();
 }
 // ✅ زر تسجيل الدخول
@@ -79,9 +80,9 @@ if (token) {
 }
 
 // ✅ عند إغلاق الترحيب ➜ افتح تسجيل الدخول
-if (closeBtn) {
-  closeBtn.addEventListener('click', () => {
-    hideCustomModal();
+if (quizCloseBtn) {
+  quizCloseBtn.addEventListener('click', () => {
+    hideQuizModal();
   });
 };
 
@@ -106,15 +107,16 @@ function updateTwoModalsColors() {
 
   const c = colorsMap[mode] || colorsMap['light-gray2'];
   // طبعاً لو المودال ظاهر بنغير لونه
-  if (welcomeModal) {
-    welcomeModal.style.backgroundColor = c.bg;
-    welcomeModal.style.color = c.color;
+  if (quizModal) {
+    quizModal.style.backgroundColor = c.bg;
+    quizModal.style.color = c.color;
   }
-  if (loginModal) {
-    loginModal.style.backgroundColor = c.bg;
-    loginModal.style.color = c.color;
+  if (quizLoginModal) {
+    quizLoginModal.style.backgroundColor = c.bg;
+    quizLoginModal.style.color = c.color;
   }
 };
+
 
 
 
@@ -123,15 +125,7 @@ function updateTwoModalsColors() {
 // ====================
 
 
-if (!token) {
-  const lang = localStorage.getItem('lang') || 'ar';
-  const message = lang === 'ar'
-    ? "❌ الرابط غير صالح! لا يوجد توكن."
-    : "Invalid link! No token found.❌";
-  
-  showCustomModal(message, 'error');
-  throw new Error("Missing token in URL");
-}
+
 // ✅  جلب اسم المالك
 async function fetchOwnerName(token) {
   try {
@@ -212,7 +206,7 @@ if (form) {
     e.preventDefault();
 
     const lang = localStorage.getItem("lang") || "ar";
-    const submitBtn = form.querySelector('button[type="submit"]');
+    const quizSubmitBtn = form.querySelector('#quizGoogleLoginBtn');
     const answers = {};
 
     // اجمع الإجابات
@@ -231,13 +225,13 @@ if (form) {
     });
 
     if (missing) {
-      showCustomModal(lang === "ar" ? "⚠️ من فضلك أجب على كل الأسئلة" : "⚠️ Please answer all questions", 'error');
+      showQuizModal(lang === "ar" ? "⚠️ من فضلك أجب على كل الأسئلة" : "⚠️ Please answer all questions", 'error');
       return;
     }
 
     // عطل الزر
-    submitBtn.disabled = true;
-    submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
+    quizSubmitBtn.disabled = true;
+    quizSubmitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
     try {
       const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/answer`, {
@@ -262,20 +256,20 @@ if (form) {
       await res.json();
       console.log("✅ تم الحفظ بنجاح");
 
-      showCustomModal(
+      showQuizModal(
         lang === "ar" ? "✅ تم الحفظ بنجاح. شكرا لمشاركتك!" : "✅ Saved successfully. Thank you!"
       );
 
-      submitBtn.textContent = lang === 'ar' ? '✅ تم الحفظ' : '✅ Saved';
+      quizSubmitBtn.textContent = lang === 'ar' ? '✅ تم الحفظ' : '✅ Saved';
 
     } catch (error) {
       console.error(error);
-      showCustomModal(
+      showQuizModal(
         lang === "ar" ? "❌ حدث خطأ أثناء حفظ الإجابات. حاول مرة أخرى." : "❌ Error saving your answers. Please try again.",
         'error'
       );
-      submitBtn.disabled = false;
-      submitBtn.textContent = lang === 'ar' ? 'احفظ إجاباتك وابدأ التحدي' : 'Save your answers and start the challenge';
+      quizSubmitBtn.disabled = false;
+      quizSubmitBtn.textContent = lang === 'ar' ? 'احفظ إجاباتك وابدأ التحدي' : 'Save your answers and start the challenge';
     }
   });
 }
@@ -284,7 +278,7 @@ if (form) {
 
 
 
-async function checkLoginAndOwnerAndShowModal() {
+async function checkLoginAndOwnerAndQuizModal() {
   const lang = localStorage.getItem('lang') || 'ar';
 
   try {
@@ -314,7 +308,7 @@ async function checkLoginAndOwnerAndShowModal() {
 
     if (!ownerData || !ownerData.id) {
       // ➜ التوكن غلط أو ملوش صاحب
-      showCustomModal(
+      showQuizModal(
         lang === 'ar'
           ? '❌ الرابط غير صالح أو التوكن خاطئ'
           : 'Invalid or broken link ❌',
@@ -324,7 +318,7 @@ async function checkLoginAndOwnerAndShowModal() {
     }
     // 3️⃣ تأكيد وجود الـ IDs قبل المقارنة
     if (!userData.user.id || !ownerData.id) {
-      showCustomModal(
+      showQuizModal(
         lang === 'ar'
           ? '❌ حصل خطأ في التحقق من الهوية، حاول مرة تانية.'
           : '❌ Error verifying user identity. Please try again.',
@@ -339,8 +333,8 @@ async function checkLoginAndOwnerAndShowModal() {
       // ➜ هو صاحب التوكن ➜ مينفعش يحل عن نفسه
       showLoginModal(
         lang === 'ar'
-          ?  ' ❌ مينفعش تحل التحدي بتاعك يا ناصح 😅..سجل دخول بحساب تاني' +"وخلي صحابك هم الل يجاوبوا عنك"   
-          : '❌You cannot answer your own quiz! 😅 ..مogin with another email and Let your friends answer about you'
+          ? '❌ مينفعش تحل التحدي بتاعك يا ناصح 😅..سجل دخول بحساب تاني وخلي صحابك هم الل يجاوبوا عنك'
+          : '❌You cannot answer your own quiz! 😅 ..Login with another email and Let your friends answer about you'
       );
       return;
     }
@@ -351,12 +345,12 @@ async function checkLoginAndOwnerAndShowModal() {
       en: "Welcome to E3rafni 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓" 
     };
 
-    showCustomModal(messages[lang]);
+    showQuizModal(messages[lang]);
  
 
   } catch (error) {
     console.error('Error checking user and owner:', error);
-    showCustomModal(
+    showQuizModal(
       lang === 'ar'
         ? '⚠️ حصل خطأ، حاول تحدث الصفحة'
         : '⚠️ An error occurred. Please try refreshing the page',
@@ -367,9 +361,21 @@ async function checkLoginAndOwnerAndShowModal() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    checkLoginAndOwnerAndShowModal();
-    getOwnerName();
+  if (!token) {
+    const lang = localStorage.getItem('lang') || 'ar';
+    const message = lang === 'ar'
+      ? "❌ الرابط غير صالح! هذه الصفحة غير مملوكة لأي شخص.. اذهب الي صفحة تسجيل الدخول"
+      : "Invalid link! This page doesn`t belong to any one. please, Go to LOGIN page❌";
+
+    showLoginModal(message, 'error');
+    return;
+
+  }
+
+  checkLoginAndOwnerAndQuizModal();
+  getOwnerName();
 });
+
 
 
 

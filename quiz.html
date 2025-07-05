@@ -251,7 +251,7 @@
 
      
 
-        <button type="submit" class="google-btn  btn w-75 submitButton" id="googleLoginBtn" data-key="quizSubmit">
+        <button type="submit" class="google-btn  btn w-75 submitButton" id="quizGoogleLoginBtn" data-key="quizSubmit">
       احفظ اجابتك
         </button>
       </form>
@@ -274,15 +274,16 @@
 
 
   <!-- رسالة الترحيب -->
-  <div id="modal-overlay"></div>
-  <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
-    <p id="welcome-text" data-key="welcome"></p>
-    <button id="close-btn" data-key="closeBtn">إغلاق</button>
-  </div>
+<div id="quiz-modal-overlay" ></div>
+<div id="quiz-modal"  role="dialog" aria-modal="true" aria-labelledby="quiz-modal-text">
+  <p id="quiz-modal-text" ></p>
+  <button id="quiz-close-btn" data-key="closeBtn">إغلاق</button>
+</div>
+
 
   <!-- ✅ مودال تسجيل الدخول -->
-  <div id="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-text">
-    <p id="login-text"></p>
+  <div id="quiz-login-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-login-text">
+    <p id="quiz-login-text"></p>
     <button id="quiz_google_btn" data-key="login" class="google-btn light d-inline-flex align-items-center justify-content-center">
       تسجيل الدخول بجوجل
     </button>
@@ -291,7 +292,7 @@
   <!-- سكريبتات -->
 
 <script src="./javaScripts/main.js"></script>
-  <script src="./javaScripts/quiz.js"></script>
+<script src="./javaScripts/quiz.js"></script>
 </body>
 
 </html>
