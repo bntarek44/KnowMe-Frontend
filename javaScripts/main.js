@@ -42,7 +42,7 @@ const translations = {
     cats: "القطط",
     dogs: "الكلاب",
     horses: "الخيل",
-    noAnimal: "مليش ف الكلام ده يعم..خليها علي الله",
+    noAnimal: "مليش ف الكلام ده يعم..خليها علي الله" + "😂",
     dashSubmit: "احفظ إجاباتك وابدأ التحدي",
     quizSubmit: "احفظ إجابتك يلا بينا نكشف حقيقتك" + " 🕵️‍♂️",
     closeBtn: "إغلاق",
@@ -99,7 +99,7 @@ const translations = {
     cats: "Cats",
     dogs: "Dogs",
     horses: "Horses",
-    noAnimal: "None of the above",
+    noAnimal: "مليش ف الكلام ده يعم .. خليها علي الله" + "😂",
     dashSubmit: "Save Answers & Start the Challenge",
     quizSubmit: "Save your answer, let’s see your truth 🕵️‍♂️",
     closeBtn: "Close",
