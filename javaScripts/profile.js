@@ -1,12 +1,12 @@
-const overlay = document.getElementById('modal-overlay');
+const overlay = document.getElementById('profile-modal-overlay');
 
 function showOverlay() {
-  overlay.style.display = 'block';
+  overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
 function hideOverlay() {
-  overlay.style.display = 'none';
+  overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
 

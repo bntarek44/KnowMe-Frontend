@@ -1,50 +1,56 @@
 let redirectAfterModalClose = false;
-const overlay = document.getElementById('modal-overlay');
+const overlay = document.getElementById('dash-modal-overlay');
+// Login Modal
+const dashLoginModal = document.getElementById('dash-login-modal');
+const dashLoginText = document.getElementById('dash-login-text');
+const dashGoogleLoginBtn = document.getElementById('dash_google_btn');
 
 function showOverlay() {
-  overlay.style.display = 'block';
+  overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
 function hideOverlay() {
-  overlay.style.display = 'none';
+  overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
-
-
-// الدوال الل بتتنفذ عند تحميل الصفحة
-window.addEventListener('DOMContentLoaded', () => {
-// خاص بال ويلكام موديل
-  fetchUserName().then(name => {
-    showWelcomeModal(name);
-    }).catch(err => {
-    console.error('Error fetching user:', err);
-    showWelcomeModal(null);
-    });
-
-    document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
-    updateWelcomeModalColors();
-    loadSavedQuizAnswer();
-
-});
 
 
 
 // بيستقبل بيانات من الباك اند
 async function fetchUserName() {
-    const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
+  const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
     credentials: 'include'
-    });
-    if (!response.ok) throw new Error('Failed to fetch user');
-    const data = await response.json();
-    return data.user ? data.user.name : null;
+  });
+
+  if (response.status === 401) {
+    throw new Error('NotAuthenticated');
+  }
+
+  if (!response.ok) {
+    throw new Error('ServerError');
+  }
+
+  const data = await response.json();
+
+  if (!data.user || !data.user.name) {
+    throw new Error('NotAuthenticated');
+  }
+
+  return data.user.name;
 }
+
+
+
+
 // بتحول الاسم الكامل الل جبناه من الباك اند الي الاسم الاول بس 
 function getFirstName(fullName) {
     if (!fullName) return null;
     return fullName.split(' ')[0];
 }
-
+// ======================
+// ✅ مودال الترحيب 
+// ======================
 // بتكنب الرسالة في الموديل واحنا مدينها السيناريوهين بتوع اللغة بالتفصيل مش محتاجين نحطهم ف القاموس
 function showWelcomeModal(name) {
     redirectAfterModalClose = false;
@@ -53,13 +59,14 @@ function showWelcomeModal(name) {
     const lang = localStorage.getItem('lang') || 'ar';
     const firstName = getFirstName(name);
     const welcomeMessages = {
-    ar: name ? `أهلاً بيك يا <strong><em>${firstName}</em></strong>🙌في اعرفني` : "🙌 أهلاً بيك في اعرفني",
-    en: name ? `Welcome,<strong><em>${firstName}</em></strong>,🙌to E3rafni ` : "Welcome to E3rafni 🙌"
+    ar:  `أهلاً بيك يا <strong><em>${firstName}</em></strong>🙌في اعرفني`,
+    en:  `Welcome,<strong><em>${firstName}</em></strong>,🙌to E3rafni `
     };
     welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
     welcomeText.style.fontSize = '1.5rem';
     modal.classList.add('show');
     showOverlay();
+    updateTwoModalsColors();
 }
 
 // بتخفي الموديل
@@ -75,11 +82,33 @@ function hideWelcomeModal() {
   }
 }
 
+// ======================
+// ✅ مودال تسجيل الدخول
+// ======================
+function showLoginModal(message) {
+  dashLoginText.innerHTML = message;
+  dashLoginText.style.fontSize = '1.4rem';
+  dashLoginModal.classList.add('show');
+  showOverlay();
+  updateTwoModalsColors();
+}
+
+function hideLoginModal() {
+  dashLoginModal.classList.remove('show');
+  hideOverlay();
+}
+// ✅ زر تسجيل الدخول
+if (dashGoogleLoginBtn) {
+dashGoogleLoginBtn.addEventListener('click', () => {
+  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+});
+};
+
 
 
 
 // بتغير الالوان والخلفيى بتاع الموديل 
-function updateWelcomeModalColors() {
+function updateTwoModalsColors() {
     const mode = localStorage.getItem('mode') || 'light-gray2';
     const colorsMap = {
     "light-gray1": { bg: "#fff", color: "#222" },
@@ -103,6 +132,13 @@ function updateWelcomeModalColors() {
 
 // لاستقبال الاجابات من الباك اند وملء بها النموذج تلقائيا عند التعديل
 async function loadSavedQuizAnswer() {
+    const lang = localStorage.getItem('lang') || 'ar';
+    const dashSubmitButton = document.querySelector('#self-quiz-form button[type="submit"]');
+    const SubmitForUpdate = {
+    ar:  'احفظالتعديلات واستمر في التحدي' + " ✨",
+    en:  "Save changes and continue the challenge" + " ✨"
+    };
+    welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
   try {
     const res = await fetch('https://knowme-backend-production.up.railway.app/auth/data', {
       method: "GET",
@@ -122,11 +158,11 @@ async function loadSavedQuizAnswer() {
         radio.checked = true;
       }
     }
+    dashSubmitButton.innerHTML = SubmitForUpdate[lang] || SubmitForUpdate['ar'];
   } catch (err) {
     console.log('No saved answer or error:', err.message);
   }
 }
-
 
 
 
@@ -218,8 +254,35 @@ function showCustomModal(message, type = 'success') {
   }
 
   modal.classList.add('show');
-  updateWelcomeModalColors();
+  updateTwoModalsColors();
   showOverlay();
 }
+
+
+
+
+
+// الدوال الل بتتنفذ عند تحميل الصفحة
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('lang') || 'ar';
+  fetchUserName()
+    .then(name => {
+      showWelcomeModal(name);
+      document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
+      loadSavedQuizAnswer();
+    })
+    .catch(err => {
+      if (err.message === 'NotAuthenticated') {
+        showLoginModal(
+          lang === 'ar'
+            ? 'سجل دخولك بجوجل علشان نعرفك 👀'
+            : 'Sign in with Google so we know who you are 👀'
+        );
+      } else {
+        console.error('Error loading dashboard:', err);
+        showCustomModal('حدث خطأ أثناء تحميل الصفحة. حاول مرة أخرى.', 'error');
+      }
+    });
+});
 
 

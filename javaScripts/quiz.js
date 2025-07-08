@@ -19,13 +19,14 @@ const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 // ======================
 
 function showOverlay() {
-  quizOverlay.style.display = 'block';
+  quizOverlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
+
 function hideOverlay() {
-  quizOverlay.style.display = 'none';
+  quizOverlay.classList.remove('show');
   document.body.style.overflow = '';
-};
+}
 
 // ======================
 // ✅ مودال الترحيب

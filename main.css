@@ -270,8 +270,9 @@ body.lang-en option {
   text-align: left;
   direction: ltr;
 }
+/* الاجزاء الخاصة بالموديلز */
 /* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
-#welcome-modal, #confirm-modal, #quiz-login-modal,#quiz-modal {
+#welcome-modal,#dash-login-modal, #confirm-modal, #quiz-login-modal,#quiz-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -291,12 +292,12 @@ body.lang-en option {
   transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
-#welcome-modal.show , #confirm-modal.show , #quiz-login-modal.show, #quiz-modal.show {
+#welcome-modal.show ,#dash-login-modal.show, #confirm-modal.show , #quiz-login-modal.show, #quiz-modal.show {
   opacity: 1;
   visibility: visible;
 }
 /* لاخفاء المحتوي الداخلي عند ظهور الموديل */
-#modal-overlay,#quiz-modal-overlay {
+#dash-modal-overlay,#quiz-modal-overlay,#profile-modal-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -305,8 +306,9 @@ body.lang-en option {
   background-color: rgba(0, 0, 0, 0.5); /* تعتيم أسود خفيف */
   z-index: 9998;
   display: none;
+  transition: .5s ease-in-out;
 }
-#modal-overlay.show,#quiz-modal-overlay.show {
+#dash-modal-overlay.show,#quiz-modal-overlay.show,#profile-modal-overlay.show {
   display: block;
 }
 /* ورار الاغلاق */

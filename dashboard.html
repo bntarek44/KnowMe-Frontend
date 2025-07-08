@@ -245,7 +245,7 @@
 
      
 
-        <button type="submit" class="google-btn  btn w-75 submitButton" id="googleLoginBtn" data-key="dashSubmit">
+        <button type="submit" class="google-btn  btn w-75 submitButton" id="dashSubmitButton" data-key="dashSubmit">
           احفظ إجاباتك وابدأ التحدي
         </button>
       </form>
@@ -268,10 +268,17 @@
 
 
   <!-- رسالة الترحيب -->
-  <div id="modal-overlay"></div>
+  <div id="dash-modal-overlay"></div>
   <div id="welcome-modal" role="dialog" aria-modal="true" aria-labelledby="welcome-text">
     <p id="welcome-text" data-key="welcome"></p>
     <button id="close-btn" data-key="closeBtn">إغلاق</button>
+  </div>
+    <!-- ✅ مودال تسجيل الدخول -->
+  <div id="dash-login-modal" role="dialog" aria-modal="true" aria-labelledby="dash-login-text">
+    <p id="dash-login-text"></p>
+    <button id="dash_google_btn" data-key="login" class="google-btn light d-inline-flex align-items-center justify-content-center">
+      تسجيل الدخول بجوجل
+    </button>
   </div>
 
   <!-- سكريبتات -->
