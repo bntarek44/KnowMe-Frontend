@@ -1,6 +1,10 @@
 // ✅ 1. التوكن في الرابط
 const urlParams = new URLSearchParams(window.location.search);
-const token = urlParams.get('state') || urlParams.get('token');
+const quizTokenWithPrefix = urlParams.get('quizToken');
+let rawQuizToken = quizTokenWithPrefix;
+if (quizTokenWithPrefix && quizTokenWithPrefix.startsWith('quiz-')) {
+  rawQuizToken = quizTokenWithPrefix.replace('quiz-', '');
+}
 
 // ====================
 const quizOverlay = document.getElementById('quiz-modal-overlay');
@@ -12,7 +16,6 @@ const quizCloseBtn = document.getElementById('quiz-close-btn');
 const quizLoginModal = document.getElementById('quiz-login-modal');
 const quizLoginText = document.getElementById('quiz-login-text');
 const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
-
 
 // ======================
 // ✅ خلفية المودال
@@ -27,6 +30,7 @@ function hideOverlay() {
   quizOverlay.classList.remove('show');
   document.body.style.overflow = '';
 }
+
 
 // ======================
 // ✅ مودال الترحيب
@@ -69,12 +73,12 @@ function hideLoginModal() {
 if (quizGoogleLoginBtn) {
 quizGoogleLoginBtn.addEventListener('click', () => {
 
-if (token) {
+if (quizTokenWithPrefix) {
   // صديق بيحل التحدي
-  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google?state=${token}`;
+  window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google?state=${quizTokenWithPrefix}`;
 } else {
   // صاحب التحدي
-  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+  window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
 }
 });
 
@@ -128,9 +132,9 @@ function updateTwoModalsColors() {
 
 
 // ✅  جلب اسم المالك
-async function fetchOwnerName(token) {
+async function fetchOwnerName(rawQuizToken) {
   try {
-    const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/owner?token=${token}` ,
+    const res = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}` ,
       {
         method: 'GET',
         credentials: 'include',
@@ -146,7 +150,7 @@ async function fetchOwnerName(token) {
 }
 
 const getOwnerName = async function () {
-  const ownerName = await fetchOwnerName(token);
+  const ownerName = await fetchOwnerName(rawQuizToken);
   const ownerNameElement = document.getElementById('ownerName');
   if (ownerNameElement) {
     ownerNameElement.textContent = ownerName || 'صاحب التحدي'; // افتراضي إذا لم يوجد اسم
@@ -235,14 +239,14 @@ if (form) {
     quizSubmitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
     try {
-      const res = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/answer`, {
+      const res = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          token,
+          token: `${rawQuizToken}`,
           answers
         })
       });
@@ -276,7 +280,14 @@ if (form) {
 }
 
 
-
+// دالة لتعطيل كل الأزرار والروابط في الصفحة
+function disableAllButtonsAndLinks() {
+  document.querySelectorAll('button, a').forEach(el => {
+    el.disabled = true;
+    el.style.pointerEvents = 'none';
+    el.style.opacity = '0.5';
+  });
+}
 
 
 async function checkLoginAndOwnerAndQuizModal() {
@@ -284,7 +295,7 @@ async function checkLoginAndOwnerAndQuizModal() {
 
   try {
     // 1️⃣ هات بيانات المستخدم الحالي من السيشن
-    const userRes = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
+    const userRes = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-store'
     });
@@ -301,7 +312,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     }
 
     // 2️⃣ هات بيانات صاحب التوكن
-    const ownerRes = await fetch(`https://knowme-backend-production.up.railway.app/auth/quiz/owner?token=${token}`, {
+    const ownerRes = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
       credentials: 'include',
       cache: 'no-store'
     });
@@ -362,13 +373,18 @@ async function checkLoginAndOwnerAndQuizModal() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (!token) {
+  if (!quizTokenWithPrefix) {
     const lang = localStorage.getItem('lang') || 'ar';
     const message = lang === 'ar'
-      ? "❌ الرابط غير صالح! هذه الصفحة غير مملوكة لأي شخص.. اذهب الي صفحة تسجيل الدخول"
-      : "Invalid link! This page doesn`t belong to any one. please, Go to LOGIN page❌";
+      ? "❌ الرابط غير صالح! هذه الصفحة غير مملوكة لأي شخص."
+      : "Invalid link! This page doesn`t belong to any one.❌";
 
-    showLoginModal(message, 'error');
+    showQuizModal(message, 'error');
+          // ✅ عطل زر الإغلاق في المودال
+    if (quizCloseBtn) {
+      quizCloseBtn.style.display = 'none';
+    }
+    disableAllButtonsAndLinks(); // عطل كل الأزرار والروابط
     return;
 
   }

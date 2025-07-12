@@ -100,8 +100,13 @@
 
 
 
-<!-- الموديل الخاص بالزراير -->
 <div id="profile-modal-overlay"></div>
+<!-- موديل الترحيب والرسايل -->
+<div id="profile-madal"  role="dialog" aria-modal="true" aria-labelledby="profile-modal-text">
+  <p id="profile-modal-text" ></p>
+  <button id="profile-close-btn" data-key="closeBtn">إغلاق</button>
+</div>
+<!-- الموديل الخاص بالزراير -->
 <div id="confirm-modal" class="confirm-modal" role="dialog" aria-modal="true">
   <p style="font-size: large; font-weight: bold;" id="confirm-message"></p>
   <div class="modal-buttons mt-3" style="display: flex; justify-content: space-around;">
@@ -109,6 +114,14 @@
     <button id="confirm-btn" data-key="confirmBtn" class="btn btn-danger">تأكيد</button>
   </div>
 </div>
+<!-- ✅ مودال تسجيل الدخول -->
+<div id="profile-login-modal" role="dialog" aria-modal="true" aria-labelledby="profile-login-text">
+  <p id="profile-login-text"></p>
+  <button id="profile_google_btn" data-key="login" class="google-btn light d-inline-flex align-items-center justify-content-center">
+    تسجيل الدخول بجوجل
+  </button>
+</div>
+
 
 
 

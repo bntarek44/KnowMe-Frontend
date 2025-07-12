@@ -1,9 +1,13 @@
+let userLinkToken = null;
 let redirectAfterModalClose = false;
 const overlay = document.getElementById('dash-modal-overlay');
 // Login Modal
 const dashLoginModal = document.getElementById('dash-login-modal');
 const dashLoginText = document.getElementById('dash-login-text');
 const dashGoogleLoginBtn = document.getElementById('dash_google_btn');
+
+
+
 
 function showOverlay() {
   overlay.classList.add('show');
@@ -16,10 +20,9 @@ function hideOverlay() {
 }
 
 
-
-// بيستقبل بيانات من الباك اند
-async function fetchUserName() {
-  const response = await fetch('https://knowme-backend-production.up.railway.app/auth/user', {
+// ✅ بيستقبل بيانات من الباك اند
+async function fetchUserData() {
+  const response = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', {
     credentials: 'include'
   });
 
@@ -37,7 +40,10 @@ async function fetchUserName() {
     throw new Error('NotAuthenticated');
   }
 
-  return data.user.name;
+  return {
+    name: data.user.name,
+    linkToken: data.user.linkToken
+  };
 }
 
 
@@ -75,10 +81,13 @@ function hideWelcomeModal() {
   hideOverlay();
 
   if (redirectAfterModalClose) {
+    if (userLinkToken) {
     // تأخير قبل التحويل - هنا 2 ثانية (2000 ملي ثانية)
     setTimeout(() => {
-      window.location.href = 'https://know-me-frontend-swart.vercel.app/profile.html';
+      window.location.href = `https://know-me-frontend-swart.vercel.app/profile.html?profileToken=profile-${userLinkToken}`;
     }, 1000);
+    }
+
   }
 }
 
@@ -100,17 +109,14 @@ function hideLoginModal() {
 // ✅ زر تسجيل الدخول
 if (dashGoogleLoginBtn) {
 dashGoogleLoginBtn.addEventListener('click', () => {
-  window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+  window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
 });
 };
 
-
-
-
 // بتغير الالوان والخلفيى بتاع الموديل 
 function updateTwoModalsColors() {
-    const mode = localStorage.getItem('mode') || 'light-gray2';
-    const colorsMap = {
+  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const colorsMap = {
     "light-gray1": { bg: "#fff", color: "#222" },
     "light-gray2": { bg: "#fff", color: "#222" },
     "light-beige": { bg: "#fff9f0", color: "#222" },
@@ -121,12 +127,24 @@ function updateTwoModalsColors() {
     "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
     "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
     "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
-    };
-    const modal = document.getElementById('welcome-modal');
-    const c = colorsMap[mode] || colorsMap['light-gray2'];
-    modal.style.backgroundColor = c.bg;
-    modal.style.color = c.color;
-}
+  };
+
+  const c = colorsMap[mode] || colorsMap['light-gray2'];
+  const dashWelcomeModal = document.getElementById('welcome-modal');
+  // طبعاً لو المودال ظاهر بنغير لونه
+  if (dashWelcomeModal) {
+    dashWelcomeModal.style.backgroundColor = c.bg;
+    dashWelcomeModal.style.color = c.color;
+  }
+  if (dashLoginModal) {
+    dashLoginModal.style.backgroundColor = c.bg;
+    dashLoginModal.style.color = c.color;
+  }
+};
+
+
+
+
 
 
 
@@ -138,9 +156,8 @@ async function loadSavedQuizAnswer() {
     ar:  'احفظالتعديلات واستمر في التحدي' + " ✨",
     en:  "Save changes and continue the challenge" + " ✨"
     };
-    welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
   try {
-    const res = await fetch('https://knowme-backend-production.up.railway.app/auth/data', {
+    const res = await fetch('knowme-backend-production-b054.up.railway.app/auth/data', {
       method: "GET",
       credentials: 'include'
     });
@@ -163,6 +180,7 @@ async function loadSavedQuizAnswer() {
     console.log('No saved answer or error:', err.message);
   }
 }
+
 
 
 
@@ -207,7 +225,7 @@ if (form) {
     submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
     // الإرسال للباك إند
-    fetch("https://knowme-backend-production.up.railway.app/auth/data", {
+    fetch("knowme-backend-production-b054.up.railway.app/auth/data", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -242,6 +260,7 @@ function showCustomModal(message, type = 'success') {
   const modal = document.getElementById('welcome-modal');
   const welcomeText = document.getElementById('welcome-text');
 
+
   welcomeText.innerHTML = message;
   welcomeText.style.fontSize = '1.4rem';
 
@@ -265,8 +284,9 @@ function showCustomModal(message, type = 'success') {
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
   const lang = localStorage.getItem('lang') || 'ar';
-  fetchUserName()
-    .then(name => {
+  fetchUserData()
+    .then(({ name, linkToken }) => {
+      userLinkToken = linkToken;  // ✅ خزّن التوكن العالمي
       showWelcomeModal(name);
       document.getElementById('close-btn').addEventListener('click', hideWelcomeModal);
       loadSavedQuizAnswer();

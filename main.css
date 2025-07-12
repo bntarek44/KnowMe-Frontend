@@ -272,7 +272,7 @@ body.lang-en option {
 }
 /* الاجزاء الخاصة بالموديلز */
 /* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
-#welcome-modal,#dash-login-modal, #confirm-modal, #quiz-login-modal,#quiz-modal {
+#welcome-modal,#dash-login-modal, #confirm-modal,#profile-login-modal,#profile-madal, #quiz-login-modal,#quiz-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -292,7 +292,7 @@ body.lang-en option {
   transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
-#welcome-modal.show ,#dash-login-modal.show, #confirm-modal.show , #quiz-login-modal.show, #quiz-modal.show {
+#welcome-modal.show ,#dash-login-modal.show, #confirm-modal.show ,#profile-login-modal.show,#profile-madal.show, #quiz-login-modal.show, #quiz-modal.show {
   opacity: 1;
   visibility: visible;
 }
@@ -312,7 +312,7 @@ body.lang-en option {
   display: block;
 }
 /* ورار الاغلاق */
-#close-btn , #cancel-btn ,#quiz-close-btn{
+#close-btn , #cancel-btn ,#quiz-close-btn, #profile-close-btn {
   margin-top: 15px;
   padding: 8px 20px;
   border: none;
@@ -324,7 +324,7 @@ body.lang-en option {
   transition: background-color 0.3s;
 }
 
-#close-btn:hover ,#cancel-btn:hover,#quiz-close-btn:hover {
+#close-btn:hover ,#cancel-btn:hover,#quiz-close-btn:hover, #profile-close-btn:hover {
   background-color: #333;
 }
 #confirm-btn{
@@ -610,25 +610,6 @@ body.light-pink .profile-img{
   justify-content: space-around;
   align-items: center;
 }
-/* الموديل الخاص بالزراير */
-
-/* .confirm-modal{
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #eee;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  text-align: center;
-}
-
-.confirm-modal.show {
-  display: block;
-}  */
 
 .confirm-modal .modal-buttons {
   display: flex;

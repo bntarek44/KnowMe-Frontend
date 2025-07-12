@@ -1,4 +1,35 @@
+const params = new URLSearchParams(window.location.search);
+const profileTokenWithPrefix = params.get('profileToken');
+let rawProfileToken = profileTokenWithPrefix;
+if (profileTokenWithPrefix && profileTokenWithPrefix.startsWith('profile-')) {
+  rawProfileToken = profileTokenWithPrefix.replace('profile-', '');
+}
+
+const messages = {
+    missingToken: {
+      ar: "❌ الرابط غير صالح أو التوكن مفقود.",
+      en: "❌ Invalid link or missing token."
+    },
+    userNotFound: {
+      ar: "❌ المستخدم غير موجود أو الرابط غير صالح.",
+      en: "❌ User not found or invalid link."
+    },
+    serverError: {
+      ar: "❌ حدث خطأ أثناء تحميل بيانات المستخدم.",
+      en: "❌ An error occurred while loading user data."
+    }
+  };
 const overlay = document.getElementById('profile-modal-overlay');
+// Login Modal
+const profileLoginModal = document.getElementById('profile-login-modal');
+const profileLoginText = document.getElementById('profile-login-text');
+const profileGoogleLoginBtn = document.getElementById('profile_google_btn');
+// Profile Modal
+const profileModal = document.getElementById('profile-madal');
+const profileModalText = document.getElementById('profile-modal-text');
+const profileCloseBtn = document.getElementById('profile-close-btn');
+
+// ======================
 
 function showOverlay() {
   overlay.classList.add('show');
@@ -9,8 +40,57 @@ function hideOverlay() {
   overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
+// ======================
+// ✅ مودال الترحيب
+// ======================
+function showProfileModal(message, type = 'success') {
+  profileModalText.innerHTML = message;
+  profileModalText.style.fontSize = '1.4rem';
 
+  if (type === 'error') {
+    profileModalText.style.color = '#dc2626';
+  } else {
+    profileModalText.style.color = '';
+  }
 
+  profileModal.classList.add('show');
+  updateTwoModalsColors();
+  showOverlay();
+}
+
+function hideProfileModal() {
+  profileModal.classList.remove('show');
+  hideOverlay();
+}
+
+// ======================
+// ✅ مودال تسجيل الدخول
+// ======================
+function showLoginModal(message) {
+  profileLoginText.innerHTML = message;
+  profileLoginText.style.fontSize = '1.4rem';
+  profileLoginModal.classList.add('show');
+  updateTwoModalsColors();
+  showOverlay();
+}
+
+function hideLoginModal() {
+  profileLoginModal.classList.remove('show');
+  hideOverlay();
+}
+// ✅ زر تسجيل الدخول
+if (profileGoogleLoginBtn) {
+  profileGoogleLoginBtn.addEventListener('click', () => {
+    if (profileTokenWithPrefix) {
+      // صديق بيحل التحدي
+      window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google?state=${profileTokenWithPrefix}`;
+    } else {
+      // صاحب التحدي
+      window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
+    }
+  });
+
+}
 
 function generateAvatar(name) {
   const firstLetter = encodeURIComponent(name?.charAt(0).toUpperCase() || "?");
@@ -45,63 +125,104 @@ function generateAvatar(name) {
 }
 
 
+// ✅ دالة لاستقبال بيانات اليوزر من الباك اند عبر التوكن
+async function fetchUserDataByToken() {
 
 
-// دالة لاستقبال بيانات اليوزر من الباك اند
-async function fetchUserData() {
-  fetch('https://knowme-backend-production.up.railway.app/auth/user', {
-  method: 'GET',
-  credentials: 'include' // ⬅️ مهم جدًا لو تسجيل الدخول بالكوكيز
-})
-  .then(res => res.json())
-  .then(data => {
-    console.log("بيانات المستخدم:", data);
+  const lang = localStorage.getItem('lang') || 'ar';
+  const messages = {
+    missingToken: {
+      ar: "❌ الرابط غير صالح أو التوكن مفقود.",
+      en: "❌ Invalid link or missing token."
+    },
+    userNotFound: {
+      ar: "❌ المستخدم غير موجود أو الرابط غير صالح.",
+      en: "❌ User not found or invalid link."
+    },
+    serverError: {
+      ar: "❌ حدث خطأ أثناء تحميل بيانات المستخدم.",
+      en: "❌ An error occurred while loading user data."
+    }
+  };
+
+  if (!profileTokenWithPrefix) {
+    console.error("❌ التوكن مش موجود في الرابط");
+    showError(messages.missingToken[lang]);
+    return;
+  }
+
+  try {
+    const response = await fetch(`knowme-backend-production-b054.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    if (!response.ok) throw new Error('ServerError');
+
+    const data = await response.json();
+    console.log("✅ بيانات المستخدم:", data);
+
     if (data.user) {
-      document.getElementById('userName').textContent = data.user.name;
-      document.getElementById('userEmail').textContent = data.user.email;
-      // خاص بعرض تاريخ التسجيل
-      const createdAt = new Date(data.user.createdAt);
-      const lang = localStorage.getItem('lang') || 'ar'; // لو اللغة مش موجودة في التخزين المحلي، نستخدم العربية
-      let locale = 'ar-EG';
-      if (lang === 'en') {
-        locale = 'en-US';
-      }
+      const user = data.user;
+
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('userEmail').textContent = user.email;
+
+      // ✅ خاص بعرض تاريخ التسجيل
+      const createdAt = new Date(user.createdAt);
+      let locale = lang === 'en' ? 'en-US' : 'ar-EG';
 
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const formattedDate = createdAt.toLocaleDateString(locale, options);
 
       const labels = {
-      ar: `📅  ${formattedDate}`,
-      en: `📅  ${formattedDate}`
+        ar: `📅  ${formattedDate}`,
+        en: `📅  ${formattedDate}`
       };
-
       document.getElementById('createdAt').textContent = labels[lang];
 
+      // ✅ الصورة
+      const fallbackAvatar = generateAvatar(user.name);
+      document.getElementById('userPhoto').src = user.imageUrl || fallbackAvatar;
 
-
-      const name = data.user.name;
-      const fallbackAvatar = generateAvatar(name);
-      document.getElementById('userPhoto').src = data.user.imageUrl || fallbackAvatar;
     } else {
-      // لو مش مسجل دخوله
-      console.log("User not logged in");
+      console.error("❌ User not found");
+      showError(messages.userNotFound[lang]);
     }
-  })
-  .catch(err => {
-    console.error("خطأ في جلب بيانات المستخدم:", err);
-  });
+
+  } catch (err) {
+    console.error("❌ خطأ في جلب بيانات المستخدم:", err);
+    showError(messages.serverError[lang]);
+  }
 }
 
 
 
+// بتحول الاسم الكامل الل جبناه من الباك اند الي الاسم الاول بس 
+function getFirstName(fullName) {
+    if (!fullName) return null;
+    return fullName.split(' ')[0];
+}
+
+async function showProfileWelcomeModal(name) {
+  const lang = localStorage.getItem('lang') || 'ar';
+  const profileModal = document.getElementById('profile-madal');
+  const profileModalText = document.getElementById('profile-modal-text');
+  const firstName = getFirstName(name);
+  const welcomeMessages = {
+    ar:  `أهلاً بيك يا <strong><em>${firstName}</em></strong>🙌في اعرفني`,
+    en:  `Welcome,<strong><em>${firstName}</em></strong>,🙌to E3rafni `
+    };
+    profileModalText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
+    profileModalText.style.fontSize = '1.5rem';
+    profileModal.classList.add('show');
+    showOverlay();
+    updateTwoModalsColors();
+  };
 
 
 
 
-
-
-// لعرض الموديل بتاع التأكيد او الالغاء
-
+// الموديل الخاصة بالزراير
 function showConfirmationModal(message, onConfirm, singleButton = false , updateButton = false, copyingButton = false,) {
   const modal = document.getElementById('confirm-modal');
   const text = document.getElementById('confirm-message');
@@ -109,7 +230,7 @@ function showConfirmationModal(message, onConfirm, singleButton = false , update
   const cancelBtn = document.getElementById('cancel-btn');
   const lang = localStorage.getItem('lang') || 'ar'; // لو اللغة مش موجودة في التخزين المحلي، نستخدم العربية
 
-  updateConfirmModalColors();
+  updateTwoModalsColors();
   text.innerHTML = message;
   modal.classList.add('show');
   showOverlay();
@@ -167,7 +288,10 @@ confirmBtn.classList.remove("edit-btn");
     modal.classList.remove('show');
     hideOverlay();
   });
+
+  
 }
+
 
 // دالة الرسايل الل هتتحط ف الموديل الل فيه اللينك
 function getMessage(key, replacements = {}) {
@@ -196,6 +320,43 @@ function getMessage(key, replacements = {}) {
   return template.replace(/\{(\w+)\}/g, (_, k) => replacements[k] || '');
 }
 
+// لظبط الوان الموديل حسب الوضع
+function updateTwoModalsColors() {
+  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const colorsMap = {
+    "light-gray1": { bg: "#fff", color: "#222" },
+    "light-gray2": { bg: "#fff", color: "#222" },
+    "light-beige": { bg: "#fff9f0", color: "#222" },
+    "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
+    "light-pink": { bg: "#fff0f6", color: "#831843" },
+    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+    "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
+    "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
+    "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
+    "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
+  };
+
+  const c = colorsMap[mode] || colorsMap['light-gray2'];
+  const profileConfirmModal = document.getElementById('confirm-modal');
+  // طبعاً لو المودال ظاهر بنغير لونه
+  if (profileConfirmModal) {
+    profileConfirmModal.style.backgroundColor = c.bg;
+    profileConfirmModal.style.color = c.color;
+  }
+  if (profileLoginModal) {
+    profileLoginModal.style.backgroundColor = c.bg;
+    profileLoginModal.style.color = c.color;
+  }
+  if (profileModal) {
+  profileModal.style.backgroundColor = c.bg;
+  profileModal.style.color = c.color;
+}
+};
+
+
+
+
+
 
 
 // زرار الحصول علي الرابط
@@ -204,7 +365,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 
 
   try {
-    const res = await fetch('https://knowme-backend-production.up.railway.app/auth/user', { credentials: 'include' });
+    const res = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', { credentials: 'include' });
 
     if (!res.ok) {
       throw new Error(`❌ Server responded with ${res.status}`);
@@ -212,6 +373,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 
     const data = await res.json();
 
+    console.log('✅ API response:', data);
 
     if (!data.user) {
       showConfirmationModal(getMessage('noUser'), null, true);
@@ -223,7 +385,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?token=${data.user.linkToken}`;
+    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${data.user.linkToken}`;
     showConfirmationModal(
       getMessage('copySuccess', { LINK: link }),
       async () => {
@@ -261,7 +423,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   };
 
   showConfirmationModal(messages.confirm[lang], () => {
-    fetch('https://knowme-backend-production.up.railway.app/auth/logout', {
+    fetch('knowme-backend-production-b054.up.railway.app/auth/logout', {
       method: 'GET',
       credentials: 'include'
     })
@@ -307,7 +469,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 
 
   showConfirmationModal(messages.confirm[lang], () => {
-    fetch('https://knowme-backend-production.up.railway.app/auth/request-delete', {
+    fetch('knowme-backend-production-b054.up.railway.app/auth/request-delete', {
       method: 'DELETE',
       credentials: 'include'
     })
@@ -361,35 +523,90 @@ document.getElementById('editAnswersBtn').addEventListener('click', () => {
 });
 
 
- 
 
-
-
-
-
-
-
-
-// لظبط الوان الموديل حسب الوضع
-function updateConfirmModalColors() {
-    const mode = localStorage.getItem('mode') || 'light-gray2';
-    const colorsMap = {
-    "light-gray1": { bg: "#fff", color: "#222" },
-    "light-gray2": { bg: "#fff", color: "#222" },
-    "light-beige": { bg: "#fff9f0", color: "#222" },
-    "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
-    "light-pink": { bg: "#fff0f6", color: "#831843" },
-    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
-    "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
-    "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
-    "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
-    "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
-    };
-    const modal = document.getElementById('confirm-modal');
-    const c = colorsMap[mode] || colorsMap['light-gray2'];
-    modal.style.backgroundColor = c.bg;
-    modal.style.color = c.color;
+// دالة لتعطيل كل الأزرار والروابط في الصفحة
+function disableAllButtonsAndLinks() {
+  document.querySelectorAll('button, a').forEach(el => {
+    el.disabled = true;
+    el.style.pointerEvents = 'none';
+    el.style.opacity = '0.5';
+  });
 }
+
+
+
+ 
+// لو داخل بتوكن او لا
+async function handleProfilePage() {
+  const lang = localStorage.getItem('lang') || 'ar';
+
+
+  try {
+    // ✅ 3) صاحب التوكن
+    const ownerRes = await fetch(`knowme-backend-production-b054.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
+      credentials: 'include'
+    });
+    const ownerData = await ownerRes.json();
+
+    if (!ownerData.user) {
+      const msg = lang === 'ar'
+        ? "❌ المستخدم غير موجود." 
+        : "❌ User not found.";
+      showProfileModal(msg);
+           // ✅ عطل زر الإغلاق في المودال
+      if (profileCloseBtn) {
+        profileCloseBtn.style.display = 'none';
+      }
+      // ✅ عطل كل الأزرار في الصفحة
+      disableAllButtonsAndLinks()
+      return;
+    }
+                // ✅ 2) الزائر الحالي
+    const visitorRes = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', {
+      credentials: 'include',
+      cache: 'no-cache'
+    });
+    const visitorData = await visitorRes.json();
+
+    if (!visitorData.user) {
+      // الزائر مش مسجل دخول أصلاً
+      const msg = lang === 'ar'
+        ? "سجل دخول بجوجل عشان نأكد حسابك." + "🔓"
+        : "LOGIN first to verify your account. 🔓";
+      showLoginModal(msg, 'error');
+      return;
+    }
+    // ✅ 4) المقارنة
+    if (visitorData.user.id.toString() === ownerData.user.id.toString()) {
+      // ✅ هو نفسه صاحب التوكن
+      console.log("✅ الزائر هو صاحب الصفحة");
+      showProfileWelcomeModal(visitorData.user.name);
+      if (profileCloseBtn) {
+         profileCloseBtn.addEventListener('click', hideProfileModal);
+      }
+      fetchUserDataByToken();
+     
+    } else {
+      // ❌ حد تاني غير صاحب التوكن
+      const msg = lang === 'ar'
+        ? "لا تملك صلاحية الوصول إلى هذه الصفحة." + " ❌"
+        : "You don't have permission to view this page.❌";
+      showProfileModal(msg);
+           // ✅ عطل زر الإغلاق في المودال
+      if (profileCloseBtn) {
+        profileCloseBtn.style.display = 'none';
+      }
+     // ✅ عطل كل الأزرار في الصفحة
+      disableAllButtonsAndLinks()
+      return;
+    }
+
+  } catch (err) {
+    console.error("❌ خطأ:", err);
+    showProfileModal(messages.serverError[lang]);
+  }
+}
+
 
 
 
@@ -407,6 +624,23 @@ function updateConfirmModalColors() {
 
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
-    fetchUserData(); // جلب بيانات المستخدم عند تحميل الصفحة
-    updateConfirmModalColors()
+    if (!profileTokenWithPrefix) {
+    const lang = localStorage.getItem('lang') || 'ar';
+    const message = lang === 'ar'
+      ? "❌ الرابط غير صالح! هذه الصفحة غير مملوكة لأي شخص."
+      : "Invalid link! This page doesn`t belong to any one.❌";
+
+    showProfileModal(message);
+      // ✅ عطل زر الإغلاق في المودال
+  if (profileCloseBtn) {
+    profileCloseBtn.style.display = 'none';
+  }
+
+  // ✅ عطل كل الأزرار في الصفحة
+  disableAllButtonsAndLinks()
+    return;
+
+  } 
+  handleProfilePage();  
+  updateTwoModalsColors();
   });

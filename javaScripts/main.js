@@ -43,12 +43,12 @@ const translations = {
     dogs: "الكلاب",
     horses: "الخيل",
     noAnimal: "مليش ف الكلام ده يعم..خليها علي الله" + "😂",
-    dashSubmit: "احفظ إجاباتك وابدأ التحدي",
+    dashSubmit: "احفظ إجاباتك وابدأ التحدي" + " ✨",
     quizSubmit: "احفظ إجابتك يلا بينا نكشف حقيقتك" + " 🕵️‍♂️",
     closeBtn: "إغلاق",
     confirmBtn: "تأكيد",
     required: "من فضلك اختر إجابة لجميع الأسئلة.",
-    success: "تم حفظ إجابتك بنجاح!",
+    success: "تم حفظ إجابتك بنجاح!"+" ✅",
     error: "حدث خطأ أثناء الحفظ.",
     emailLabel: "البريد الإلكتروني: ",
     ageLabel: "العمر: ",
@@ -99,13 +99,13 @@ const translations = {
     cats: "Cats",
     dogs: "Dogs",
     horses: "Horses",
-    noAnimal: "مليش ف الكلام ده يعم .. خليها علي الله" + "😂",
-    dashSubmit: "Save Answers & Start the Challenge",
+    noAnimal: "مليش ف الكلام ده يعم..خليها علي الله" + "😂",
+    dashSubmit: "Save Answers & Start the Challenge" + " ✨",
     quizSubmit: "Save your answer, let’s see your truth 🕵️‍♂️",
     closeBtn: "Close",
     confirmBtn: "confirm",
     required: "Please select an answer for all Qs.",
-    success: "Your answer has been saved successfully!",
+    success: "Your answer has been saved successfully! ✅",
     error: "An error occurred while saving.",
     emailLabel: "Email: ",
     ageLabel: "Age: ",
@@ -269,7 +269,7 @@ const mainGoogleLoginBtn = document.getElementById('mainGoogleLoginBtn');
   if (mainGoogleLoginBtn) {
   mainGoogleLoginBtn.addEventListener('click', () => {
     // هنا بقى اعمل ريديركت للـ جوجل
-    window.location.href = `https://knowme-backend-production.up.railway.app/auth/google`;
+    window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
   });
 };
 
@@ -296,17 +296,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 // جعل الدوال متاحة للاستخدام من الـ HTML
 window.setLanguage = setLanguage;
 window.changeMode = changeMode;
+
+
+
+
+
+
