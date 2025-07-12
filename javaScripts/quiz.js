@@ -75,10 +75,10 @@ quizGoogleLoginBtn.addEventListener('click', () => {
 
 if (quizTokenWithPrefix) {
   // صديق بيحل التحدي
-  window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google?state=${quizTokenWithPrefix}`;
+  window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google?state=${quizTokenWithPrefix}`;
 } else {
   // صاحب التحدي
-  window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
+  window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
 }
 });
 
@@ -134,7 +134,7 @@ function updateTwoModalsColors() {
 // ✅  جلب اسم المالك
 async function fetchOwnerName(rawQuizToken) {
   try {
-    const res = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}` ,
+    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}` ,
       {
         method: 'GET',
         credentials: 'include',
@@ -239,7 +239,7 @@ if (form) {
     quizSubmitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
     try {
-      const res = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
+      const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -295,7 +295,7 @@ async function checkLoginAndOwnerAndQuizModal() {
 
   try {
     // 1️⃣ هات بيانات المستخدم الحالي من السيشن
-    const userRes = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', {
+    const userRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-store'
     });
@@ -312,7 +312,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     }
 
     // 2️⃣ هات بيانات صاحب التوكن
-    const ownerRes = await fetch(`knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
+    const ownerRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
       credentials: 'include',
       cache: 'no-store'
     });

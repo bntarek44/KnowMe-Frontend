@@ -269,7 +269,7 @@ const mainGoogleLoginBtn = document.getElementById('mainGoogleLoginBtn');
   if (mainGoogleLoginBtn) {
   mainGoogleLoginBtn.addEventListener('click', () => {
     // هنا بقى اعمل ريديركت للـ جوجل
-    window.location.href = `knowme-backend-production-b054.up.railway.app/auth/google`;
+    window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
   });
 };
 
