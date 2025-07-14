@@ -153,7 +153,7 @@ async function loadSavedQuizAnswer() {
     const lang = localStorage.getItem('lang') || 'ar';
     const dashSubmitButton = document.querySelector('#self-quiz-form button[type="submit"]');
     const SubmitForUpdate = {
-    ar:  'احفظالتعديلات واستمر في التحدي' + " ✨",
+    ar:  'احفظ التعديلات واستمر في التحدي' + " ✨",
     en:  "Save changes and continue the challenge" + " ✨"
     };
   try {
