@@ -562,7 +562,7 @@ async function handleProfilePage() {
       return;
     }
                 // ✅ 2) الزائر الحالي
-    const visitorRes = await fetch('knowme-backend-production-b054.up.railway.app/auth/user', {
+    const visitorRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-cache'
     });
