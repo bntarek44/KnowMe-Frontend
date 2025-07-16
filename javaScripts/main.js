@@ -220,6 +220,7 @@ function changeMode(value) {
   };
 
 window.updateOwnerNameColors?.();
+window.updateModalColor?.();
   
 };
 // بتغير اللغة عند اختيارها من السيلكت
@@ -244,6 +245,9 @@ function setLanguage(lang) {
     }
   });
 window.getQuizHeader?.();
+  if (window._correctCount !== undefined && window._totalQuestions !== undefined) {
+    window.renderResultText?.(window._correctCount, window._totalQuestions);
+}
 
 
 
@@ -274,6 +278,19 @@ const mainGoogleLoginBtn = document.getElementById('mainGoogleLoginBtn');
 };
 
 
+
+
+
+
+// جعل الدوال متاحة للاستخدام من الـ HTML
+window.setLanguage = setLanguage;
+window.changeMode = changeMode;
+
+
+
+
+
+
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
   let savedMode = localStorage.getItem('mode') || 'light-gray2';
@@ -290,18 +307,3 @@ window.addEventListener('DOMContentLoaded', () => {
   if (langSelect) langSelect.value = savedLang;
 
 });
-
-
-
-
-
-
-// جعل الدوال متاحة للاستخدام من الـ HTML
-window.setLanguage = setLanguage;
-window.changeMode = changeMode;
-
-
-
-
-
-

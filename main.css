@@ -272,7 +272,7 @@ body.lang-en option {
 }
 /* الاجزاء الخاصة بالموديلز */
 /* الموديل الخاص بالترحيب والتأكيد بتاع الزراير */
-#welcome-modal,#dash-login-modal, #confirm-modal,#profile-login-modal,#profile-madal, #quiz-login-modal,#quiz-modal {
+#welcome-modal,#dash-login-modal, #confirm-modal,#profile-login-modal,#profile-madal, #quiz-login-modal,#quiz-modal,#result-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -292,12 +292,12 @@ body.lang-en option {
   transition: opacity 0.5s ease, visibility 0.5s ease, background-color 0.5s ease, color 0.5s ease;
 }
 
-#welcome-modal.show ,#dash-login-modal.show, #confirm-modal.show ,#profile-login-modal.show,#profile-madal.show, #quiz-login-modal.show, #quiz-modal.show {
+#welcome-modal.show ,#dash-login-modal.show, #confirm-modal.show ,#profile-login-modal.show,#profile-madal.show, #quiz-login-modal.show, #quiz-modal.show,#result-modal.show {
   opacity: 1;
   visibility: visible;
 }
 /* لاخفاء المحتوي الداخلي عند ظهور الموديل */
-#dash-modal-overlay,#quiz-modal-overlay,#profile-modal-overlay {
+#dash-modal-overlay,#quiz-modal-overlay,#profile-modal-overlay,#result-modal-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -308,11 +308,11 @@ body.lang-en option {
   display: none;
   transition: .5s ease-in-out;
 }
-#dash-modal-overlay.show,#quiz-modal-overlay.show,#profile-modal-overlay.show {
+#dash-modal-overlay.show,#quiz-modal-overlay.show,#profile-modal-overlay.show,#result-modal-overlay.show {
   display: block;
 }
 /* ورار الاغلاق */
-#close-btn , #cancel-btn ,#quiz-close-btn, #profile-close-btn {
+#close-btn , #cancel-btn ,#quiz-close-btn, #profile-close-btn,#result-close-btn {
   margin-top: 15px;
   padding: 8px 20px;
   border: none;
@@ -324,7 +324,7 @@ body.lang-en option {
   transition: background-color 0.3s;
 }
 
-#close-btn:hover ,#cancel-btn:hover,#quiz-close-btn:hover, #profile-close-btn:hover {
+#close-btn:hover ,#cancel-btn:hover,#quiz-close-btn:hover, #profile-close-btn:hover,#result-close-btn:hover {
   background-color: #333;
 }
 #confirm-btn{

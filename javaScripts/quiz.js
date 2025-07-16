@@ -17,6 +17,7 @@ const quizLoginModal = document.getElementById('quiz-login-modal');
 const quizLoginText = document.getElementById('quiz-login-text');
 const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 
+
 // ======================
 // ✅ خلفية المودال
 // ======================
@@ -213,6 +214,19 @@ if (form) {
     const lang = localStorage.getItem("lang") || "ar";
     const quizSubmitBtn = form.querySelector('#quizGoogleLoginBtn');
     const answers = {};
+    // ✅ هات اسم الزائر وإيميله من التخزين
+    const guestName = localStorage.getItem('guestName');
+    const guestEmail = localStorage.getItem('guestEmail');
+
+    // ✅ تحقق احتياطي
+    if (!guestName || !guestEmail) {
+      showQuizModal(
+        lang === "ar" ? "⚠️ خطأ في تسجيل الدخول. جرب تسجيل الدخول مرة أخرى." : "⚠️ Login error. Please sign in again.",
+        'error'
+      );
+      return;
+    }
+
 
     // اجمع الإجابات
     const questionNames = [...new Set(
@@ -238,46 +252,50 @@ if (form) {
     quizSubmitBtn.disabled = true;
     quizSubmitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
-    try {
-      const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: `${rawQuizToken}`,
-          answers
-        })
-      });
 
-
-        const errorMessage = lang === 'ar'
-        ? "❌ فشل حفظ الإجابات"
-        : "❌ Failed to save answers";
-
-        if (!res.ok) throw new Error(errorMessage);
-
-      await res.json();
-      console.log("✅ تم الحفظ بنجاح");
-
-      showQuizModal(
-        lang === "ar" ? "✅ تم الحفظ بنجاح. شكرا لمشاركتك!" : "✅ Saved successfully. Thank you!"
-      );
-
-      quizSubmitBtn.textContent = lang === 'ar' ? '✅ تم الحفظ' : '✅ Saved';
-
-    } catch (error) {
-      console.error(error);
-      showQuizModal(
-        lang === "ar" ? "❌ حدث خطأ أثناء حفظ الإجابات. حاول مرة أخرى." : "❌ Error saving your answers. Please try again.",
-        'error'
-      );
-      quizSubmitBtn.disabled = false;
-      quizSubmitBtn.textContent = lang === 'ar' ? 'احفظ إجاباتك وابدأ التحدي' : 'Save your answers and start the challenge';
-    }
+try {
+  const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: `${rawQuizToken}`,
+      guestName,
+      guestEmail,
+      answers
+    })
   });
+
+  const errorMessage = lang === 'ar'
+    ? "❌ فشل حفظ الإجابات"
+    : "❌ Failed to save answers";
+
+  if (!res.ok) throw new Error(errorMessage);
+
+  await res.json();
+  console.log("✅ تم الحفظ بنجاح");
+
+  // ✅ غيّر النص
+  quizSubmitBtn.textContent = lang === 'ar' ? '✅ تم الحفظ' : '✅ Saved';
+
+  // ✅ انتظر ثانية
+  setTimeout(() => {
+    window.location.href = `https://know-me-frontend-swart.vercel.app/result.html?token=${rawQuizToken}`;
+  }, 1000);
+
+} catch (error) {
+  console.error(error);
+  showQuizModal(
+    lang === "ar" ? "❌ حدث خطأ أثناء حفظ الإجابات. حاول مرة أخرى." : "❌ Error saving your answers. Please try again.",
+    'error'
+  );
+  quizSubmitBtn.disabled = false;
+  quizSubmitBtn.textContent = lang === 'ar' ? 'احفظ إجاباتك وابدأ التحدي' : 'Save your answers and start the challenge';
 }
+  });
+};
 
 
 // دالة لتعطيل كل الأزرار والروابط في الصفحة
@@ -358,6 +376,9 @@ async function checkLoginAndOwnerAndQuizModal() {
     };
 
     showQuizModal(messages[lang]);
+        // ✅ ✅ ✅ هنا نسجل بياناته في localStorage
+    localStorage.setItem('guestName', userData.user.name);
+    localStorage.setItem('guestEmail', userData.user.email);
  
 
   } catch (error) {

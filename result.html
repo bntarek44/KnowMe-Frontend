@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عرض النتيجة - اعرفني</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <link rel="stylesheet" href="main.css" />
+  <style>
+    body {
+    margin: 0;
+    font-family: 'Tajawal', sans-serif;
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    overflow: hidden;
+    padding-bottom: 30px;
+    }
+
+    .result-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    }
+
+    .result-card {
+      opacity: 0;
+      transform: translateY(50px) scale(0.9);
+      transition: box-shadow 0.5s;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      background: white;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      max-width: 400px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+
+ .result-card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 0 8px 16px transparent;
+}
+
+
+    @keyframes cardEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.85) rotate(-2deg);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-10px) scale(1.05) rotate(0deg);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      }
+      80% {
+        transform: translateY(5px) scale(0.98);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      }
+    }
+
+/* Glow Effect with customizable color */
+.result-card.glow {
+  box-shadow: 0 0 20px 5px var(--glow-color, rgba(0,0,0,0.1));
+  transition: box-shadow 0.4s ease;
+}
+
+
+
+    .result-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    transition: transform 0.5s;
+    }
+
+    .result-score {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4CAF50;
+    transition: color 0.5s;
+    }
+
+    .result-message {
+    font-size: 22px;
+    margin-bottom: 30px;
+    }
+
+    @keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    } 
+
+    .confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    }
+
+  </style>
+
+</head>
+ 
+<body>
+
+  <!-- الناف بار -->
+  <nav id="mainNav" class="navbar navbar-expand-lg  p-2">
+      <div class="container-fluid">
+          <select id="langSelect" class="form-select language-selector responsive-select" onchange="setLanguage(this.value)" style="max-width: 100px; ">
+              <option value="ar" data-key="ar">العربية</option>
+              <option value="en" data-key="en">English</option>
+          </select>
+
+          <select class="form-select mode-select responsive-select" aria-label="اختيار الوضع" onchange="changeMode(this.value)" style="max-width: 220px; ">
+              <option value="light-gray1" data-key="lightGray1">فاتح - رمادي فاتح جداً</option>
+              <option value="light-gray2" data-key="lightGray2" selected>فاتح - رمادي فاتح</option>
+              <option value="light-beige" data-key="lightBeige">فاتح - بيج فاتح</option>
+              <option value="light-purple" data-key="lightPurple">فاتح - بنفسجي فاتح</option>
+              <option value="light-pink" data-key="lightPink">فاتح - بينك فاتح</option>
+              <option value="dark-gray1" data-key="darkGray1">داكن - رمادي داكن</option>
+              <option value="dark-gray2" data-key="darkGray2">داكن - رمادي أغمق</option>
+              <option value="dark-blue" data-key="darkBlue">داكن - أزرق داكن</option>
+              <option value="dark-brown" data-key="darkBrown">داكن - بني غامق</option>
+              <option value="dark-red" data-key="darkRed">داكن - أحمر غامق</option>
+          </select>
+      </div>
+  </nav>
+
+<!-- المحتوي -->
+    <div class="result-container">
+    <div class="result-card" id="resultCard">
+      <div class="result-icon" id="resultIcon">🏆</div>
+      <div class="result-score" id="resultScore">0 / 10</div>
+      <div class="result-message" id="resultMessage">...</div>
+    </div>
+  </div>
+
+    <!-- رسالة الترحيب -->
+<div id="result-modal-overlay" ></div>
+<div id="result-modal"  role="dialog" aria-modal="true" aria-labelledby="result-modal-text">
+  <p id="result-modal-text" ></p>
+  <button id="result-close-btn" data-key="closeBtn">إغلاق</button>
+</div>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script src="./javaScripts/main.js"></script>
+<script src="./javaScripts/result.js"></script>
+</body>
+</html>
