@@ -15,7 +15,7 @@ const translations = {
     lightBeige: "فاتح - بيج فاتح",
     lightPurple: "فاتح - بنفسجي فاتح",
     lightPink: "فاتح - بينك فاتح",
-    darkGray1: "داكن - رمادي داكن",
+    darkGray1: "داكن - أسود ",
     darkGray2: "داكن - رمادي أغمق",
     darkBlue: "داكن - أزرق داكن",
     darkBrown: "داكن - بني غامق",
@@ -72,7 +72,7 @@ const translations = {
     lightBeige: "Light - Beige",
     lightPurple: "Light - Light Purple",
     lightPink: "Light - Light Pink",
-    darkGray1: "Dark - Dark Gray",
+    darkGray1: "Dark - Black",
     darkGray2: "Dark - Darker Gray",
     darkBlue: "Dark - Blue",
     darkBrown: "Dark - Brown",
@@ -244,10 +244,11 @@ function setLanguage(lang) {
       }
     }
   });
-window.getQuizHeader?.();
-  if (window._correctCount !== undefined && window._totalQuestions !== undefined) {
-    window.renderResultText?.(window._correctCount, window._totalQuestions);
-}
+    window.getQuizHeader?.();
+    window.fetchUserDataByToken ?.();
+    if (window._correctCount !== undefined && window._totalQuestions !== undefined) {
+      window.renderResultText?.(window._correctCount, window._totalQuestions);
+  }
 
 
 

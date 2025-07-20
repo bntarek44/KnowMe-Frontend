@@ -6,9 +6,6 @@ const dashLoginModal = document.getElementById('dash-login-modal');
 const dashLoginText = document.getElementById('dash-login-text');
 const dashGoogleLoginBtn = document.getElementById('dash_google_btn');
 
-
-
-
 function showOverlay() {
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
@@ -18,6 +15,7 @@ function hideOverlay() {
   overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
+
 
 
 // ✅ بيستقبل بيانات من الباك اند
@@ -45,6 +43,7 @@ async function fetchUserData() {
     linkToken: data.user.linkToken
   };
 }
+
 
 
 
@@ -113,6 +112,9 @@ dashGoogleLoginBtn.addEventListener('click', () => {
 });
 };
 
+
+
+
 // بتغير الالوان والخلفيى بتاع الموديل 
 function updateTwoModalsColors() {
   const mode = localStorage.getItem('mode') || 'light-gray2';
@@ -122,7 +124,7 @@ function updateTwoModalsColors() {
     "light-beige": { bg: "#fff9f0", color: "#222" },
     "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
     "light-pink": { bg: "#fff0f6", color: "#831843" },
-    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+    "dark-gray1": { bg: "#151616ff", color: "#f3f4f6" },
     "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
     "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
     "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
@@ -145,9 +147,6 @@ function updateTwoModalsColors() {
 
 
 
-
-
-
 // لاستقبال الاجابات من الباك اند وملء بها النموذج تلقائيا عند التعديل
 async function loadSavedQuizAnswer() {
     const lang = localStorage.getItem('lang') || 'ar';
@@ -156,6 +155,7 @@ async function loadSavedQuizAnswer() {
     ar:  'احفظ التعديلات واستمر في التحدي' + " ✨",
     en:  "Save changes and continue the challenge" + " ✨"
     };
+    // welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
   try {
     const res = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/data', {
       method: "GET",

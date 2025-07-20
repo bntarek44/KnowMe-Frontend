@@ -94,7 +94,7 @@ if (profileGoogleLoginBtn) {
 
 function generateAvatar(name) {
   const firstLetter = encodeURIComponent(name?.charAt(0).toUpperCase() || "?");
-
+// 3a3d42
   const mode = localStorage.getItem('mode') || 'light-gray2';
   const colorsMap = {
     "light-gray1": { bg: "#e0e2e5", color: "#222" },
@@ -102,13 +102,13 @@ function generateAvatar(name) {
     "light-beige": { bg: "#f0ddc6", color: "#222" },
     "light-purple": { bg: "#d1bcec", color: "#4c1d95" },
     "light-pink": { bg: "#fdb6c7", color: "#831843" },
-    "dark-gray1": { bg: "#3a3d42", color: "#f3f4f6" },
+    "dark-gray1": { bg: "#222", color: "#c9d2e6" },
     "dark-gray2": { bg: "#3f464e", color: "#e5e7eb" },
     "dark-blue": { bg: "#3e4683", color: "#bae6fd" },
     "dark-brown": { bg: "#5c504c", color: "#f3e0dc" },
     "dark-red": { bg: "#663434", color: "#fee2e2" }
   };
-
+//  3e4683
   const c = colorsMap[mode] || colorsMap['light-gray2'];
   const bgColor = c.bg;
   const textColor = c.color;
@@ -123,8 +123,6 @@ function generateAvatar(name) {
   const base64 = btoa(unescape(encodeURIComponent(svg)));
   return `data:image/svg+xml;base64,${base64}`;
 }
-
-
 // ✅ دالة لاستقبال بيانات اليوزر من الباك اند عبر التوكن
 async function fetchUserDataByToken() {
 
@@ -172,7 +170,8 @@ async function fetchUserDataByToken() {
       let locale = lang === 'en' ? 'en-US' : 'ar-EG';
 
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      const formattedDate = createdAt.toLocaleDateString(locale, options);
+      const formatter = new Intl.DateTimeFormat([locale, 'en'], options);
+      const formattedDate = formatter.format(createdAt);
 
       const labels = {
         ar: `📅  ${formattedDate}`,
@@ -197,6 +196,7 @@ async function fetchUserDataByToken() {
 
 
 
+
 // بتحول الاسم الكامل الل جبناه من الباك اند الي الاسم الاول بس 
 function getFirstName(fullName) {
     if (!fullName) return null;
@@ -218,6 +218,7 @@ async function showProfileWelcomeModal(name) {
     showOverlay();
     updateTwoModalsColors();
   };
+
 
 
 
@@ -292,7 +293,6 @@ confirmBtn.classList.remove("edit-btn");
   
 }
 
-
 // دالة الرسايل الل هتتحط ف الموديل الل فيه اللينك
 function getMessage(key, replacements = {}) {
   const currentLang = localStorage.getItem('lang') || 'ar';
@@ -329,7 +329,7 @@ function updateTwoModalsColors() {
     "light-beige": { bg: "#fff9f0", color: "#222" },
     "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
     "light-pink": { bg: "#fff0f6", color: "#831843" },
-    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+    "dark-gray1": { bg: "#151616ff", color: "#f3f4f6" },
     "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
     "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
     "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
@@ -385,7 +385,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${data.user.linkToken}`;
+    const link = `${window.location.origin}/quiz.html?quizToken=quiz-${data.user.linkToken}`;
     showConfirmationModal(
       getMessage('copySuccess', { LINK: link }),
       async () => {
@@ -431,7 +431,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
       if (!res.ok) throw new Error('Logout failed');
       localStorage.removeItem('loggedIn');
       setTimeout(() => {
-        window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
       }, 1000);
     })
     .catch(err => {
@@ -479,7 +479,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
       setTimeout(() => {
         showConfirmationModal(messagesAfterConfirm.confirm[lang], () => {
           setTimeout(() => {
-          window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
+          window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
         }, 1000);    
       },true);
       }, 1000)
@@ -644,3 +644,6 @@ window.addEventListener('DOMContentLoaded', () => {
   handleProfilePage();  
   updateTwoModalsColors();
   });
+
+
+  window.fetchUserDataByToken = fetchUserDataByToken;

@@ -101,7 +101,7 @@ function updateModalColor() {
     "light-beige": { bg: "#f7e9daff", color: "#222" },
     "light-purple": { bg: "#d6c9eeff", color: "#4c1d95" },
     "light-pink": { bg: "#fac2cfff", color: "#831843" },
-    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+    "dark-gray1": { bg: "#151616ff", color: "#f3f4f6" },
     "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
     "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
     "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },

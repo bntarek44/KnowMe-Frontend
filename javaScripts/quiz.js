@@ -104,7 +104,7 @@ function updateTwoModalsColors() {
     "light-beige": { bg: "#fff9f0", color: "#222" },
     "light-purple": { bg: "#f9f5ff", color: "#4c1d95" },
     "light-pink": { bg: "#fff0f6", color: "#831843" },
-    "dark-gray1": { bg: "#4b5563", color: "#f3f4f6" },
+    "dark-gray1": { bg: "#151616ff", color: "#f3f4f6" },
     "dark-gray2": { bg: "#374151", color: "#e5e7eb" },
     "dark-blue": { bg: "#1e40af", color: "#bae6fd" },
     "dark-brown": { bg: "#6d4c41", color: "#f3e0dc" },
@@ -312,7 +312,7 @@ async function checkLoginAndOwnerAndQuizModal() {
   const lang = localStorage.getItem('lang') || 'ar';
 
   try {
-    // 1️⃣ هات بيانات المستخدم الحالي من السيشن
+    // 1️⃣ هات بيانات المستخدم الحالي
     const userRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-store'
@@ -320,7 +320,6 @@ async function checkLoginAndOwnerAndQuizModal() {
     const userData = await userRes.json();
 
     if (!userData.user) {
-      // ➜ مش مسجل دخول
       showLoginModal(
         lang === 'ar'
           ? 'سجل دخولك بجوجل علشان نعرفك 👀'
@@ -337,16 +336,20 @@ async function checkLoginAndOwnerAndQuizModal() {
     const ownerData = await ownerRes.json();
 
     if (!ownerData || !ownerData.id) {
-      // ➜ التوكن غلط أو ملوش صاحب
       showQuizModal(
         lang === 'ar'
           ? '❌ الرابط غير صالح أو التوكن خاطئ'
           : 'Invalid or broken link ❌',
         'error'
       );
+      if (quizCloseBtn) {
+        quizCloseBtn.style.display = 'none';
+      }
+      disableAllButtonsAndLinks();
       return;
     }
-    // 3️⃣ تأكيد وجود الـ IDs قبل المقارنة
+
+    // 3️⃣ تأكيد وجود الـ IDs
     if (!userData.user.id || !ownerData.id) {
       showQuizModal(
         lang === 'ar'
@@ -354,13 +357,15 @@ async function checkLoginAndOwnerAndQuizModal() {
           : '❌ Error verifying user identity. Please try again.',
         'error'
       );
+      if (quizCloseBtn) {
+      quizCloseBtn.style.display = 'none';
+      }
+      disableAllButtonsAndLinks();
       return;
     }
 
-
-    // 3️⃣ قارن الـ IDs
-    if (userData.user.id.toString() === ownerData.id.toString()){
-      // ➜ هو صاحب التوكن ➜ مينفعش يحل عن نفسه
+    // 4️⃣ لو هو صاحب التوكن ➜ ممنوع
+    if (userData.user.id.toString() === ownerData.id.toString()) {
       showLoginModal(
         lang === 'ar'
           ? '❌ مينفعش تحل التحدي بتاعك يا ناصح 😅..سجل دخول بحساب تاني وخلي صحابك هم الل يجاوبوا عنك'
@@ -369,17 +374,47 @@ async function checkLoginAndOwnerAndQuizModal() {
       return;
     }
 
-    // 4️⃣ الشخص مسجل دخول ومش هو صاحب التوكن ➜ تمام
+    // ✅ 5️⃣ تحقق إذا الشخص جاوب قبل كده
+ 
+  const guestEmail = userData.user.email;
+   const checkRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/quiz/result', {
+      credentials: 'include',
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        token:rawQuizToken,
+        guestEmail
+      })
+    });
+    const checkData = await checkRes.json();
+
+    if (checkData.result && checkData.result.percentage) {
+      showQuizModal(
+        lang === 'ar'
+          ? '✅ انت جاوبت على التحدي ده قبل كده. متقلقش، إجابتك محفوظة 🎉'
+          : '✅ You’ve already answered this quiz. Don’t worry, your answers are saved! 🎉',
+        'success'
+      );
+      if (quizCloseBtn) {
+      quizCloseBtn.style.display = 'none';
+      }
+      disableAllButtonsAndLinks();
+      return;
+    }
+
+    // ✅ 6️⃣ كل حاجة تمام ➜ عرض الكويز
     const messages = {
-      ar: "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 ", 
-      en: "Welcome to E3rafni 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓" 
+      ar: "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 ",
+      en: "Welcome to E3rafni 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓"
     };
 
     showQuizModal(messages[lang]);
-        // ✅ ✅ ✅ هنا نسجل بياناته في localStorage
+
+    // سجل بيانات الزائر
     localStorage.setItem('guestName', userData.user.name);
     localStorage.setItem('guestEmail', userData.user.email);
- 
 
   } catch (error) {
     console.error('Error checking user and owner:', error);
@@ -391,6 +426,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     );
   }
 }
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
