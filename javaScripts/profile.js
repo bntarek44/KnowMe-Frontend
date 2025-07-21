@@ -83,10 +83,10 @@ if (profileGoogleLoginBtn) {
   profileGoogleLoginBtn.addEventListener('click', () => {
     if (profileTokenWithPrefix) {
       // صديق بيحل التحدي
-      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google?state=${profileTokenWithPrefix}`;
+      window.location.href = `http://localhost:3100/auth/google?state=${profileTokenWithPrefix}`;
     } else {
       // صاحب التحدي
-      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
+      window.location.href = `http://localhost:3100/auth/google`;
     }
   });
 
@@ -338,6 +338,8 @@ function updateTwoModalsColors() {
 
   const c = colorsMap[mode] || colorsMap['light-gray2'];
   const profileConfirmModal = document.getElementById('confirm-modal');
+  const static_Card = document.getElementById('static_Card');
+
   // طبعاً لو المودال ظاهر بنغير لونه
   if (profileConfirmModal) {
     profileConfirmModal.style.backgroundColor = c.bg;
@@ -352,6 +354,174 @@ function updateTwoModalsColors() {
   profileModal.style.color = c.color;
 }
 };
+
+// الاحصائيات
+async function loadFriendsRanking() {
+  try {
+    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/friends-ranking?token=${rawProfileToken}`,{
+      method : "GET",
+      credentials : "include"
+    }
+    );
+    const data = await res.json();
+    const ranking = data.ranking || [];
+    const table = document.getElementById('static_Card');
+    if (ranking.length === 0) {
+      table.style.display = 'none'; // ❌ اخفي الجدول لو مفيش بيانات
+      return;
+    }
+
+    
+    const tbody = document.getElementById('friends-ranking-body');
+    tbody.innerHTML = '';
+
+    ranking
+      .sort((a, b) => b.percentage - a.percentage) // ترتيب تنازلي حسب النجاح
+      .forEach((friend, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${friend.name || friend.token?.slice(0, 6) || '—'}</td>
+          <td>${friend.email}</td>
+          <td>${friend.correct}</td>
+          <td>${friend.percentage.toFixed(1)}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      updateStaticBlockColors();
+
+  } catch (err) {
+    console.error('❌ Error loading friends ranking:', err);
+  }
+}
+
+// اوضاع بلوك الاحصائيات
+// function updateStaticBlockColors() {
+//   const mode = localStorage.getItem('mode') || 'light-gray2';
+
+//   const colorsMap = {
+//     "light-gray1":  { bg: "#fff",      color: "#222",     border: "1px solid #3b82f6" },
+//     "light-gray2":  { bg: "#fff",      color: "#222",     border: "1px solid #3b82f6" },
+//     "light-beige":  { bg: "#fff9f0",   color: "#222",     border: "1px solid #f3d9c2" },
+//     "light-purple": { bg: "#f9f5ff",   color: "#4c1d95",  border: "1px solid #d8b4fe" },
+//     "light-pink":   { bg: "#fff0f6",   color: "#831843",  border: "1px solid #f9a8d4" },
+//     "dark-gray1":   { bg: "#151616",   color: "#f3f4f6",  border: "1px solid #444" },
+//     "dark-gray2":   { bg: "#2a3341ff",   color: "#e5e7eb",  border: "1px solid #3b82f6" },
+//     "dark-blue":    { bg: "#1e40af",   color: "#bae6fd",  border: "1px solid #3b82f6" },
+//     "dark-brown":   { bg: "#57372cff",   color: "#f3e0dc",  border: "1px solid #41261cff" },
+//     "dark-red":     { bg: "#b91c1c",   color: "#fee2e2",  border: "1px solid #f87171" }
+//   };
+//   // 2a3341ff 6d4c41
+
+//   const c = colorsMap[mode] || colorsMap["light-gray2"];
+
+//   const staticCard = document.getElementById("static_Card");
+//   const headers = document.querySelectorAll("#static_Card thead th");
+//   const rows = document.querySelectorAll("#friends-ranking-body tr");
+
+//   // ✅ تلوين الكارت الخارجي
+//   if (staticCard) {
+//     staticCard.style.backgroundColor = c.bg;
+//     staticCard.style.color = c.color;
+//     staticCard.style.border = c.border;
+//   }
+
+//   // ✅ تلوين رؤوس الجدول
+//   headers.forEach(th => {
+//     th.style.backgroundColor = c.bg;
+//     th.style.color = c.color;
+//     th.style.border = c.border;
+//   });
+
+//   // ✅ تلوين صفوف البيانات
+//   rows.forEach(row => {
+//     row.querySelectorAll("td").forEach(td => {
+//       td.style.setProperty("background-color", c.bg, "important");
+//       td.style.setProperty("color", c.color, "important");
+//       td.style.setProperty("border", c.border, "important");
+//     });
+//   });
+// }
+
+function updateStaticBlockColors() {
+  const mode = localStorage.getItem('mode') || 'light-gray2';
+
+  const colorsMap = {
+    "light-gray1": {
+      bg: "#fff", color: "#222", border: "1px solid #3b82f6",
+      headerBg: "#f3f4f6", topRowBg: "#e5e7eb"
+    },
+    "light-gray2": {
+      bg: "#fff", color: "#222", border: "1px solid #3b82f6",
+      headerBg: "#f3f4f6", topRowBg: "#e5e7eb"
+    },
+    "light-beige": {
+      bg: "#fff9f0", color: "#222", border: "1px solid #f3d9c2",
+      headerBg: "#fcebd6", topRowBg: "#f8dcc2"
+    },
+    "light-purple": {
+      bg: "#f9f5ff", color: "#4c1d95", border: "1px solid #d8b4fe",
+      headerBg: "#ede9fe", topRowBg: "#e3d9ff"
+    },
+    "light-pink": {
+      bg: "#fff0f6", color: "#831843", border: "1px solid #f9a8d4",
+      headerBg: "#fde4ec", topRowBg: "#f8d0e2"
+    },
+    "dark-gray1": {
+      bg: "#151616", color: "#f3f4f6", border: "1px solid #444",
+      headerBg: "#1f1f1f", topRowBg: "#2c2c2c"
+    },
+    "dark-gray2": {
+      bg: "#2a3341ff", color: "#e5e7eb", border: "1px solid #555",
+      headerBg: "#4b5563", topRowBg: "#5f6a7d"
+    },
+    "dark-blue": {
+      bg: "#1e40af", color: "#bae6fd", border: "1px solid #3b82f6",
+      headerBg: "#1d4ed8", topRowBg: "#2563eb"
+    },
+    "dark-brown": {
+      bg: "#57372cff", color: "#f3e0dc", border: "1px solid #41261cff",
+      headerBg: "#845c4a", topRowBg: "#9b6c59"
+    },
+    "dark-red": {
+      bg: "#b91c1c", color: "#fee2e2", border: "1px solid #f87171",
+      headerBg: "#dc2626", topRowBg: "#ef4444"
+    }
+  };
+// ef4444
+  const c = colorsMap[mode] || colorsMap["light-gray2"];
+
+  const staticCard = document.getElementById("static_Card");
+  const headers = document.querySelectorAll("#static_Card thead th");
+  const rows = document.querySelectorAll("#friends-ranking-body tr");
+
+  // ✅ تلوين الكارت الخارجي
+  if (staticCard) {
+    staticCard.style.backgroundColor = c.bg;
+    staticCard.style.color = c.color;
+    staticCard.style.border = c.border;
+  }
+
+  // ✅ تلوين رؤوس الجدول
+  headers.forEach(th => {
+    th.style.backgroundColor = c.headerBg;
+    th.style.color = c.color;
+    th.style.border = c.border;
+  });
+
+  // ✅ تلوين صفوف البيانات
+  rows.forEach((row, index) => {
+    const rowBg = index === 0 ? c.topRowBg : c.bg;
+    row.querySelectorAll("td").forEach(td => {
+      td.style.setProperty("background-color", rowBg, "important");
+      td.style.setProperty("color", c.color, "important");
+      td.style.setProperty("border", c.border, "important");
+    });
+  });
+}
+
+
+
 
 
 
@@ -431,7 +601,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
       if (!res.ok) throw new Error('Logout failed');
       localStorage.removeItem('loggedIn');
       setTimeout(() => {
-        window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
+        window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
       }, 1000);
     })
     .catch(err => {
@@ -479,7 +649,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
       setTimeout(() => {
         showConfirmationModal(messagesAfterConfirm.confirm[lang], () => {
           setTimeout(() => {
-          window.location.href = 'https://know-me-frontend-swart.vercel.app/login.html'; // غير المسار لو حبيت
+          window.location.href = 'https://know-me-frontend-swart.vercel.app/index.html'; // غير المسار لو حبيت
         }, 1000);    
       },true);
       }, 1000)
@@ -627,23 +797,19 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!profileTokenWithPrefix) {
     const lang = localStorage.getItem('lang') || 'ar';
     const message = lang === 'ar'
-      ? "❌ الرابط غير صالح! هذه الصفحة غير مملوكة لأي شخص."
-      : "Invalid link! This page doesn`t belong to any one.❌";
+      ? " الرابط غير صالح!❌ هذه الصفحة غير مملوكة لأي شخص."+ "سجل دخول بجوجل"
+      : "Invalid link!❌ This page doesn`t belong to any one..GO LOGIN first";
 
-    showProfileModal(message);
-      // ✅ عطل زر الإغلاق في المودال
-  if (profileCloseBtn) {
-    profileCloseBtn.style.display = 'none';
-  }
-
-  // ✅ عطل كل الأزرار في الصفحة
-  disableAllButtonsAndLinks()
+    showLoginModal(message, 'error');
     return;
 
   } 
   handleProfilePage();  
   updateTwoModalsColors();
+  loadFriendsRanking();
+  updateStaticBlockColors();
   });
 
 
   window.fetchUserDataByToken = fetchUserDataByToken;
+  window.updateStaticBlockColors = updateStaticBlockColors;

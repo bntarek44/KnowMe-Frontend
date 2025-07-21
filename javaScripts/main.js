@@ -54,6 +54,11 @@ const translations = {
     ageLabel: "العمر: ",
     getLink: "احصل علي الرابط",
     createdAt: "تاريخ التسجيل: ",
+    staticBox: "ترتيب أصدقاءك "+ "🏆",
+    friendCol : "الصديق",
+    emailCol : "البريد الالكتروني",
+    trueCol : "الإجابات الصحيحة",
+    ratioCol : "نسبة النجاح",
     logOut: "تسجيل الخروج 🔓",   
     updateAnswer: "تحديث الإجابة" +" ✏️",
     deleteAccount: "حذف الحساب" + " 🗑️",
@@ -111,6 +116,11 @@ const translations = {
     ageLabel: "Age: ",
     getLink: "Get the URL",
     createdAt: "Login Date: ",
+    staticBox : "Your Friends Ranking 🏆",
+    friendCol : "Friend",
+    emailCol : "Email",
+    trueCol : "Correct Answers",
+    ratioCol : "Success Ratio",
     logOut: "Log Out 🔓",
     updateAnswer: "Update Answer ✏️",
     deleteAccount: "Delete Account 🗑️",
@@ -221,6 +231,7 @@ function changeMode(value) {
 
 window.updateOwnerNameColors?.();
 window.updateModalColor?.();
+window.updateStaticBlockColors?.();
   
 };
 // بتغير اللغة عند اختيارها من السيلكت

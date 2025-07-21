@@ -7,6 +7,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 
 </head>
 <body>
@@ -62,11 +64,35 @@
     </div>
   </div>
 
+<!-- احصائيات ترتيب الاصدقاء -->
+<div class="container card mt-4 p-3 shadow-sm rounded-4" id="static_Card">
+  <h4 class="mb-3" data-key="staticBox">🏆 ترتيب أصدقائك</h4>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-center align-middle">
+      <thead >
+        <tr >
+          <th>#</th>
+          <th data-key="friendCol">الصديق</th>
+          <th data-key="emailCol"> البريد الألكتروني</th>
+          <th data-key="trueCol">إجابات صحيحة</th>
+          <th data-key="ratioCol">نسبة النجاح</th>
+        </tr>
+      </thead>
+      <tbody id="friends-ranking-body">
+        <!-- يتم ملؤه بالجافاسكربت -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
 
 
 
 <!-- ✅ البلوك الأخير في الصفحة -->
-<div class="container my-5">
+ <div class="container my-5">
 
   <!-- الأزرار -->
   <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-3">
@@ -93,13 +119,13 @@
   </div>
 
 
-</div>
+</div> 
 
 
 
 
 
-
+<!-- الموديلز -->
 <div id="profile-modal-overlay"></div>
 <!-- موديل الترحيب والرسايل -->
 <div id="profile-madal"  role="dialog" aria-modal="true" aria-labelledby="profile-modal-text">
