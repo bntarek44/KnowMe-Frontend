@@ -83,10 +83,10 @@ if (profileGoogleLoginBtn) {
   profileGoogleLoginBtn.addEventListener('click', () => {
     if (profileTokenWithPrefix) {
       // صديق بيحل التحدي
-      window.location.href = `http://localhost:3100/auth/google?state=${profileTokenWithPrefix}`;
+      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google?state=${profileTokenWithPrefix}`;
     } else {
       // صاحب التحدي
-      window.location.href = `http://localhost:3100/auth/google`;
+      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
     }
   });
 
@@ -125,8 +125,6 @@ function generateAvatar(name) {
 }
 // ✅ دالة لاستقبال بيانات اليوزر من الباك اند عبر التوكن
 async function fetchUserDataByToken() {
-
-
   const lang = localStorage.getItem('lang') || 'ar';
   const messages = {
     missingToken: {
@@ -365,7 +363,7 @@ async function loadFriendsRanking() {
     );
     const data = await res.json();
     const ranking = data.ranking || [];
-    const table = document.getElementById('static_Card');
+    const table = document.getElementById('Friends_Static_Card');
     if (ranking.length === 0) {
       table.style.display = 'none'; // ❌ اخفي الجدول لو مفيش بيانات
       return;
@@ -395,54 +393,49 @@ async function loadFriendsRanking() {
   }
 }
 
+
+// احصائيات التحديات الل جاوبتها
+async function loadQuizesRanking() {
+  const guestEmail = localStorage.getItem('guestEmail');
+  try {
+    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/quizes-ranking?email=${guestEmail}`,{
+      method : "GET",
+      credentials : "include"
+    }
+    );
+    const data = await res.json();
+    const ranking = data.ranking || [];
+    const table = document.getElementById('Quizes_static_Card');
+    if (ranking.length === 0) {
+      table.style.display = 'none'; // ❌ اخفي الجدول لو مفيش بيانات
+      return;
+    }
+
+    
+    const tbody = document.getElementById('quizes-ranking-body');
+    tbody.innerHTML = '';
+
+    ranking
+      .sort((a, b) => b.percentage - a.percentage) // ترتيب تنازلي حسب النجاح
+      .forEach((friend, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${friend.name || friend.token?.slice(0, 6) || '—'}</td>
+          <td>${friend.email}</td>
+          <td>${friend.correct}</td>
+          <td>${friend.percentage.toFixed(1)}%</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      updateStaticBlockColors();
+
+  } catch (err) {
+    console.error('❌ Error loading friends ranking:', err);
+  }
+}
+
 // اوضاع بلوك الاحصائيات
-// function updateStaticBlockColors() {
-//   const mode = localStorage.getItem('mode') || 'light-gray2';
-
-//   const colorsMap = {
-//     "light-gray1":  { bg: "#fff",      color: "#222",     border: "1px solid #3b82f6" },
-//     "light-gray2":  { bg: "#fff",      color: "#222",     border: "1px solid #3b82f6" },
-//     "light-beige":  { bg: "#fff9f0",   color: "#222",     border: "1px solid #f3d9c2" },
-//     "light-purple": { bg: "#f9f5ff",   color: "#4c1d95",  border: "1px solid #d8b4fe" },
-//     "light-pink":   { bg: "#fff0f6",   color: "#831843",  border: "1px solid #f9a8d4" },
-//     "dark-gray1":   { bg: "#151616",   color: "#f3f4f6",  border: "1px solid #444" },
-//     "dark-gray2":   { bg: "#2a3341ff",   color: "#e5e7eb",  border: "1px solid #3b82f6" },
-//     "dark-blue":    { bg: "#1e40af",   color: "#bae6fd",  border: "1px solid #3b82f6" },
-//     "dark-brown":   { bg: "#57372cff",   color: "#f3e0dc",  border: "1px solid #41261cff" },
-//     "dark-red":     { bg: "#b91c1c",   color: "#fee2e2",  border: "1px solid #f87171" }
-//   };
-//   // 2a3341ff 6d4c41
-
-//   const c = colorsMap[mode] || colorsMap["light-gray2"];
-
-//   const staticCard = document.getElementById("static_Card");
-//   const headers = document.querySelectorAll("#static_Card thead th");
-//   const rows = document.querySelectorAll("#friends-ranking-body tr");
-
-//   // ✅ تلوين الكارت الخارجي
-//   if (staticCard) {
-//     staticCard.style.backgroundColor = c.bg;
-//     staticCard.style.color = c.color;
-//     staticCard.style.border = c.border;
-//   }
-
-//   // ✅ تلوين رؤوس الجدول
-//   headers.forEach(th => {
-//     th.style.backgroundColor = c.bg;
-//     th.style.color = c.color;
-//     th.style.border = c.border;
-//   });
-
-//   // ✅ تلوين صفوف البيانات
-//   rows.forEach(row => {
-//     row.querySelectorAll("td").forEach(td => {
-//       td.style.setProperty("background-color", c.bg, "important");
-//       td.style.setProperty("color", c.color, "important");
-//       td.style.setProperty("border", c.border, "important");
-//     });
-//   });
-// }
-
 function updateStaticBlockColors() {
   const mode = localStorage.getItem('mode') || 'light-gray2';
 
@@ -488,29 +481,50 @@ function updateStaticBlockColors() {
       headerBg: "#dc2626", topRowBg: "#ef4444"
     }
   };
-// ef4444
+
   const c = colorsMap[mode] || colorsMap["light-gray2"];
 
-  const staticCard = document.getElementById("static_Card");
-  const headers = document.querySelectorAll("#static_Card thead th");
-  const rows = document.querySelectorAll("#friends-ranking-body tr");
+  const Friends_Static_Card = document.getElementById("Friends_Static_Card");
+  const Quizes_static_Card = document.getElementById("Quizes_static_Card");
+  const friendsHeaders = document.querySelectorAll("#Friends_Static_Card thead th");
+  const quizesHeaders = document.querySelectorAll("#Quizes_static_Card thead th");
+  const friendsRows = document.querySelectorAll("#friends-ranking-body tr");
+  const quizesRows = document.querySelectorAll("#quizes-ranking-body tr");
 
   // ✅ تلوين الكارت الخارجي
-  if (staticCard) {
-    staticCard.style.backgroundColor = c.bg;
-    staticCard.style.color = c.color;
-    staticCard.style.border = c.border;
+  if (Friends_Static_Card) {
+    Friends_Static_Card.style.backgroundColor = c.bg;
+    Friends_Static_Card.style.color = c.color;
+    Friends_Static_Card.style.border = c.border;
+  }
+  if (Quizes_static_Card) {
+    Quizes_static_Card.style.backgroundColor = c.bg;
+    Quizes_static_Card.style.color = c.color;
+    Quizes_static_Card.style.border = c.border;
   }
 
   // ✅ تلوين رؤوس الجدول
-  headers.forEach(th => {
+  friendsHeaders.forEach(th => {
+    th.style.backgroundColor = c.headerBg;
+    th.style.color = c.color;
+    th.style.border = c.border;
+  });
+  quizesHeaders.forEach(th => {
     th.style.backgroundColor = c.headerBg;
     th.style.color = c.color;
     th.style.border = c.border;
   });
 
   // ✅ تلوين صفوف البيانات
-  rows.forEach((row, index) => {
+  friendsRows.forEach((row, index) => {
+    const rowBg = index === 0 ? c.topRowBg : c.bg;
+    row.querySelectorAll("td").forEach(td => {
+      td.style.setProperty("background-color", rowBg, "important");
+      td.style.setProperty("color", c.color, "important");
+      td.style.setProperty("border", c.border, "important");
+    });
+  });
+    quizesRows.forEach((row, index) => {
     const rowBg = index === 0 ? c.topRowBg : c.bg;
     row.querySelectorAll("td").forEach(td => {
       td.style.setProperty("background-color", rowBg, "important");
@@ -519,7 +533,6 @@ function updateStaticBlockColors() {
     });
   });
 }
-
 
 
 
@@ -555,7 +568,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `${window.location.origin}/quiz.html?quizToken=quiz-${data.user.linkToken}`;
+    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${data.user.linkToken}`;
     showConfirmationModal(
       getMessage('copySuccess', { LINK: link }),
       async () => {
@@ -755,6 +768,7 @@ async function handleProfilePage() {
          profileCloseBtn.addEventListener('click', hideProfileModal);
       }
       fetchUserDataByToken();
+      localStorage.setItem('guestEmail', visitorData.user.email);
      
     } else {
       // ❌ حد تاني غير صاحب التوكن
@@ -807,6 +821,7 @@ window.addEventListener('DOMContentLoaded', () => {
   handleProfilePage();  
   updateTwoModalsColors();
   loadFriendsRanking();
+  loadQuizesRanking();
   updateStaticBlockColors();
   });
 
