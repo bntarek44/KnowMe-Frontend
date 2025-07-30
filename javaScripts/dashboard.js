@@ -5,6 +5,8 @@ const overlay = document.getElementById('dash-modal-overlay');
 const dashLoginModal = document.getElementById('dash-login-modal');
 const dashLoginText = document.getElementById('dash-login-text');
 const dashGoogleLoginBtn = document.getElementById('dash_google_btn');
+const dashCloseButton =document.getElementById('close-btn');
+
 
 function showOverlay() {
   overlay.classList.add('show');
@@ -300,7 +302,16 @@ window.addEventListener('DOMContentLoaded', () => {
         );
       } else {
         console.error('Error loading dashboard:', err);
-        showCustomModal('حدث خطأ أثناء تحميل الصفحة. حاول مرة أخرى.', 'error');
+        showCustomModal(
+          lang==="ar"
+          ? 'حدث خطأ أثناء تحميل الصفحة. حاول مرة أخرى.'
+          : 'An Error Occured while loading the page, Try again ,please'
+        );        
+        if (dashCloseButton) {
+        dashCloseButton.style.display = 'none';
+        }
+        // ✅ عطل كل الأزرار في الصفحة
+        disableAllButtonsAndLinks();
       }
     });
 });

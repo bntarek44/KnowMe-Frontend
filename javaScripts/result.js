@@ -209,17 +209,17 @@ function renderResultText(correctCount, totalQuestions) {
   let color = '';
   let icon = '';
 
-  if (percentage >= 85) {
+  if (percentage >= 84) {
     message = lang === 'ar'
       ? '🔥 ايه الجمدان ده🤯🏆.. دنت عارفه أكتر من نفسه ا جدع!'
       : '🔥 What a legend 🤯🏆.. You know them better than they know themselves, mate!';
     color = '#4CAF50'; icon = '🏆';
-  } else if (percentage >= 65) {
+  } else if (percentage >= 64) {
     message = lang === 'ar'
       ? '😎 مش بطال ! مشيت معاك المرة دي ي محظوظ👀 😂'
       : '😎 Not bad at all! Luck’s clearly on your side today 👀😂';
     color = '#8BC34A'; icon = '🎯';
-  } else if (percentage >= 50) {
+  } else if (percentage >= 48) {
     message = lang === 'ar'
       ? '🤔 هو انتو فعلًا صحاب؟ ولا بتقابلوا بعض في الأسانسير؟ 😂'
       : '🤔 Are you really friends... or just LinkedIn connections? 😂';
