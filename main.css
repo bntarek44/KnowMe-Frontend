@@ -627,7 +627,9 @@ body.light-pink .profile-img{
 
 
 
-
+.option-hidden {
+  display: none;
+}
 
 
 
