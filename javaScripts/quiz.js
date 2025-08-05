@@ -404,26 +404,26 @@ async function checkLoginAndOwnerAndQuizModal() {
       return;
     }
     // عشان نعمل حد معين للاجابات
-    const quizRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/quizes-ranking?email=${guestEmail}`,{
-      method : "GET",
-      credentials : "include"
-    }
-    );
-    const quiz_data = await quizRes.json();
-    const quiz_ranking = quiz_data.ranking || [];
-    if (quiz_ranking.length === 5) {
-      showQuizModal(
-        lang === 'ar'
-          ? "❌ واضح إنك بتحب التحديات 😅 بس للأسف، خلصت فرصك! جاوبت على ٥ اختبارات."
-          : "❌ That's it! You've already answered the maximum of 5 friend quizzes.",
-        'error'
-      ); 
-      if (quizCloseBtn) {
-      quizCloseBtn.style.display = 'none';
-      }
-      disableAllButtonsAndLinks();
-      return;
-    };
+    // const quizRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/quizes-ranking?email=${guestEmail}`,{
+    //   method : "GET",
+    //   credentials : "include"
+    // }
+    // );
+    // const quiz_data = await quizRes.json();
+    // const quiz_ranking = quiz_data.ranking || [];
+    // if (quiz_ranking.length === 10) {
+    //   showQuizModal(
+    //     lang === 'ar'
+    //       ? "❌ واضح إنك بتحب التحديات 😅 بس للأسف، خلصت فرصك! جاوبت على 10 اختبارات."
+    //       : "❌ That's it! You've already answered the maximum of 10 friend quizzes.",
+    //     'error'
+    //   ); 
+    //   if (quizCloseBtn) {
+    //   quizCloseBtn.style.display = 'none';
+    //   }
+    //   disableAllButtonsAndLinks();
+    //   return;
+    // };
         // عشان نعمل حد معين للاجابات
     const friendsRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/friends-ranking?token=${rawQuizToken}`,{
       method : "GET",
@@ -432,7 +432,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     );
     const friend_data = await friendsRes.json();
     const friends_ranking = friend_data.ranking || [];
-    if (friends_ranking.length === 5) {
+    if (friends_ranking.length === 10) {
       showQuizModal(
         lang === 'ar'
           ? '❌ لقد وصل صاحب التحدي للحد الأقصي  من الاصدقاء'
