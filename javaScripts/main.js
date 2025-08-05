@@ -281,7 +281,7 @@ const translations = {
     sport: "Sport",
     reading:"Reading",
     cooking:"Cooking",
-    hangingOut:"hangingOut",
+    hangingOut:"HangingOut",
     q11:"【11】"+"If you could live one day as a famous person, who would you choose to be?!",
     q11quiz:"【11】"+"If your friend could live one day as a famous person, who would HE/SHE chooses to be?",
     actor:" Actor ",
