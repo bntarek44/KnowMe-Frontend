@@ -20,7 +20,7 @@ body {
   margin-bottom: 20px;
 } */
 .mainContaent{
-    padding-top: 130px;
+    padding-top: 30px;
     max-width: 600px;
 }
 body {
@@ -665,8 +665,9 @@ body.light-pink .profile-img{
   
 }
 
-/* #container-6e35b3acd2d1bcea961e8454529e6f74 { */
-  /* margin: 20px auto; مسافة فوق وتحت */
-  /* text-align: center; توسيط */
-/* } */
+#container-6e35b3acd2d1bcea961e8454529e6f74 {
+  padding-top: 20px;
+  margin: 20px auto; مسافة فوق وتحت
+  text-align: center; توسيط
+}
 
