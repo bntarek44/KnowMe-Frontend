@@ -16,11 +16,11 @@ body {
     width: 100%;
     z-index: 1000;
 }
-#mainNav{
+/* #mainNav{
   margin-bottom: 20px;
-}
+} */
 .mainContaent{
-    padding-top: 230px;
+    padding-top: 130px;
     max-width: 600px;
 }
 body {
