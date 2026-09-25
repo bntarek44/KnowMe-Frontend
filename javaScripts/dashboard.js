@@ -22,7 +22,7 @@ function hideOverlay() {
 
 // ✅ بيستقبل بيانات من الباك اند
 async function fetchUserData() {
-  const response = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
+  const response = await fetch('https://know-me-production.up.railway.app/auth/user', {
     credentials: 'include'
   });
 
@@ -110,7 +110,7 @@ function hideLoginModal() {
 // ✅ زر تسجيل الدخول
 if (dashGoogleLoginBtn) {
 dashGoogleLoginBtn.addEventListener('click', () => {
-  window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
+  window.location.href = `https://know-me-production.up.railway.app/auth/google`;
 });
 };
 
@@ -159,7 +159,7 @@ async function loadSavedQuizAnswer() {
     };
     // welcomeText.innerHTML = welcomeMessages[lang] || welcomeMessages['ar'];
   try {
-    const res = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/data', {
+    const res = await fetch('https://know-me-production.up.railway.app/auth/data', {
       method: "GET",
       credentials: 'include'
     });
@@ -227,7 +227,7 @@ if (form) {
     submitBtn.textContent = lang === 'ar' ? 'جاري الحفظ...' : 'Saving...';
 
     // الإرسال للباك إند
-    fetch("https://knowme-backend-production-b054.up.railway.app/auth/data", {
+    fetch("https://know-me-production.up.railway.app/auth/data", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

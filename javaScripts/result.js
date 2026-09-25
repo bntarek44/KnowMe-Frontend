@@ -136,7 +136,7 @@ function disableAllButtonsAndLinks() {
 // استقبال البيانات
 async function fetchResultFromAPI(token, guestEmail) {
   try {
-    const response = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/quiz/result', {
+    const response = await fetch('https://know-me-production.up.railway.app/auth/quiz/result', {
       credentials: 'include',
       method: "POST",
       headers: {

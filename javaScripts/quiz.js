@@ -76,10 +76,10 @@ quizGoogleLoginBtn.addEventListener('click', () => {
 
 if (quizTokenWithPrefix) {
   // صديق بيحل التحدي
-  window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google?state=${quizTokenWithPrefix}`;
+  window.location.href = `https://know-me-production.up.railway.app/auth/google?state=${quizTokenWithPrefix}`;
 } else {
   // صاحب التحدي
-  window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
+  window.location.href = `https://know-me-production.up.railway.app/auth/google`;
 }
 });
 
@@ -135,7 +135,7 @@ function updateTwoModalsColors() {
 // ✅  جلب اسم المالك
 async function fetchOwnerName(rawQuizToken) {
   try {
-    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}` ,
+    const res = await fetch(`https://know-me-production.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}` ,
       {
         method: 'GET',
         credentials: 'include',
@@ -254,7 +254,7 @@ if (form) {
 
 
 try {
-  const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/answer`, {
+  const res = await fetch(`https://know-me-production.up.railway.app/auth/quiz/answer`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -313,7 +313,7 @@ async function checkLoginAndOwnerAndQuizModal() {
 
   try {
     // 1️⃣ هات بيانات المستخدم الحالي
-    const userRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
+    const userRes = await fetch('https://know-me-production.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-store'
     });
@@ -329,7 +329,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     }
 
     // 2️⃣ هات بيانات صاحب التوكن
-    const ownerRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
+    const ownerRes = await fetch(`https://know-me-production.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
       credentials: 'include',
       cache: 'no-store'
     });
@@ -377,7 +377,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     // ✅ 5️⃣ تحقق إذا الشخص جاوب قبل كده
  
   const guestEmail = userData.user.email;
-   const checkRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/quiz/result', {
+   const checkRes = await fetch('https://know-me-production.up.railway.app/auth/quiz/result', {
       credentials: 'include',
       method: "POST",
       headers: {
@@ -425,7 +425,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     //   return;
     // };
         // عشان نعمل حد معين للاجابات
-    const friendsRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/friends-ranking?token=${rawQuizToken}`,{
+    const friendsRes = await fetch(`https://know-me-production.up.railway.app/auth/statics/friends-ranking?token=${rawQuizToken}`,{
       method : "GET",
       credentials : "include"
     }

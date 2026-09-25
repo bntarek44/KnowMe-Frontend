@@ -83,10 +83,10 @@ if (profileGoogleLoginBtn) {
   profileGoogleLoginBtn.addEventListener('click', () => {
     if (profileTokenWithPrefix) {
       // صديق بيحل التحدي
-      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google?state=${profileTokenWithPrefix}`;
+      window.location.href = `https://know-me-production.up.railway.app/auth/google?state=${profileTokenWithPrefix}`;
     } else {
       // صاحب التحدي
-      window.location.href = `https://knowme-backend-production-b054.up.railway.app/auth/google`;
+      window.location.href = `https://know-me-production.up.railway.app/auth/google`;
     }
   });
 
@@ -148,7 +148,7 @@ async function fetchUserDataByToken() {
   }
 
   try {
-    const response = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
+    const response = await fetch(`https://know-me-production.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
       method: 'GET',
       credentials: 'include'
     });
@@ -356,7 +356,7 @@ function updateTwoModalsColors() {
 // الاحصائيات
 async function loadFriendsRanking() {
   try {
-    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/friends-ranking?token=${rawProfileToken}`,{
+    const res = await fetch(`https://know-me-production.up.railway.app/auth/statics/friends-ranking?token=${rawProfileToken}`,{
       method : "GET",
       credentials : "include"
     }
@@ -398,7 +398,7 @@ async function loadFriendsRanking() {
 async function loadQuizesRanking() {
   const guestEmail = localStorage.getItem('guestEmail');
   try {
-    const res = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/statics/quizes-ranking?email=${guestEmail}`,{
+    const res = await fetch(`https://know-me-production.up.railway.app/auth/statics/quizes-ranking?email=${guestEmail}`,{
       method : "GET",
       credentials : "include"
     }
@@ -548,7 +548,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 
 
   try {
-    const res = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', { credentials: 'include' });
+    const res = await fetch('https://know-me-production.up.railway.app/auth/user', { credentials: 'include' });
 
     if (!res.ok) {
       throw new Error(`❌ Server responded with ${res.status}`);
@@ -606,7 +606,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
   };
 
   showConfirmationModal(messages.confirm[lang], () => {
-    fetch('https://knowme-backend-production-b054.up.railway.app/auth/logout', {
+    fetch('https://know-me-production.up.railway.app/auth/logout', {
       method: 'GET',
       credentials: 'include'
     })
@@ -652,7 +652,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 
 
   showConfirmationModal(messages.confirm[lang], () => {
-    fetch('https://knowme-backend-production-b054.up.railway.app/auth/request-delete', {
+    fetch('https://know-me-production.up.railway.app/auth/request-delete', {
       method: 'DELETE',
       credentials: 'include'
     })
@@ -726,7 +726,7 @@ async function handleProfilePage() {
 
   try {
     // ✅ 3) صاحب التوكن
-    const ownerRes = await fetch(`https://knowme-backend-production-b054.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
+    const ownerRes = await fetch(`https://know-me-production.up.railway.app/auth/user-by-token?profileToken=${rawProfileToken}`, {
       credentials: 'include'
     });
     const ownerData = await ownerRes.json();
@@ -745,7 +745,7 @@ async function handleProfilePage() {
       return;
     }
                 // ✅ 2) الزائر الحالي
-    const visitorRes = await fetch('https://knowme-backend-production-b054.up.railway.app/auth/user', {
+    const visitorRes = await fetch('https://know-me-production.up.railway.app/auth/user', {
       credentials: 'include',
       cache: 'no-cache'
     });
