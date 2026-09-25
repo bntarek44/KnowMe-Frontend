@@ -20,7 +20,7 @@ body {
   margin-bottom: 20px;
 } */
 .mainContaent{
-    padding-top: 30px;
+    padding-top: 230px;
     max-width: 600px;
 }
 body {
@@ -94,7 +94,7 @@ body {
   border-radius: 50px;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  margin-top: 3rem;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
