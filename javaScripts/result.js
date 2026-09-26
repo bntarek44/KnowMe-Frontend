@@ -94,7 +94,7 @@ if (resultCloseBtn) {
 };
 
 function updateModalColor() {
-  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const mode = localStorage.getItem('mode') || 'light-beige';
   const colorsMap = {
     "light-gray1": { bg: "#fff", color: "#222" },
     "light-gray2": { bg: "#fff", color: "#222" },
@@ -108,7 +108,7 @@ function updateModalColor() {
     "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
   };
 
-  const c = colorsMap[mode] || colorsMap['light-gray2'];
+  const c = colorsMap[mode] || colorsMap['light-beige'];
   // طبعاً لو المودال ظاهر بنغير لونه
   if (resultModal) {
     resultModal.style.backgroundColor = c.bg;

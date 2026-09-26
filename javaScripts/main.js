@@ -381,8 +381,8 @@ window.changeMode = changeMode;
 
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
-  let savedMode = localStorage.getItem('mode') || 'light-gray2';
-  if (!modes.includes(savedMode)) savedMode = 'light-gray2';
+  let savedMode = localStorage.getItem('mode') || 'light-beige';
+  if (!modes.includes(savedMode)) savedMode = 'light-beige';
   changeMode(savedMode);
 
   const modeSelect = document.querySelector('.mode-select');

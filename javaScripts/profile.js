@@ -95,7 +95,7 @@ if (profileGoogleLoginBtn) {
 function generateAvatar(name) {
   const firstLetter = encodeURIComponent(name?.charAt(0).toUpperCase() || "?");
 // 3a3d42
-  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const mode = localStorage.getItem('mode') || 'light-beige';
   const colorsMap = {
     "light-gray1": { bg: "#e0e2e5", color: "#222" },
     "light-gray2": { bg: "#f3f4f6", color: "#222" },
@@ -109,7 +109,7 @@ function generateAvatar(name) {
     "dark-red": { bg: "#663434", color: "#fee2e2" }
   };
 //  3e4683
-  const c = colorsMap[mode] || colorsMap['light-gray2'];
+  const c = colorsMap[mode] || colorsMap['light-beige'];
   const bgColor = c.bg;
   const textColor = c.color;
 
@@ -320,7 +320,7 @@ function getMessage(key, replacements = {}) {
 
 // لظبط الوان الموديل حسب الوضع
 function updateTwoModalsColors() {
-  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const mode = localStorage.getItem('mode') || 'light-beige';
   const colorsMap = {
     "light-gray1": { bg: "#fff", color: "#222" },
     "light-gray2": { bg: "#fff", color: "#222" },
@@ -334,7 +334,7 @@ function updateTwoModalsColors() {
     "dark-red": { bg: "#b91c1c", color: "#fee2e2" }
   };
 
-  const c = colorsMap[mode] || colorsMap['light-gray2'];
+  const c = colorsMap[mode] || colorsMap['light-beige'];
   const profileConfirmModal = document.getElementById('confirm-modal');
   const static_Card = document.getElementById('static_Card');
 
@@ -437,7 +437,7 @@ async function loadQuizesRanking() {
 
 // اوضاع بلوك الاحصائيات
 function updateStaticBlockColors() {
-  const mode = localStorage.getItem('mode') || 'light-gray2';
+  const mode = localStorage.getItem('mode') || 'light-beige';
 
   const colorsMap = {
     "light-gray1": {
@@ -482,7 +482,7 @@ function updateStaticBlockColors() {
     }
   };
 
-  const c = colorsMap[mode] || colorsMap["light-gray2"];
+  const c = colorsMap[mode] || colorsMap["light-beige"];
 
   const Friends_Static_Card = document.getElementById("Friends_Static_Card");
   const Quizes_static_Card = document.getElementById("Quizes_static_Card");
