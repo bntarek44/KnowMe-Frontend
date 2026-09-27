@@ -131,7 +131,6 @@ function updateTwoModalsColors() {
 // ====================
 
 
-
 // ✅  جلب اسم المالك
 async function fetchOwnerName(rawQuizToken) {
   try {
@@ -159,7 +158,6 @@ const getOwnerName = async function () {
   }
 
 }
-
 
 
 
@@ -203,7 +201,6 @@ function updateOwnerNameColors() {
 
 
 
-
 // ✅  إرسال الإجابات
 const form = document.getElementById("self-quiz-form");
 
@@ -212,7 +209,7 @@ if (form) {
     e.preventDefault();
 
     const lang = localStorage.getItem("lang") || "ar";
-    const quizSubmitBtn = form.querySelector('#quizGoogleLoginBtn');
+    const quizSubmitBtn = form.querySelector('#quizSubmitBtn ');
     const answers = {};
     // ✅ هات اسم الزائر وإيميله من التخزين
     const guestName = localStorage.getItem('guestName');
@@ -295,7 +292,7 @@ try {
   quizSubmitBtn.textContent = lang === 'ar' ? 'احفظ إجاباتك وابدأ التحدي' : 'Save your answers and start the challenge';
 }
   });
-};
+}; 
 
 
 // دالة لتعطيل كل الأزرار والروابط في الصفحة
@@ -306,7 +303,7 @@ function disableAllButtonsAndLinks() {
     el.style.opacity = '0.5';
   });
 }
-
+// ************************************
 // دالة التحقق عند تحميل الصفحة
 async function checkLoginAndOwnerAndQuizModal() {
   const lang = localStorage.getItem('lang') || 'ar';
@@ -470,7 +467,7 @@ async function checkLoginAndOwnerAndQuizModal() {
 }
 
 
-
+// ***********************************
 document.addEventListener('DOMContentLoaded', () => {
   if (!quizTokenWithPrefix) {
     const lang = localStorage.getItem('lang') || 'ar';
