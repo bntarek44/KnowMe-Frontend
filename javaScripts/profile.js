@@ -91,10 +91,8 @@ if (profileGoogleLoginBtn) {
   });
 
 }
-
 function generateAvatar(name) {
   const firstLetter = encodeURIComponent(name?.charAt(0).toUpperCase() || "?");
-// 3a3d42
   const mode = localStorage.getItem('mode') || 'light-beige';
   const colorsMap = {
     "light-gray1": { bg: "#e0e2e5", color: "#222" },
@@ -108,7 +106,7 @@ function generateAvatar(name) {
     "dark-brown": { bg: "#5c504c", color: "#f3e0dc" },
     "dark-red": { bg: "#663434", color: "#fee2e2" }
   };
-//  3e4683
+
   const c = colorsMap[mode] || colorsMap['light-beige'];
   const bgColor = c.bg;
   const textColor = c.color;
@@ -220,7 +218,6 @@ async function showProfileWelcomeModal(name) {
 
 
 
-
 // الموديل الخاصة بالزراير
 function showConfirmationModal(message, onConfirm, singleButton = false , updateButton = false, copyingButton = false,) {
   const modal = document.getElementById('confirm-modal');
@@ -290,7 +287,6 @@ confirmBtn.classList.remove("edit-btn");
 
   
 }
-
 // دالة الرسايل الل هتتحط ف الموديل الل فيه اللينك
 function getMessage(key, replacements = {}) {
   const currentLang = localStorage.getItem('lang') || 'ar';
@@ -352,7 +348,6 @@ function updateTwoModalsColors() {
   profileModal.style.color = c.color;
 }
 };
-
 // الاحصائيات
 async function loadFriendsRanking() {
   try {
@@ -392,7 +387,6 @@ async function loadFriendsRanking() {
     console.error('❌ Error loading friends ranking:', err);
   }
 }
-
 
 // احصائيات التحديات الل جاوبتها
 async function loadQuizesRanking() {
@@ -434,7 +428,6 @@ async function loadQuizesRanking() {
     console.error('❌ Error loading friends ranking:', err);
   }
 }
-
 // اوضاع بلوك الاحصائيات
 function updateStaticBlockColors() {
   const mode = localStorage.getItem('mode') || 'light-beige';
@@ -587,7 +580,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
 });
 
 
-
+// ***************************************************
 // لتنفيذ تسجيل الخروج حال التأكيد
 document.getElementById('logoutBtn').addEventListener('click', () => {
   
@@ -718,7 +711,7 @@ function disableAllButtonsAndLinks() {
 
 
 
- 
+//  ************************************
 // لو داخل بتوكن او لا
 async function handleProfilePage() {
   const lang = localStorage.getItem('lang') || 'ar';
@@ -805,7 +798,7 @@ async function handleProfilePage() {
 
 
 
-
+// **********************************************
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
     if (!profileTokenWithPrefix) {

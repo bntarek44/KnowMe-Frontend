@@ -528,11 +528,20 @@ body.dark-red input[type="radio"]:checked + label.custom-btn {
   text-align: center;
   margin: 150px auto;
 }
+/*  تعديل بعض السمات في البلوك في بعض الخلفيات عشان البلوك يظهر ك contrast */
 body.dark-gray1 .profile-card{
-  background: #111;
-  color: white;
+  background: rgba(32, 32, 32, 0.705);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0);
 }
 
+body.light-gray1 .profile-card{
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.171);
+}
+
+body.light-beige .profile-card{
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.336);
+
+}
 body.dark-gray2 .profile-card {
   background: #26303b41;
   color: #f3f4f6;
