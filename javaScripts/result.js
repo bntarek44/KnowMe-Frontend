@@ -1,4 +1,4 @@
-let token;
+ let token;
 let guestEmail;
 let lang;
 
@@ -77,7 +77,7 @@ function hideResultModal() {
   resultModal.classList.remove('show');
   hideOverlay();
 }
-
+// ****************
 if (resultCloseBtn) {
   resultCloseBtn.addEventListener('click', async() => {
     hideResultModal();
@@ -132,7 +132,6 @@ function disableAllButtonsAndLinks() {
     el.style.opacity = '0.5';
   });
 }
-
 // استقبال البيانات
 async function fetchResultFromAPI(token, guestEmail) {
   try {
@@ -242,7 +241,7 @@ function renderResultText(correctCount, totalQuestions) {
 
 
 function launchConfetti() {
-  const duration = 3 * 1000; // 5 ثواني
+  const duration = 3 * 1000; // 3 ثواني
   const animationEnd = Date.now() + duration;
   const defaults = { 
     origin: { y: 0.6 },
