@@ -561,7 +561,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${rawProfileToken`;
+    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${rawProfileToken}`;
     showConfirmationModal(
       getMessage('copySuccess', { LINK: link }),
       async () => {
