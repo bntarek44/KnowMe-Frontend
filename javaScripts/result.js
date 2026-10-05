@@ -278,6 +278,7 @@ function launchConfetti() {
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+  showOverlay();
   token = getTokenFromURL();
   guestEmail = getGuestEmail();
   lang = localStorage.getItem('lang') || 'ar';

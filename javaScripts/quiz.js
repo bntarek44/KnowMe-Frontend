@@ -476,6 +476,7 @@ async function checkLoginAndOwnerAndQuizModal() {
 
 // ***********************************
 document.addEventListener('DOMContentLoaded', () => {
+  showOverlay();
   if (!quizTokenWithPrefix) {
     const lang = localStorage.getItem('lang') || 'ar';
     const message = lang === 'ar'

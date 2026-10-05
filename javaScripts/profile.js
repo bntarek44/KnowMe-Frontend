@@ -803,6 +803,7 @@ async function handleProfilePage() {
 // **********************************************
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
+  showOverlay();
     if (!profileTokenWithPrefix) {
     const lang = localStorage.getItem('lang') || 'ar';
     const message = lang === 'ar'
