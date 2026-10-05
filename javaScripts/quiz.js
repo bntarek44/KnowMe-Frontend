@@ -393,10 +393,9 @@ async function checkLoginAndOwnerAndQuizModal() {
     });
     const checkData = await checkRes.json();
     // لاستخدام الاسم الاول في رسالة الترحيب
-     
+      const firstName = getFirstName(userData.user.name) ;
 
     if (checkData.result && checkData.result.percentage) {
-     const firstName = getFirstName(userData.user.name) ;
     
       showQuizModal(
         lang === 'ar'
