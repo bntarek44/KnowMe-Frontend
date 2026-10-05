@@ -288,6 +288,7 @@ function showCustomModal(message, type = 'success') {
 // الدوال الل بتتنفذ عند تحميل الصفحة
 window.addEventListener('DOMContentLoaded', () => {
   const lang = localStorage.getItem('lang') || 'ar';
+  showOverlay();
   fetchUserData()
     .then(({ name, linkToken }) => {
       userLinkToken = linkToken;  // ✅ خزّن التوكن العالمي
