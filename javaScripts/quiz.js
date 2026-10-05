@@ -18,6 +18,8 @@ const quizLoginText = document.getElementById('quiz-login-text');
 const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 
 
+const getFirstName = window.getFirstName ;
+
 // ======================
 // ✅ خلفية المودال
 // ======================
@@ -307,6 +309,7 @@ function disableAllButtonsAndLinks() {
 // دالة التحقق عند تحميل الصفحة
 async function checkLoginAndOwnerAndQuizModal() {
   const lang = localStorage.getItem('lang') || 'ar';
+ 
 
   try {
     // 1️⃣ هات بيانات المستخدم الحالي
@@ -386,14 +389,19 @@ async function checkLoginAndOwnerAndQuizModal() {
       })
     });
     const checkData = await checkRes.json();
+    // لاستخدام الاسم الاول في رسالة الترحيب
+     const firstName = getFirstName(userData.user.name); 
 
     if (checkData.result && checkData.result.percentage) {
+      const ms = lang === 'ar'
+    
       showQuizModal(
         lang === 'ar'
-          ? '✅ انت جاوبت على التحدي ده قبل كده. متقلقش، إجابتك محفوظة 🎉'
-          : '✅ You’ve already answered this quiz. Don’t worry, your answers are saved! 🎉',
+      ? `انت جاوبت علي التحدي ده قبل كده يا ${firstName} 😅.. متقلقش، إجابتك محفوظة 🎉`
+      : `You’ve already answered this quiz, ${firstName} 😅.. Don’t worry, your answers are saved! 🎉`,
         'success'
       );
+
       if (quizCloseBtn) {
       quizCloseBtn.style.display = 'none';
       }
@@ -429,7 +437,7 @@ async function checkLoginAndOwnerAndQuizModal() {
     );
     const friend_data = await friendsRes.json();
     const friends_ranking = friend_data.ranking || [];
-    if (friends_ranking.length === 10) {
+    if (friends_ranking.length === 10) { // استدعاء الدالة مع تمرير الاسم الكامل
       showQuizModal(
         lang === 'ar'
           ? '❌ لقد وصل صاحب التحدي للحد الأقصي  من الاصدقاء'
@@ -442,13 +450,13 @@ async function checkLoginAndOwnerAndQuizModal() {
       disableAllButtonsAndLinks();
       return;
     }
-
+    
     // ✅ 6️⃣ كل حاجة تمام ➜ عرض الكويز
     const messages = {
-      ar: "أهلاً بيك في إعرفني 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 ",
-      en: "Welcome to E3rafni 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓"
+      ar: `أهلاً ${firstName} 🙌.. جاوب الأسئلة عن صحبك قبل ما يكتشف إنك مش عارفه أصلًا 🕵️‍♂️😂 `,
+      en: `Welcome ${firstName} 🙌. Let’s see if you really know your friend or if you’ve been bluffing this whole time! 😂🤓`
     };
-
+ 
     showQuizModal(messages[lang]);
 
     // سجل بيانات الزائر
