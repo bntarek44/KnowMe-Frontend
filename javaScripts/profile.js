@@ -763,6 +763,7 @@ async function handleProfilePage() {
       }
       fetchUserDataByToken();
       localStorage.setItem('guestEmail', visitorData.user.email);
+      return true;
      
     } else {
       // ❌ حد تاني غير صاحب التوكن
@@ -812,13 +813,16 @@ window.addEventListener('DOMContentLoaded', () => {
     return;
 
   } 
-  handleProfilePage();  
-  updateTwoModalsColors();
+   updateTwoModalsColors();
+  const hasAccess = handleProfilePage();  
+  if (!hasAccess){
+    return;
+  }
   loadFriendsRanking();
   loadQuizesRanking();
   updateStaticBlockColors();
-  });
-
+  
+});
 
   window.fetchUserDataByToken = fetchUserDataByToken;
   window.updateStaticBlockColors = updateStaticBlockColors;

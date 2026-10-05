@@ -329,16 +329,12 @@ async function checkLoginAndOwnerAndQuizModal() {
       );
       return;
     }
-console.log("rawQuizToken:", rawQuizToken);
-
     // 2️⃣ هات بيانات صاحب التوكن
     const ownerRes = await fetch(`https://know-me-production.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
       credentials: 'include',
       cache: 'no-store'
     });
     const ownerData = await ownerRes.json();
-    console.log("ownerData:", ownerData);
-
     if (!ownerData || !ownerData.id) {
       showQuizModal(
         lang === 'ar'
