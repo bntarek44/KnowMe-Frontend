@@ -18,7 +18,10 @@ const quizLoginText = document.getElementById('quiz-login-text');
 const quizGoogleLoginBtn = document.getElementById('quiz_google_btn');
 
 
-
+function getFirstName(fullName) {
+    if (!fullName) return null;
+    return fullName.split(' ')[0];
+}
 
 // ======================
 // ✅ خلفية المودال
@@ -393,7 +396,7 @@ async function checkLoginAndOwnerAndQuizModal() {
      
 
     if (checkData.result && checkData.result.percentage) {
-     const firstName = window.getFirstName(userData.user.name) ;
+     const firstName = getFirstName(userData.user.name) ;
     
       showQuizModal(
         lang === 'ar'

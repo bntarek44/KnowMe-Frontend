@@ -319,4 +319,3 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-window.getFirstName = getFirstName;
