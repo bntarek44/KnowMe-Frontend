@@ -561,7 +561,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
       return;
     }
 
-    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${data.user.linkToken}`;
+    const link = `https://know-me-frontend-swart.vercel.app/quiz.html?quizToken=quiz-${rawProfileToken`;
     showConfirmationModal(
       getMessage('copySuccess', { LINK: link }),
       async () => {
@@ -573,6 +573,7 @@ document.getElementById('URLButton').addEventListener('click', async (e) => {
     );
 
 
+  
   } catch (error) {
     console.error(error);
     showConfirmationModal(getMessage('errorFetching', { ERROR: error.message }), null, true);

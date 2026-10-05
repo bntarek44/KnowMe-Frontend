@@ -313,7 +313,6 @@ function disableAllButtonsAndLinks() {
 async function checkLoginAndOwnerAndQuizModal() {
   const lang = localStorage.getItem('lang') || 'ar';
  
-
   try {
     // 1️⃣ هات بيانات المستخدم الحالي
     const userRes = await fetch('https://know-me-production.up.railway.app/auth/user', {
@@ -331,7 +330,7 @@ async function checkLoginAndOwnerAndQuizModal() {
       return;
     }
 console.log("rawQuizToken:", rawQuizToken);
-console.log("logged user:", userData.user.email);
+
     // 2️⃣ هات بيانات صاحب التوكن
     const ownerRes = await fetch(`https://know-me-production.up.railway.app/auth/quiz/owner?quizToken=${rawQuizToken}`, {
       credentials: 'include',
